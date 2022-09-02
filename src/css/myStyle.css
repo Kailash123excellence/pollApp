@@ -1,0 +1,122 @@
+*{
+  max-width: 100vw;
+  max-height: 100vh;
+}
+.registerFrom {
+  /* border: 2px solid red; */
+  height: 100vh;
+  margin-top: 50px;
+  margin: 0;
+  background-image: url("../assert//image/background.jpg");
+  padding: 0;
+}
+
+.registerContainer {
+  /* border: 2px solid red; */
+  border-radius: 10px;
+  width: 50%;
+  margin: auto;
+  text-align: start;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: rgba(183, 173, 173, 0.858);
+}
+.formHeading {
+  text-align: center;
+  font-size: 50px;
+  color: rgb(12, 12, 31);
+  padding-top: 40px;
+  /* margin: 0; */
+}
+.inputForm {
+  padding: 40px;
+  width: 80%;
+  /* background-color: gray; */
+  margin: auto;
+}
+.pollNav {
+  background-color: rgb(70, 99, 218);
+  height: 50px;
+}
+.loginLink {
+  text-align: center;
+}
+.pollNav {
+  display: flex;
+}
+.order {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 10px;
+  position: absolute;
+  right: 10%;
+}
+.listOrder {
+  width: 100px;
+  text-align: center;
+  margin-left: 20px;
+  /* border: 2px solid red; */
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgb(53, 193, 116);
+}
+.orderLink {
+  color: red;
+  text-decoration: none;
+}
+a{
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+}
+.poll{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: aquamarine;
+  font-size: 30px;
+  height: 50px;
+  padding: 10px 10px;
+  color: green;
+}
+.NavSignLink{
+  text-decoration: none;
+  border: none;
+  background-color: rgb(53, 193, 116);
+
+}
+
+/* home page csss */
+.pollContainer{
+  border: 2px solid rgb(232, 224, 224);
+  min-height: 100vh;
+  background-image:url("../assert//image/background.jpg");
+  margin: auto;
+  position: relative;
+  top:50%
+}
+.pollStart{
+  /* border: 2px solid red; */
+  width: 400px;
+  color: white;
+  margin: auto;
+  margin-top: 20%;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  
+}
+.headLineFirst{
+  
+ font-size: 30px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.quoteLine{
+  font-size: 20px;
+  text-align: center;
+}
+.getStart{
+  border-radius: 10px;
+  border: none;
+}
