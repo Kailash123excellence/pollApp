@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from '@mui/material';
 // import {Link} from 'react-router-dom'
+import login from '../../LoginPage';
+import SignUp from '../../SignUp';
+
 export default function PollNavbar() {
   return (
     <>
@@ -12,7 +15,7 @@ export default function PollNavbar() {
             <li className="listOrder">
               {/* <Link to="/login">Login</Link> */}
               <button className="NavSignLink">
-                <Link className="NavSignLink" to="/logIn">
+                <Link className="NavSignLink" to="/login">
                   LogIn
                 </Link>
               </button>
@@ -26,12 +29,7 @@ export default function PollNavbar() {
               </button>
             </li>
           </ul>
-          {/* <button >
-            <Link>SignIn</Link>
-          </button>
-          <button >
-            <Link>LoginIn</Link>
-          </button> */}
+        
         </div>
       </nav>
     </>

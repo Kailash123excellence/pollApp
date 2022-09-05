@@ -1,76 +1,241 @@
-import React, { useState } from "react";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import  { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-
-export default function LoginPage() {
-  const dispatch = useDispatch();
-
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setPassword("");
-    setUser("");
-    console.log(user);
-    console.log(password);
-  }
-
+import {requestLogin} from '../redux/action'
+import { useSelect } from "@mui/base";
+import { useNavigate } from "react-router";
+function Copyright(props) {
   return (
-    <>
-      {/* <Navbar /> */}
-      <div className="registerFrom">
-        <div className="registerContainer">
-          <form className="inputForm" onSubmit={"handleSubmit"}>
-            <h1 className="formHeading">LOGIN PAGE</h1>
-            <div className="mb-3">
-              <label className="form-label">UserName</label>
-              <input
-                required
-                type="text"
-                className="form-control"
-                placeholder="Enter Username"
-                onChange={(e) => setUser(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input
-                required
-                type="password"
-                className="form-control"
-                placeholder="Enter Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            <label className="form-label">Role</label>
-            <select
-              class="form-select mb-2"
-              aria-label="Default select example"
-            >
-              <option selected>Guest</option>
-              <option value="1">Admin</option>
-            </select>
-            <button type="submit" className="btn btn-primary w-100">
-              Submit
-            </button>
-          </form>
-          <p className="loginLink">
-            Not a Member <Link href="/registerPage">SignUp</Link>
-          </p>
-        </div>
-        {/* <div className="form">
-
-        <form className="loginFrom" onSubmit={"handleSubmit"}>
-        <label>UserName</label>
-        <input type="text" required placeholder="Enter Username"  name="username" onChange={(e)=>setUser(e.target.value)} />
-        <label>Password</label>
-        <input type="password" required placeholder="Password" name="password" onChange={(e)=>setPassword(e.target.value)}  />
-        <button type="submit">Register</button>
-      </form>
-        </div> */}
-      </div>
-    </>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
+
+const theme = createTheme();
+
+export default function SignIn() {
+  const dispatch = useDispatch();
+const loginSelector = useSelector((state) => state && state.logInReducer);
+  const [userLogin, setUserLogin] = useState({
+    username: "",
+    password: "",
+  });
+
+  const navigator= useNavigate()
+
+  const userRole= localStorage.getItem("role")
+
+  useEffect(()=>{
+    if(loginSelector.isSuccess){
+      if(userRole=='Admin'){
+        navigator('/adminPanel')
+      }else{
+        navigator('/pollDeshboard')
+      }
+
+    }
+  },[loginSelector])
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(
+      requestLogin({
+        username: userLogin.username,
+        password: userLogin.password,
+      })
+    );
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              onChange={(e) =>
+                setUserLogin({ ...userLogin, username: e.target.value })
+              }
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) =>
+                setUserLogin({ ...userLogin, password: e.target.value })
+              }
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              {/* <Grid item xs>
+                <Link href="/signUp" variant="body1">
+                  Forgot password?
+                </Link>
+              </Grid> */}
+              <Grid item>
+                <Link href="/signUp" variant="body1">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { Link ,useNavigate} from "react-router-dom";
+// import {requestLogin} from '../redux/action/index'
+
+// export default function LoginPage() {
+//   const navigator= useNavigate()
+//   const dispatch = useDispatch();
+// const loginSelector = useSelector((state) =>state&& state.logInReducer);
+// // console.log(loginSelector);
+// const userRole= localStorage.getItem("role")
+// console.log(userRole);
+
+// useEffect(()=>{
+//   if(loginSelector.isSuccess){
+//     if(userRole=='Admin'){
+//       navigator('/adminPanel')
+//     }else{
+//       navigator('/pollDeshboard')
+//     }
+
+//   }
+// },[loginSelector])
+
+// const[userLogin,setUserLogin]=useState({
+//     username:"",
+//     password:""
+
+//   })
+
+//   function handleSubmit(e) {
+//     e.preventDefault();
+//     dispatch(requestLogin({
+//       username:userLogin.username,
+//       password:userLogin.password
+//     }));
+//   }
+
+//   return (
+//     <>
+
+//       <div className="registerFrom">
+//         <div className="registerContainer">
+//           <form className="inputForm" onSubmit={handleSubmit}>
+//             <h1 className="formHeading">Login</h1>
+//             <div className="mb-3">
+//               <label className="form-label">UserName</label>
+//               <input
+//                 required
+//                 name="username"
+//                 type="text"
+//                 className="form-control"
+//                 placeholder="Enter Username"
+//                 onChange={(e) => setUserLogin({...userLogin, username:e.target.value})}
+//               />
+//             </div>
+//             <div className="mb-3">
+//               <label className="form-label">Password</label>
+//               <input
+//                 required
+//                 name="password"
+//                 type="password"
+//                 className="form-control"
+//                 placeholder="Enter Password"
+//                 onChange={(e) => setUserLogin({...userLogin, password:e.target.value})}
+//               />
+//             </div>
+//             <button type="submit" className="btn btn-primary w-100">
+//               Submit
+//             </button>
+//           </form>
+//           <p className="loginLink">
+//             Not a Member <Link to="/signUp">SignUp</Link>
+//           </p>
+//         </div>
+
+//       </div>
+//     </>
+//   );
+// }

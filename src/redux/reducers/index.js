@@ -1,9 +1,13 @@
-import pollReducers from "./reducers"
 
+import signUpReducer from "./signUp";
+import logInReducer from './logIn'
 import { combineReducers } from "redux";
 
 const rootReducers=combineReducers({
-  pollReducers,
+  signUpReducer,
+  logInReducer
+  
+
 })
 
 export default rootReducers;

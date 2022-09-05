@@ -7,7 +7,7 @@
   height: 100vh;
   margin-top: 50px;
   margin: 0;
-  background-image: url("../assert//image/background.jpg");
+  /* background-image: url("../assert//image/background.jpg"); */
   padding: 0;
 }
 
@@ -32,6 +32,7 @@
 .inputForm {
   padding: 40px;
   width: 80%;
+  /* height: 100%; */
   /* background-color: gray; */
   margin: auto;
 }

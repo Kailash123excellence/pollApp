@@ -1,35 +1,75 @@
 import {
-  ADD_USER,
-LOGIN_USER,
-CHANGE_USERNAME,
-ADD_PASSWORD
+ REQUEST_SIGNUP,
+ REQUEST_LOGIN_SUCCESS,
+ REQUEST_SIGNUP_SUCCESS,
+ REQUEST_SIGNUP_ERROR,
+ REQUEST_LOGIN,
+ REQUEST_LOGIN_ERROR,
+ POLL_REQUEST,
+ POLL_REQUEST_SUCCESS,
+ POLL_REQUEST_ERROR
 } from './actionType';
 
-export const changeUsername = (user) => {
-  return {
-    type: CHANGE_USERNAME,
-    payload: { user },
-  };
-};
-
-export const changePassword = (pass) => {
-  return {
-    type: ADD_PASSWORD,
-    payload: { pass },
-  };
-};
-
-
-export const addUser =(user)=>{
+export const requestSingUp =(data)=>{
   return{
-    type:ADD_USER,
-    payload:{user}
+    type:REQUEST_SIGNUP,
+    payload:data,
   }
 };
 
-export const loginUser = (user) => {
+export const requestSingUpSuccess = (data) => {
   return {
-    type: LOGIN_USER,
-    payload: {user},
+    type: REQUEST_SIGNUP_SUCCESS,
+    payload: data,
+  };
+};
+
+export const requestSingUpError = (data) => {
+  return {
+    type: REQUEST_SIGNUP_ERROR,
+    payload: data,
+  };
+};
+
+export const requestLogin = (data) => {
+  return {
+    type: REQUEST_LOGIN,
+    payload: data,
+  };
+};
+
+export const requestLoginSuccess = (data) => {
+  return {
+    type: REQUEST_LOGIN_SUCCESS,
+    payload: data,
+  };
+};
+
+export const requestLoginError = (data) => {
+  return {
+    type: REQUEST_LOGIN_ERROR,
+    payload:data
+  };
+};
+
+
+export const pollRequest = (data) => {
+  return {
+    type: POLL_REQUEST,
+    payload: data,
+  };
+};
+
+export const pollRequestSuccess = (data) => {
+  return {
+    type: POLL_REQUEST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const pollRequestError = (data) => {
+  return {
+    type: POLL_REQUEST_ERROR,
+    payload: data,
   };
 };
