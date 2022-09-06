@@ -8,7 +8,7 @@ function* pollShow(){
     const response = yield call (
     axios.get, `https://secure-refuge-14993.herokuapp.com/list_polls`
   )
-console.log(response);
+// console.log(response.data, "22222222");
   if(response && response.data){
     yield put (pollRequestSuccess({response:response.data}))
   }else{

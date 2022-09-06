@@ -13,11 +13,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import  { useEffect, useState } from "react";
+import  { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {requestLogin} from '../redux/action'
 import { useSelect } from "@mui/base";
 import { useNavigate } from "react-router";
+import CircularProgress from "@mui/material/CircularProgress";
+
+
+
 function Copyright(props) {
   return (
     <Typography
@@ -29,9 +33,8 @@ function Copyright(props) {
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -39,9 +42,13 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+
   const dispatch = useDispatch();
 const loginSelector = useSelector((state) => state && state.logInReducer);
-  const [userLogin, setUserLogin] = useState({
+// console.log(loginSelector,"loginSelector")  
+
+const [userLogin, setUserLogin] = useState({
     username: "",
     password: "",
   });
@@ -49,26 +56,31 @@ const loginSelector = useSelector((state) => state && state.logInReducer);
   const navigator= useNavigate()
 
   const userRole= localStorage.getItem("role")
+  // console.log(userRole, "5555 role")
 
   useEffect(()=>{
     if(loginSelector.isSuccess){
-      if(userRole=='Admin'){
+      if(loginSelector.data.error ===0 && userRole =='admin'){
         navigator('/adminPanel')
-      }else{
-        navigator('/pollDeshboard')
+      }else if (loginSelector.data.error === 0) {
+        navigator("/pollList");
       }
 
     }
   },[loginSelector])
 
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(
-      requestLogin({
-        username: userLogin.username,
-        password: userLogin.password,
-      })
-    );
+    if(userLogin.username && userLogin.password){
+      dispatch(
+        requestLogin({
+          username: userLogin.username,
+          password: userLogin.password,
+        })
+      );
+    }
+    // console.log(userLogin, "userlogin")
   };
 
   return (
@@ -122,6 +134,14 @@ const loginSelector = useSelector((state) => state && state.logInReducer);
               }
             />
 
+            {loginSelector.isLoading ? (
+              <Box sx={{ display: "flex", ml: 20 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              ""
+            )}
+
             <Button
               type="submit"
               fullWidth
@@ -131,11 +151,7 @@ const loginSelector = useSelector((state) => state && state.logInReducer);
               Sign In
             </Button>
             <Grid container>
-              {/* <Grid item xs>
-                <Link href="/signUp" variant="body1">
-                  Forgot password?
-                </Link>
-              </Grid> */}
+              
               <Grid item>
                 <Link href="/signUp" variant="body1">
                   {"Don't have an account? Sign Up"}

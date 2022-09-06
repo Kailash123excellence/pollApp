@@ -121,3 +121,41 @@ a{
   border-radius: 10px;
   border: none;
 }
+.pollListHeading{
+  font-size: 30px;
+  height: 60px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: rgb(123, 123, 186);
+  text-align: center;
+  }
+
+
+.pollListArea{
+  border:2px solid red;
+  width: 50%;
+  text-align: center;
+  overflow: auto;
+  
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+.pollQuestion{
+  /* background-color: brown; */
+  /* color:white; */
+  margin-right: 30%;
+  margin-left: 20%;
+  width:300px;
+  align-content: center;
+  margin-top: 50px;
+  font-size: large;
+  font-weight: bold;
+
+}
+.pollListOption{
+  text-align: center;
+  
+
+}

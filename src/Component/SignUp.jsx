@@ -15,16 +15,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { requestSingUp } from "../redux/action";
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
-import CircularProgress from '@mui/material/CircularProgress';
-// import Box from '@mui/material/Box';
-
-
+import Snackbar from "@mui/material/Snackbar";
+import CircularProgress from "@mui/material/CircularProgress";
+import MuiAlert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 function Copyright(props) {
   return (
@@ -35,39 +34,39 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         Your Website
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
 
-function Spinner(){
-  
-}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const theme = createTheme();
 
 export default function SignIn() {
-
   const [credential, setCredential] = useState({
     username: "",
     password: "",
     role: "guest",
   });
 
-const dispatch = useDispatch();
-const signUpSelector = useSelector((state) => state && state.signUpReducer);
-console.log(signUpSelector)
+  const [open, setOpen] = React.useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
+  const dispatch = useDispatch();
+  const signUpSelector = useSelector((state) => state && state.signUpReducer);
 
-
-
-
-
-
+  console.log(signUpSelector, "123");
 
   function getSelect(e) {
     setCredential({ ...credential, role: e.target.value });
@@ -75,6 +74,7 @@ console.log(signUpSelector)
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setOpen(true);
     dispatch(
       requestSingUp({
         username: credential.username,
@@ -82,6 +82,7 @@ console.log(signUpSelector)
         role: credential.role,
       })
     );
+
     console.log(credential);
   };
 
@@ -89,7 +90,7 @@ console.log(signUpSelector)
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        
+
         <Box
           sx={{
             marginTop: 8,
@@ -98,7 +99,6 @@ console.log(signUpSelector)
             alignItems: "center",
           }}
         >
- 
           <Avatar sx={{ m: 1, bgColor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -137,6 +137,7 @@ console.log(signUpSelector)
                 setCredential({ ...credential, password: e.target.value })
               }
             />
+
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -160,6 +161,14 @@ console.log(signUpSelector)
               </FormControl>
             </Box>
 
+            {signUpSelector.isLoading ? (
+              <Box sx={{ display: "flex", ml: 20 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              ""
+            )}
+
             <Button
               type="submit"
               fullWidth
@@ -168,12 +177,13 @@ console.log(signUpSelector)
             >
               Sign Up
             </Button>
+
+            {signUpSelector.isError ? (
+              <Stack spacing={2} sx={{ width: "100%", marginTop: "10px" }}>
+                <Alert severity="error">{signUpSelector.message}</Alert>
+              </Stack>
+            ) : ''}
             <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
               <Grid item>
                 <Link href="/logIn" variant="body1">
                   {"Already have an account? Sign In"}
@@ -187,23 +197,6 @@ console.log(signUpSelector)
     </ThemeProvider>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
