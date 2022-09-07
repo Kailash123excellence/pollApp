@@ -2,7 +2,7 @@ import {put, call} from 'redux-saga/effects';
 import axios from 'axios';
 import {pollRequestSuccess,pollRequestError} from '../action/index';
 
-function* pollShow(){
+ function* pollShow(){
 
   try{
     const response = yield call (

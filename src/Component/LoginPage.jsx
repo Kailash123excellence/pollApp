@@ -13,14 +13,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import  { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {requestLogin} from '../redux/action'
-import { useSelect } from "@mui/base";
+import { requestLogin } from "../redux/action";
 import { useNavigate } from "react-router";
 import CircularProgress from "@mui/material/CircularProgress";
-
-
 
 function Copyright(props) {
   return (
@@ -42,37 +39,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-
-
   const dispatch = useDispatch();
-const loginSelector = useSelector((state) => state && state.logInReducer);
-// console.log(loginSelector,"loginSelector")  
+  const loginSelector = useSelector((state) => state && state.logInReducer);
+  // console.log(loginSelector,"loginSelector")
 
-const [userLogin, setUserLogin] = useState({
+  const [userLogin, setUserLogin] = useState({
     username: "",
     password: "",
   });
 
-  const navigator= useNavigate()
+  const navigator = useNavigate();
 
-  const userRole= localStorage.getItem("role")
+  const userRole = localStorage.getItem("role");
   // console.log(userRole, "5555 role")
 
-  useEffect(()=>{
-    if(loginSelector.isSuccess){
-      if(loginSelector.data.error ===0 && userRole =='admin'){
-        navigator('/adminPanel')
-      }else if (loginSelector.data.error === 0) {
+  useEffect(() => {
+    if (loginSelector.isSuccess) {
+      if (loginSelector.data.error === 0 && userRole == "admin") {
+        navigator("/adminPanel");
+      } else if (loginSelector.data.error === 0) {
         navigator("/pollList");
       }
-
     }
-  },[loginSelector])
+  }, [loginSelector.isSuccess]);
 
-  
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(userLogin.username && userLogin.password){
+    if (userLogin.username && userLogin.password) {
       dispatch(
         requestLogin({
           username: userLogin.username,
@@ -151,7 +144,6 @@ const [userLogin, setUserLogin] = useState({
               Sign In
             </Button>
             <Grid container>
-              
               <Grid item>
                 <Link href="/signUp" variant="body1">
                   {"Don't have an account? Sign Up"}
@@ -165,15 +157,6 @@ const [userLogin, setUserLogin] = useState({
     </ThemeProvider>
   );
 }
-
-
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";

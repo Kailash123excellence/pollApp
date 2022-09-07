@@ -4,10 +4,7 @@ import { pollRequest } from '../redux/action/index';
 import pollReducer from '../redux/reducers/viewPoll';
 
 
-import Paper from '@mui/material/Paper';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
+
 
 import ResponsiveAppBar from './navbar';
 
@@ -43,6 +40,7 @@ dispatch(pollRequest())
 
   return (
     <>
+          
      <div className='pollContainerOuter'>
       <ResponsiveAppBar/>
           <div className='pollContentInner'>
@@ -66,16 +64,18 @@ dispatch(pollRequest())
                       {item.options.map((val, index) => {
                         return (
                           <>
-                            <Card sx={{ minWidth: 275 }}>
-                              <CardContent>
-                                <Typography
-                                  sx={{ mb: 1.5 }}
-                                  color="text.secondary"
-                                >
-                                  {val.option}
-                                </Typography>
-                              </CardContent>
-                            </Card>
+                            <div key={index}>
+                              <Card sx={{ minWidth: 275 }}>
+                                <CardContent>
+                                  <Typography
+                                    sx={{ mb: 1.5 }}
+                                    color="text.secondary"
+                                  >
+                                    {val.option}
+                                  </Typography>
+                                </CardContent>
+                              </Card>
+                            </div>
 
                             {/* <Paper sx={{ width: 320 }}>
                               <MenuList dense>
