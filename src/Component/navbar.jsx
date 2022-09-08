@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,15 +17,22 @@ import Stack from "@mui/material/Stack";
 
 import { useNavigate } from "react-router";
 
+// import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
+// import Stack from "@mui/material/Stack";
+
+
+
 const pages = ["Home Page"];
 const settings = ["Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
 
   const navigate= useNavigate()
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] =useState(null);
 
+  const Role= localStorage.getItem("role")
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(true);
   };
@@ -40,6 +48,9 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(false);
   };
 
+  const handleLogout= ()=>{
+    navigate("/login")
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -129,18 +140,27 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
 
-            <Button onClick={navigate("/")}>Home Page</Button>
+            <Button onClick={""}>Home Page</Button>
           </Box>
 
-          <Button className="mr-2"  onClick={navigate("/login")}  variant="contained" disableElevation>
+          <Button className="mr-2"  onClick={handleLogout}  variant="contained" >
             Logout
           </Button>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+
+              <Stack direction="row" spacing={1}>
+      {/* <Chip avatar={<Avatar>M</Avatar>} label="Avatar" /> */}
+      <Chip
+        avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+        label={Role}
+        variant="outlined"
+      />
+    </Stack>
+              {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
+              </IconButton> */}
             </Tooltip>
           </Box>
         </Toolbar>

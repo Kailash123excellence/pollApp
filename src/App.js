@@ -17,8 +17,8 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route element={<PrivateRoute isLogged={isLoggedIn} />}>
-            <Route path="/pollList" element={<PollList />} />
           </Route>
+            <Route path="/pollList" element={<PollList />} />
             <Route path="/adminPanel" element={<AdminPanel />} />
         </Routes>
       </Router>
