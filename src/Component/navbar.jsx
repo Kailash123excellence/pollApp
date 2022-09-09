@@ -19,6 +19,7 @@ import { useNavigate } from "react-router";
 
 // import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
+import PollList from "./pollList";
 // import Stack from "@mui/material/Stack";
 
 
@@ -26,8 +27,8 @@ import Chip from "@mui/material/Chip";
 const pages = ["Home Page"];
 const settings = ["Dashboard", "Logout"];
 
-const ResponsiveAppBar = () => {
-
+const Navbar = () => {
+// const User= localStorage.getItem("role")
   const navigate= useNavigate()
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] =useState(null);
@@ -41,6 +42,7 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseNavMenu = () => {
+    // {User=="admin"?<adminPanal/>: <pollList/> }
     setAnchorElNav(false);
   };
 
@@ -168,4 +170,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default Navbar;

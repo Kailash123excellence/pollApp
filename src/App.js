@@ -6,6 +6,7 @@ import LoginPage from "./Component/LoginPage";
 import PollList from "./Component/pollList";
 import AdminPanel from "./Component/adminPanel";
 import PrivateRoute from "./PrivateRoute";
+import AddNewPoll from "./Component/AddNewPoll";
 
 export default function App() {
   const isLoggedIn = localStorage.getItem("token") ? true : false;
@@ -20,6 +21,7 @@ export default function App() {
           </Route>
             <Route path="/pollList" element={<PollList />} />
             <Route path="/adminPanel" element={<AdminPanel />} />
+            <Route path="/addNewPoll" element={<AddNewPoll/>} />
         </Routes>
       </Router>
     </>

@@ -1,14 +1,20 @@
 import {
- REQUEST_SIGNUP,
- REQUEST_LOGIN_SUCCESS,
- REQUEST_SIGNUP_SUCCESS,
- REQUEST_SIGNUP_ERROR,
- REQUEST_LOGIN,
- REQUEST_LOGIN_ERROR,
- POLL_REQUEST,
- POLL_REQUEST_SUCCESS,
- POLL_REQUEST_ERROR
-} from './actionType';
+  REQUEST_SIGNUP,
+  REQUEST_LOGIN_SUCCESS,
+  REQUEST_SIGNUP_SUCCESS,
+  REQUEST_SIGNUP_ERROR,
+  REQUEST_LOGIN,
+  REQUEST_LOGIN_ERROR,
+  POLL_REQUEST,
+  POLL_REQUEST_SUCCESS,
+  POLL_REQUEST_ERROR,
+  DELETE_POLL_REQUEST,
+  DELETE_POLL_REQUEST_SUCCESS,
+  DELETE_POLL_REQUEST_ERROR,
+  EDIT_TITLE_REQUEST,
+  EDIT_TITLE_REQUEST_SUCCESS,
+  EDIT_TITLE_REQUEST_ERROR,
+} from "./actionType";
 
 export const requestSingUp =(data)=>{
   return{
@@ -70,6 +76,52 @@ export const pollRequestSuccess = (data) => {
 export const pollRequestError = (data) => {
   return {
     type: POLL_REQUEST_ERROR,
+    payload: data,
+  };
+};
+
+export const deletePollRequest= (id)=>{
+    console.log("step2");
+  return {
+    type:DELETE_POLL_REQUEST,
+    payload:id
+  }
+}
+
+export const deletePollRequestSuccess = (id) => {
+  return {
+    type: DELETE_POLL_REQUEST_SUCCESS,
+    payload: id,
+  };
+};
+
+export const deletePollRequestError = (id) => {
+  return {
+    type: DELETE_POLL_REQUEST_ERROR,
+    payload: id,
+  };
+};
+
+export const editPollTitleRequest= (data)=>{
+  console.log("called1");
+  console.log(data, 'action');
+
+  return{
+    type:EDIT_TITLE_REQUEST,
+    payload:data
+  }
+}
+
+export const editPollTitleRequestSuccess = (data) => {
+  return {
+    type: EDIT_TITLE_REQUEST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const editPollTitleRequestError = (data) => {
+  return {
+    type: EDIT_TITLE_REQUEST_ERROR,
     payload: data,
   };
 };

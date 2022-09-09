@@ -12,12 +12,15 @@ const initialState={
  function pollReducer(state=initialState,action){
   switch (action.type) {
     case POLL_REQUEST:
+      
       return {
         isLoading: true,
         isSuccess: false,
         isError: false,
       };
     case POLL_REQUEST_SUCCESS:
+      
+
       return {
         isLoading: false,
         isSuccess: true,
@@ -25,6 +28,7 @@ const initialState={
         data: action.payload.response,
       };
     case POLL_REQUEST_ERROR:
+     
       return {
         isLoading: false,
         isSuccess: false,

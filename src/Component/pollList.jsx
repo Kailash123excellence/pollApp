@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import { pollRequest } from '../redux/action/index';
-import ResponsiveAppBar from './navbar'
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Navbar from './navbar';
 
 
 const bull = (
@@ -34,7 +34,7 @@ dispatch(pollRequest())
   return (
     <>
           
-      <ResponsiveAppBar/>
+      <Navbar/>
      <div className='pollContainerOuter'>
           <div className='pollContentInner'>
             
