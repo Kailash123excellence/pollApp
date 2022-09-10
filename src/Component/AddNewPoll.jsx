@@ -51,7 +51,7 @@ export default function AddNewPoll() {
   //       .catch((error) => {
   //         console.log(error);
   //       });
-
+ 
   //     setQuestion({
   //       text: "",
   //       opt1: "",
@@ -103,14 +103,14 @@ export default function AddNewPoll() {
           noValidate
           autoComplete="off"
         >
-          {/* <TextField
+          <TextField
             id="outlined-basic"
             label="Option"
             variant="outlined"
             name="opt"
             // value={question.opt1}
             // onChange={(e) => setQuestion({ ...question, opt1: e.target.value })}
-          /> */}
+          />
           <Button variant="outlined" onClick={console.log("hello")}>
             {/* <TextField
               id="outlined-basic"

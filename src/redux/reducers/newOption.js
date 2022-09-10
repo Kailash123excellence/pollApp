@@ -1,8 +1,8 @@
 import {
-  EDIT_TITLE_REQUEST,
-EDIT_TITLE_REQUEST_SUCCESS,
-EDIT_TITLE_REQUEST_ERROR
-}from "../action/actionType";
+  NEW_OPTION_REQUEST,
+  NEW_OPTION_REQUEST_ERROR,
+  NEW_OPTION_REQUEST_SUCCESS,
+} from "../action/actionType";
 
 const initialState = {
   isLoading: false,
@@ -11,25 +11,22 @@ const initialState = {
   data: null,
 };
 
-const editPollReducer = (state = initialState, action) => {
-  
+const  newOptionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case EDIT_TITLE_REQUEST:
-      console.log(action.payload,"reduce");
+    case NEW_OPTION_REQUEST:
       return {
         isLoading: true,
         isSuccess: false,
         isError: false,
       };
-    case EDIT_TITLE_REQUEST_SUCCESS:
-      console.log(action.payload, "reduce12")
+    case NEW_OPTION_REQUEST_SUCCESS:
       return {
         isLoading: false,
         isSuccess: true,
         isError: false,
-        data: action.payload.response,
+        data: action.payload,
       };
-    case EDIT_TITLE_REQUEST_ERROR:
+    case NEW_OPTION_REQUEST_ERROR:
       return {
         isLoading: false,
         isSuccess: false,
@@ -41,4 +38,4 @@ const editPollReducer = (state = initialState, action) => {
   }
 };
 
-export default editPollReducer;
+export default newOptionReducer;

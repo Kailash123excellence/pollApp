@@ -5,15 +5,14 @@ import {
 } from "../action/index";
 import axios from "axios";
 
-function* deleteSaga(action) {
-   
-
+ function* deleteSaga(action) {
+  console.log("saga delete")
   const id  = action.payload;
    
   
   try {
     const response = yield call(
-      axios.delete,
+      axios.delete, 
       `https://secure-refuge-14993.herokuapp.com/delete_poll?id=${id}`
     );
     // console.log(response, "deleteresponse");

@@ -14,7 +14,15 @@ import {
   EDIT_TITLE_REQUEST,
   EDIT_TITLE_REQUEST_SUCCESS,
   EDIT_TITLE_REQUEST_ERROR,
+  NEW_OPTION_REQUEST,
+  NEW_OPTION_REQUEST_SUCCESS,
+  NEW_OPTION_REQUEST_ERROR,
+  REMOVE_OPTION_REQUEST,
+  REMOVE_OPTION_REQUEST_SUCCESS,
+  REMOVE_OPTION_REQUEST_ERROR,
 } from "./actionType";
+
+
 
 export const requestSingUp =(data)=>{
   return{
@@ -81,7 +89,7 @@ export const pollRequestError = (data) => {
 };
 
 export const deletePollRequest= (id)=>{
-    console.log("step2");
+    
   return {
     type:DELETE_POLL_REQUEST,
     payload:id
@@ -103,9 +111,6 @@ export const deletePollRequestError = (id) => {
 };
 
 export const editPollTitleRequest= (data)=>{
-  console.log("called1");
-  console.log(data, 'action');
-
   return{
     type:EDIT_TITLE_REQUEST,
     payload:data
@@ -123,5 +128,47 @@ export const editPollTitleRequestError = (data) => {
   return {
     type: EDIT_TITLE_REQUEST_ERROR,
     payload: data,
+  };
+};
+
+export const newOptionRequest= (text)=>{
+  return{
+    type:NEW_OPTION_REQUEST,
+    payload:text,
+  }
+}
+
+export const newOptionRequestSuccess = (text) => {
+  return {
+    type: NEW_OPTION_REQUEST_SUCCESS,
+    payload: text,
+  };
+};
+
+export const newOptionRequestError = (text) => {
+  return {
+    type: NEW_OPTION_REQUEST_ERROR,
+    payload: text,
+  };
+};
+
+export const removeOptionRequest = (text) => {
+  return {
+    type: REMOVE_OPTION_REQUEST,
+    payload: text,
+  };
+};
+
+export const removeOptionRequestSuccess = (text) => {
+  return {
+    type: REMOVE_OPTION_REQUEST_SUCCESS,
+    payload: text,
+  };
+};
+
+export const removeOptionRequestError = (text) => {
+  return {
+    type: REMOVE_OPTION_REQUEST_ERROR,
+    payload: text,
   };
 };
