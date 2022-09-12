@@ -152,51 +152,48 @@ const submitRemoveOption=(e)=>{
   
   return (
     <>
-      <div
-        className="adminContainer"
-      >
+      <div className="adminContainer">
         <Navbar />
 
         <Stack
           sx={{
-            mb: 4,
-            
-            width:'50%',
+            mb: 2,
+
+            width: "50%",
             margin: "auto",
             // paddingLeft: "25%",
-            border:2,
-            borderColor:'primary.main',
-            borderRadius:'10px',
-            backgroundColor:"red",
-            
+            // border: 2,
+            // borderColor: "primary.main",
+            // borderRadius: "10px",
+            // backgroundColor: "red",
           }}
           direction="row"
           spacing={2}
           m={5}
         >
+          <Link className="addBtn" to="/addNewPoll">
             <Button
-            className="addBtn"
-              sx={{mt:10,width:'100%' }}
-              
+              className="addBtnInner"
+              sx={{width: "100%" }}
               // variant="contained"
               endIcon={<AddIcon />}
-              onClick={()=><AddNewPoll/>}
+              // onClick={() => <AddNewPoll />}
             >
-          <Link to="/addNewPoll">
               add Poll
-          </Link>
             </Button>
+          </Link>
         </Stack>
 
         {pollSelector.isSuccess ? (
-          pollSelector.data.data.map((item) => {
+          pollSelector.data.data.map((item,index) => {
             return (
               <Card
+              key={index}
                 sx={{
-                  minWidth: 275,
-
+                  minWidth: 475,
                   width: "50%",
                   margin: "auto",
+                  mb:1,
                 }}
               >
                 <Stack
@@ -239,25 +236,6 @@ const submitRemoveOption=(e)=>{
                     color="blue"
                     gutterBottom
                   >
-                    {/* {editPoll && item._id === editable.id ? (
-                      <input
-                        type="text"
-                        value={editable.title}
-                        // onChange={(e) =>
-                        //   dispatch(
-                        //     editPollTitleRequest(
-                        //       setEditable({
-                        //         ...editable,
-                        //         title: e.target.value,
-                        //       })
-                        //     )
-                        //   )
-                        // }
-                        onChange={(e) => handleEditTitle(e)}
-                      />
-                    ) : (
-                      item.title
-                    )} */}
 
                     {editPoll && item._id === editable.id ? (
                       <Box
@@ -286,10 +264,10 @@ const submitRemoveOption=(e)=>{
                     )}
                   </Typography>
 
-                  {item.options.map((val) => {
+                  {item.options.map((val,index) => {
                     return (
                       <>
-                        <Typography sx={{ mb: 1.5 }} color="black">
+                        <Typography key={index} sx={{ mb: 1.5 }} color="black">
                           {val.option}
                         </Typography>
                       </>

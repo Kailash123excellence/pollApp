@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Navbar from './navbar';
-
+import Radio from "@mui/material/Radio";
 
 const bull = (
   <Box
@@ -21,7 +21,7 @@ const bull = (
 
 
 export default function PollList() {
-
+const [selectedValue, setSelectedValue] = React.useState("a");
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
   console.log(pollSelector.data, "1212");
@@ -60,8 +60,15 @@ dispatch(pollRequest())
                             <div key={index}>
                               <Card sx={{ minWidth: 275 }}>
                                 <CardContent>
+                                  <Radio
+                                    checked={selectedValue === "a"}
+                                    onChange={"handleChange"}
+                                    value="a"
+                                    name="radio-buttons"
+                                    inputProps={{ "aria-label": "A" }}
+                                  />
                                   <Typography
-                                    sx={{ mb: 1.5 }}
+                                    // sx={{ mb: 1 }}
                                     color="text.secondary"
                                   >
                                     {val.option}

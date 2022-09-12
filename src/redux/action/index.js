@@ -20,15 +20,16 @@ import {
   REMOVE_OPTION_REQUEST,
   REMOVE_OPTION_REQUEST_SUCCESS,
   REMOVE_OPTION_REQUEST_ERROR,
+  ADD_POLL_REQUEST,
+  ADD_POLL_REQUEST_SUCCESS,
+  ADD_POLL_REQUEST_ERROR,
 } from "./actionType";
 
-
-
-export const requestSingUp =(data)=>{
-  return{
-    type:REQUEST_SIGNUP,
-    payload:data,
-  }
+export const requestSingUp = (data) => {
+  return {
+    type: REQUEST_SIGNUP,
+    payload: data,
+  };
 };
 
 export const requestSingUpSuccess = (data) => {
@@ -62,10 +63,9 @@ export const requestLoginSuccess = (data) => {
 export const requestLoginError = (data) => {
   return {
     type: REQUEST_LOGIN_ERROR,
-    payload:data
+    payload: data,
   };
 };
-
 
 export const pollRequest = (data) => {
   return {
@@ -88,13 +88,12 @@ export const pollRequestError = (data) => {
   };
 };
 
-export const deletePollRequest= (id)=>{
-    
+export const deletePollRequest = (id) => {
   return {
-    type:DELETE_POLL_REQUEST,
-    payload:id
-  }
-}
+    type: DELETE_POLL_REQUEST,
+    payload: id,
+  };
+};
 
 export const deletePollRequestSuccess = (id) => {
   return {
@@ -110,12 +109,12 @@ export const deletePollRequestError = (id) => {
   };
 };
 
-export const editPollTitleRequest= (data)=>{
-  return{
-    type:EDIT_TITLE_REQUEST,
-    payload:data
-  }
-}
+export const editPollTitleRequest = (data) => {
+  return {
+    type: EDIT_TITLE_REQUEST,
+    payload: data,
+  };
+};
 
 export const editPollTitleRequestSuccess = (data) => {
   return {
@@ -131,12 +130,12 @@ export const editPollTitleRequestError = (data) => {
   };
 };
 
-export const newOptionRequest= (text)=>{
-  return{
-    type:NEW_OPTION_REQUEST,
-    payload:text,
-  }
-}
+export const newOptionRequest = (text) => {
+  return {
+    type: NEW_OPTION_REQUEST,
+    payload: text,
+  };
+};
 
 export const newOptionRequestSuccess = (text) => {
   return {
@@ -170,5 +169,27 @@ export const removeOptionRequestError = (text) => {
   return {
     type: REMOVE_OPTION_REQUEST_ERROR,
     payload: text,
+  };
+};
+
+export const addPollRequest = (data) => {
+  console.log(data, "Action");
+  return {
+    type: ADD_POLL_REQUEST,
+    payload: data,
+  };
+};
+
+export const addPollRequestSuccess = (data) => {
+  return {
+    type: ADD_POLL_REQUEST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const addPollRequestError = (data) => {
+  return {
+    type: ADD_POLL_REQUEST_ERROR,
+    payload: data,
   };
 };

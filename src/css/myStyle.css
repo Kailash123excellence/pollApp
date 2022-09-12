@@ -1,12 +1,167 @@
-.adminContainer{
-  /* margin-top: 40px; */
+/* home page */
+.pollContainer {
+  border: 2px solid rgb(232, 224, 224);
+  height: 100vh;
+  background-image: url("../assert//image/background.jpg");
+  margin: auto;
+  /* position: relative; */
+  /* top: 50%; */
+}
+.pollStart {
+  width: 400px;
+  color: white;
+  margin: auto;
+  margin-top: 20%;
+  text-align: center;
+  font-size: 30px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.headLineFirst {
+  font-size: 30px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.quoteLine {
+  font-size: 20px;
+  text-align: center;
+}
+.getStart {
+  border-radius: 10px;
+  border: none;
+}
+
+
+/* PollList */
+
+.pollContentInner{
+  margin-top: 70px;
+  background-color: rgba(168, 197, 197, 0.728);
+}
+.pollListArea{
+  box-shadow: 5px 5px 10px 10px rgb(137, 137, 220);
+  /* border:2px solid red; */
+  width: 50%;
+  text-align: center;
+  overflow: auto;
+  
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 20px;
+ 
+
+}
+.pollQuestion{
+  
+  margin-right: 30%;
+  margin-left: 20%;
+  width:300px;
+  align-content: center;
+  margin-top: 50px;
+  font-size: large;
+  font-weight: bold;
+   
+
+}
+.pollListOption{
+  text-align: center;
+}
+
+/* admin page */
+
+.adminContainer {
+  /* margin-top: 100px; */
   height: 100%;
-  background-image: linear-gradient(to bottom, red, orange,yellow ,green,blue,indigo,violet) 
+  background-image: url("../assert//image/background.jpg");
+
+  /* background-image: linear-gradient(
+    to bottom,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  ); */
   /* background-image: linear-gradient(to bottom, red, orange,yellow)  */
 }
 
-.addBtn{
-  width:100%;
+.addBtn {
+  width: 100%;
+  height: 40px;
+  text-decoration: none;
+  border-radius: 20px;
+  margin-top: 80px;
+  background-image: linear-gradient(to right, #ff7722, white, green);
+}
+.addPollContainerForm{
+  /* border: 3px solid red; */
+  
+  height: 100vh;
+ background-color: rgb(226, 186, 136);
+  /* background-image: url('../assert/image/voting.jpg') ; */
+}
+.addNewPollForm {
+  width: 50%;
+  margin: auto;
+  margin-top: 50px;
+  /* border:2px solid rgba(231, 222, 222, 0.6); */
+
+  display: flex;
+  flex-direction: column;
+}
+
+.inputPollTitle {
   margin-top: 100px;
-  background-image: linear-gradient(to right, #FF7722, white, green);
+  margin-bottom: 15px;
+  height: 60px;
+  border: 2px solid rgba(231, 222, 222, 0.769);
+
+  padding: 15px;
+  border-radius: 10px;
+}
+
+
+.inputPollTitle:hover{
+   box-shadow: 5px 3px 5px 5px #df9595;
+}
+.inputOptionValue {
+  margin-bottom: 10px;
+  border: 2px solid rgba(231, 222, 222, 0.801);
+
+  width: 50%;
+  height: 40px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+
+.inputOptionValue:hover{
+   box-shadow: 2px 3px 2px 2px #3e4143 ;
+
+}
+
+.AddBtn {
+  height: 50px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  background-image: linear-gradient(to right, red, blue, yellow);
+}
+
+ .AddBtn:hover{
+   box-shadow: 5px 3px 5px 5px #e99e5c;
+
+ }
+
+.backLink {
+  width: 60%;
+  margin: auto;
+
+}
+
+.backBtn{
+  width: 100%;
+
 }

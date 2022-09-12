@@ -6,6 +6,7 @@ import {
   EDIT_TITLE_REQUEST,
   NEW_OPTION_REQUEST,
   REMOVE_OPTION_REQUEST,
+  ADD_POLL_REQUEST,
 } from "../action/actionType";
 
 
@@ -17,7 +18,8 @@ import deleteSaga from "./deletePollSaga";
 import { all, fork, takeLatest } from "redux-saga/effects";
 import editTitleSaga from "./editPollSaga";
 import newOptionSaga from "./newOptionSaga";
-import removeOptionSaga from './removeOptionSaga'
+import removeOptionSaga from './removeOptionSaga';
+import addPollSaga from './addPollSaga'
 
 
 
@@ -48,6 +50,10 @@ function* removeOptionRequest() {
   yield takeLatest(REMOVE_OPTION_REQUEST, removeOptionSaga);
 }
 
+function* addRequest(){
+  yield takeLatest(ADD_POLL_REQUEST, addPollSaga)
+}
+
 export default function* rootSaga() {
   yield all([
     fork(signUpUser),
@@ -57,5 +63,6 @@ export default function* rootSaga() {
     fork(editRequest),
     fork(newOptionRequest),
     fork(removeOptionRequest),
+    fork(addRequest),
   ]);
 }

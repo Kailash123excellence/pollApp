@@ -53,6 +53,12 @@ const Navbar = () => {
   const handleLogout= ()=>{
     navigate("/login")
   }
+
+  // const backToHome=(Role)=>{
+  //   Role=='admin'?
+  //   navigate('/adminPanel'):
+  //   navigate('/pollList')
+  // }
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
@@ -142,7 +148,7 @@ const Navbar = () => {
               </Button>
             ))}
 
-            <Button onClick={""}>Home Page</Button>
+            <Button onClick={ " "}>Home Page</Button>
           </Box>
 
           <Button className="mr-2"  onClick={handleLogout}  variant="contained" >
