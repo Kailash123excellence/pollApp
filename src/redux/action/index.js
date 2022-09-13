@@ -23,6 +23,9 @@ import {
   ADD_POLL_REQUEST,
   ADD_POLL_REQUEST_SUCCESS,
   ADD_POLL_REQUEST_ERROR,
+  VOTE_POLL_REQUEST,
+  VOTE_POLL_REQUEST_SUCCESS,
+  VOTE_POLL_REQUEST_ERROR
 } from "./actionType";
 
 export const requestSingUp = (data) => {
@@ -190,6 +193,28 @@ export const addPollRequestSuccess = (data) => {
 export const addPollRequestError = (data) => {
   return {
     type: ADD_POLL_REQUEST_ERROR,
+    payload: data,
+  };
+};
+
+
+export const votePollRequest = (data) => {
+  return {
+    type: VOTE_POLL_REQUEST,
+    payload: data,
+  };
+};
+
+export const votePollRequestSuccess = (data) => {
+  return {
+    type: VOTE_POLL_REQUEST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const votePollRequestError = (data) => {
+  return {
+    type: VOTE_POLL_REQUEST_ERROR,
     payload: data,
   };
 };

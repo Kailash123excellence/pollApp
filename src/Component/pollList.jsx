@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
-import { useDispatch,useSelector } from 'react-redux'
-import { pollRequest } from '../redux/action/index';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { pollRequest, votePollRequest } from "../redux/action/index";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Navbar from './navbar';
+import Navbar from "./navbar";
 import Radio from "@mui/material/Radio";
 
 const bull = (
@@ -18,93 +18,112 @@ const bull = (
   </Box>
 );
 
-
-
 export default function PollList() {
-const [selectedValue, setSelectedValue] = React.useState("a");
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
-  console.log(pollSelector.data, "1212");
+  // console.log(pollSelector.data, "1212");
 
-useEffect(()=>{
+  const token = localStorage.getItem("token");
 
-dispatch(pollRequest())
-},[])
+  const [voteDisable, setVoteDisable] = useState(false);
+  const [clickedID, setClickedID] = useState([]);
+  const [voteID, setVoteID] = useState({
+    id: "",
+    text: "",
+  });
+  // console.log(voteID, "vote");
+  const handleChange = (id, text) => {
+    setVoteID({ id: id, text: text });
+    setVoteDisable(true);
+    setClickedID(id);
+
+    {
+      pollSelector.data.data.map((val) => {
+        if (val._id === id) {
+          {
+            val.options.map((item) => {
+              console.log(item.vote);
+              item.vote = 1;
+            });
+          }
+        }
+      });
+    }
+
+    dispatch(votePollRequest(voteID));
+  };
+
+  useEffect(() => {
+    dispatch(pollRequest());
+  }, []);
 
   return (
     <>
-          
-      <Navbar/>
-     <div className='pollContainerOuter'>
-          <div className='pollContentInner'>
-            
-            {pollSelector.isSuccess?
-            
-            pollSelector.data.data.map((item,index)=>{
-              return (
-                <>
-                  <div key={index} className="pollListArea">
-                    <Card sx={{ minWidth: 275 }}>
-                      <CardContent>
-                        <Typography variant="h5" component="div">
-                          {item.title}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                    {/* <p className="pollQuestion"> {item.title}</p> */}
+      <Navbar />
 
-                    <div>
-                      {item.options.map((val, index) => {
-                        return (
-                          <>
-                            <div key={index}>
-                              <Card sx={{ minWidth: 275 }}>
-                                <CardContent>
-                                  <Radio
-                                    checked={selectedValue === "a"}
-                                    onChange={"handleChange"}
-                                    value="a"
-                                    name="radio-buttons"
-                                    inputProps={{ "aria-label": "A" }}
-                                  />
-                                  <Typography
-                                    // sx={{ mb: 1 }}
-                                    color="text.secondary"
+      <div className="pollContainerOuter">
+        <div className="pollContentInner">
+          {pollSelector.isSuccess
+            ? pollSelector.data.data.map((item, index) => {
+                return (
+                  <>
+                    <div key={index} className="pollListArea">
+                      <Card sx={{ minWidth: 275 }}>
+                        <CardContent>
+                          <Typography variant="h5" component="div">
+                            {item.title}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                      {/* <p className="pollQuestion"> {item.title}</p> */}
+                      <div>
+                        {item.options.map((val, index) => {
+                          return (
+                            <>
+                              <div key={index}>
+                                <Card
+                                  sx={{
+                                    minWidth: 275,
+                                  }}
+                                >
+                                  <CardContent
+                                    sx={{
+                                      minWidth: 275,
+                                      display: "flex",
+                                      flexDirection: "row",
+                                    }}
                                   >
-                                    {val.option}
-                                  </Typography>
-                                </CardContent>
-                              </Card>
-                            </div>
+                                    <Radio
+                                      // checked={}
+                                      onChange={() =>
+                                        handleChange(item._id, val.option)
+                                      }
+                                      disabled={val.vote ? true : false}
+                                      value="a"
+                                      name="radio-buttons"
+                                      inputProps={{ "aria-label": "A" }}
+                                    />
 
-                            {/* <Paper sx={{ width: 320 }}>
-                              <MenuList dense>
-                                <MenuItem>
-                                  <ListItemText inset>
-                                    {val.option}
-                                  </ListItemText>
-                                </MenuItem>
-                              </MenuList>
-                            </Paper> */}
-
-                            {/* <p key={index} className="pollListOption">
-                              {val.option}
-                            </p> */}
-                          </>
-                        );
-                      })}
+                                    <Typography
+                                      // sx={{ mb: 1 }}
+                                      color="text.secondary"
+                                    >
+                                      {val.option}
+                                    </Typography>
+                                  </CardContent>
+                                </Card>
+                              </div>
+                            </>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                </>
-              );
-            })
-            
-            :" "
-
-            }
-          
-          </div>
-     </div>
+                  </>
+                );
+              })
+            : " "}
+        </div>
+      </div>
     </>
-  )
+  );
 }

@@ -7,6 +7,7 @@ import {
   NEW_OPTION_REQUEST,
   REMOVE_OPTION_REQUEST,
   ADD_POLL_REQUEST,
+  VOTE_POLL_REQUEST,
 } from "../action/actionType";
 
 
@@ -20,6 +21,7 @@ import editTitleSaga from "./editPollSaga";
 import newOptionSaga from "./newOptionSaga";
 import removeOptionSaga from './removeOptionSaga';
 import addPollSaga from './addPollSaga'
+import votePollSaga from "./votePollSaga";
 
 
 
@@ -54,6 +56,10 @@ function* addRequest(){
   yield takeLatest(ADD_POLL_REQUEST, addPollSaga)
 }
 
+function* voteRequest() {
+  yield takeLatest(VOTE_POLL_REQUEST, votePollSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(signUpUser),
@@ -64,5 +70,6 @@ export default function* rootSaga() {
     fork(newOptionRequest),
     fork(removeOptionRequest),
     fork(addRequest),
+    fork(voteRequest)
   ]);
 }

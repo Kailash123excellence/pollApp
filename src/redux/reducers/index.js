@@ -7,6 +7,7 @@ import editPollReducer from "./editPollTitle";
 import newOptionReducer from "./newOption";
 import removeOptionReducer from "./removeOption";
 import addPollReducer from "./addPoll";
+import votePollReducer from "./votePoll";
 import { combineReducers } from "redux";
 
 const rootReducers = combineReducers({
@@ -18,6 +19,7 @@ const rootReducers = combineReducers({
   newOptionReducer,
   removeOptionReducer,
   addPollReducer,
+  votePollReducer,
 });
 
 export default rootReducers;
