@@ -12,16 +12,29 @@ export default function App() {
   const isLoggedIn = localStorage.getItem("token") ? true : false;
   return (
     <>
+      {/* <Router>
+        <Routes>
+          <Route path="/" element={<PollHomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route element={<PrivateRoute isLogged={isLoggedIn} />}>
+            <Route path="/pollList" element={<PollList />} />
+            <Route path="/adminPanel" element={<AdminPanel />} />
+            <Route path="/addNewPoll" element={<AddNewPoll/>} />
+          </Route>
+        </Routes>
+      </Router> */}
+
       <Router>
         <Routes>
           <Route path="/" element={<PollHomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signUp" element={<SignUp />} />
-          {/* <Route element={<PrivateRoute isLogged={isLoggedIn} />}> */}
+          {/* <Route element={<PrivateRoute />}> */}
+            <Route path="/pollList" element={<PollList />} exact />
+            <Route path="/adminPanel" element={<AdminPanel />} exact />
+            <Route path="/addNewPoll" element={<AddNewPoll />} exact />
           {/* </Route> */}
-            <Route path="/pollList" element={<PollList />} />
-            <Route path="/adminPanel" element={<AdminPanel />} />
-            <Route path="/addNewPoll" element={<AddNewPoll/>} />
         </Routes>
       </Router>
     </>

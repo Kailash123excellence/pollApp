@@ -19,22 +19,22 @@ import { requestLogin } from "../redux/action";
 import { useNavigate } from "react-router";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>
+//       {new Date().getFullYear()}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 
@@ -52,6 +52,16 @@ export default function SignIn() {
 
   const userRole = localStorage.getItem("role");
   // console.log(userRole, "5555 role")
+
+  // useEffect(() => {
+  //   if (loginSelector.isSuccess) {
+  //     if (loginSelector.data.error === 0 && userRole == "admin") {
+  //       navigator("/adminPanel");
+  //     } else if (loginSelector.data.error === 0) {
+  //       navigator("/pollList");
+  //     }
+  //   }
+  // }, [loginSelector.isSuccess]);
 
   useEffect(() => {
     if (loginSelector.isSuccess) {
@@ -152,7 +162,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

@@ -5,13 +5,29 @@ import axios from "axios";
 function* addPollSaga(action) {
   console.log(action,"saga");
   const { option,question } = action.payload;
+  
+  let opt='';
+option.map((val, index) => {
+  if(option.length===index+1){
+      opt += `${val.option}`;
+  }
+  else{
+  opt += `${val.option}____`;
+
+  }
+});
+  
+
+console.log(opt, "opt");
+
+
 
   try {
     const response = yield call(
       axios.put,
-`https://secure-refuge-14993.herokuapp.com/add_poll?title=${question}&options=${option[0]}____${option[1]}____${option[2]}____${option[3]}`
+`https://secure-refuge-14993.herokuapp.com/add_poll?title=${question}&options=${opt}`
       );
-
+        console.log(response,"addsaga");
     if (response && response.data && response.data.error === 0) {
       yield put(addPollRequestSuccess({ response: response.data }));
     } else {

@@ -12,6 +12,7 @@ const initialState = {
 };
 
 const removeOptionReducer = (state = initialState, action) => {
+ 
   switch (action.type) {
     case REMOVE_OPTION_REQUEST:
       return {

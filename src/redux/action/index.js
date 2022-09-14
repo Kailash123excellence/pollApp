@@ -154,29 +154,39 @@ export const newOptionRequestError = (text) => {
   };
 };
 
-export const removeOptionRequest = (text) => {
+export const removeOptionRequest = (id,text) => {
+ 
   return {
     type: REMOVE_OPTION_REQUEST,
-    payload: text,
+    payload:({
+      id:id,
+      text:text,
+    }),
   };
 };
 
-export const removeOptionRequestSuccess = (text) => {
+export const removeOptionRequestSuccess = (id,text) => {
   return {
     type: REMOVE_OPTION_REQUEST_SUCCESS,
-    payload: text,
+    payload:({
+      id:id,
+      text:text,
+    }),
   };
 };
 
-export const removeOptionRequestError = (text) => {
+export const removeOptionRequestError = (id,text) => {
   return {
     type: REMOVE_OPTION_REQUEST_ERROR,
-    payload: text,
+    payload:({
+      id:id,
+      text:text,
+    }),
   };
 };
 
 export const addPollRequest = (data) => {
-  console.log(data, "Action");
+  
   return {
     type: ADD_POLL_REQUEST,
     payload: data,
@@ -198,23 +208,32 @@ export const addPollRequestError = (data) => {
 };
 
 
-export const votePollRequest = (data) => {
+export const votePollRequest = (id,text) => {
   return {
     type: VOTE_POLL_REQUEST,
-    payload: data,
+    payload:({
+      id:id,
+      text:text,
+    }),
   };
 };
 
-export const votePollRequestSuccess = (data) => {
+export const votePollRequestSuccess = (id,text) => {
   return {
     type: VOTE_POLL_REQUEST_SUCCESS,
-    payload: data,
+    payload:({
+      id:id,
+      text:text,
+    }),
   };
 };
 
-export const votePollRequestError = (data) => {
+export const votePollRequestError = (id,text) => {
   return {
     type: VOTE_POLL_REQUEST_ERROR,
-    payload: data,
+    payload: {
+      id: id,
+      text: text,
+    },
   };
 };

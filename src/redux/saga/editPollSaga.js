@@ -2,6 +2,7 @@ import { call, put } from "redux-saga/effects";
 import {
   editPollTitleRequestSuccess,
   editPollTitleRequestError,
+  pollRequest,
 } from "../action/index";
 import axios from "axios";
 
@@ -17,6 +18,7 @@ function* editTitleSaga(action) {
 
     if (response && response.data && response.data.error === 0) {
       yield put(editPollTitleRequestSuccess({ response: response.data }));
+      yield put(pollRequest())
     } else {
       yield put(
         editPollTitleRequestError({

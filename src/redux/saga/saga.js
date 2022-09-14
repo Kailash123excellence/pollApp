@@ -10,8 +10,6 @@ import {
   VOTE_POLL_REQUEST,
 } from "../action/actionType";
 
-
-
 import singUp from "./signUpSaga";
 import logIn from "./logInSaga";
 import pollShow from "./pollShow";
@@ -19,11 +17,9 @@ import deleteSaga from "./deletePollSaga";
 import { all, fork, takeLatest } from "redux-saga/effects";
 import editTitleSaga from "./editPollSaga";
 import newOptionSaga from "./newOptionSaga";
-import removeOptionSaga from './removeOptionSaga';
-import addPollSaga from './addPollSaga'
+import removeOptionSaga from "./removeOptionSaga";
+import addPollSaga from "./addPollSaga";
 import votePollSaga from "./votePollSaga";
-
-
 
 function* signUpUser() {
   yield takeLatest(REQUEST_SIGNUP, singUp);
@@ -52,8 +48,8 @@ function* removeOptionRequest() {
   yield takeLatest(REMOVE_OPTION_REQUEST, removeOptionSaga);
 }
 
-function* addRequest(){
-  yield takeLatest(ADD_POLL_REQUEST, addPollSaga)
+function* addRequest() {
+  yield takeLatest(ADD_POLL_REQUEST, addPollSaga);
 }
 
 function* voteRequest() {
@@ -70,6 +66,6 @@ export default function* rootSaga() {
     fork(newOptionRequest),
     fork(removeOptionRequest),
     fork(addRequest),
-    fork(voteRequest)
+    fork(voteRequest),
   ]);
 }

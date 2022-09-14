@@ -1,8 +1,9 @@
 import { put, call } from "redux-saga/effects";
 import { requestLoginSuccess, requestLoginError } from "../action/index";
 import axios from "axios";
+// import jwt from "jsonwebtoken";
 
-import { jwtDecode } from "jwt-js-decode";
+import jwt_decode from "jwt-decode";
 
 function* logIn(action) {
   const { username, password } = action.payload;
@@ -16,9 +17,14 @@ function* logIn(action) {
     if (response && response.data && response.data.error === 0) {
       yield put(requestLoginSuccess({ response: response.data }));
       // console.log(response.data, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      let jwt = jwtDecode(response.data.token);
-      // console.log(jwt.payload.role, "get role");
-      localStorage.setItem("role", jwt.payload.role);
+      // let token = jwt.verify(response.data.token);
+      // console.log(token, "tokennnnnnnnnnnn");
+      // localStorage.setItem("role", jwt.payload.role);
+
+      let token = response.data.token;
+      let decoded = jwt_decode(token);
+      console.log(decoded, "get role");
+      localStorage.setItem("role", decoded.role);
       localStorage.setItem("token", response.data.token);
     } else {
       yield put(

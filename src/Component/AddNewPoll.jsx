@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { addPollRequest } from "../redux/action/index";
@@ -12,7 +12,7 @@ import Navbar from "./navbar";
 
 export default function AddNewPoll() {
   const dispatch = useDispatch();
-
+const navigate = useNavigate()
   const [addPoll, setAddPoll] = useState({
     question: "",
     option: [],
@@ -20,31 +20,35 @@ export default function AddNewPoll() {
   const [counter, setCounter] = useState(0);
   // const [option, setOption] = useState("");
 
-
-
+    // console.log(addPoll.option, "option");
+  
   function handleSubmitAddPoll(e) {
     e.preventDefault();
     
+    // console.log(addPoll.option, "option");
     dispatch(addPollRequest(addPoll))
-    setAddPoll({...addPoll,question:""})
+    // setAddPoll({...addPoll,question:""})
 
-    setAddPoll({...addPoll,option:[]})
+    // setAddPoll({...addPoll,option:[]})
+
+    navigate('/adminPanel')
   }
 
   const handleOptionPoll = () => {
     if (addPoll.option.length <4) {
-      addPoll.option.push("");
+      addPoll.option.push({option:"",vote:0 });
       setCounter(counter+1)
     }
   };
 
   const handleOnChangeOption = (index,e) => {
+    console.log(index, "index");
     
 
-    {addPoll.option.map((val,id)=>{
-          if(id===index){
-           
-            addPoll.option[id]=e.target.value
+    {addPoll.option.map((val,indexOption)=>{
+          if(indexOption===index){
+          // console.log(val, "Val");
+            val.option=e.target.value
           
         }
       
@@ -54,46 +58,60 @@ export default function AddNewPoll() {
 
   return (
     <>
-    <div className="addPollContainerForm">
+      <div className="addPollContainerForm">
+        <Navbar />
 
-      <Navbar />
-
-      <form className="addNewPollForm" onSubmit={handleSubmitAddPoll}>
-        <input
-          type="text"
-          className="inputPollTitle"
-          value={addPoll.question}
-          onChange={(e) => setAddPoll({ ...addPoll, question: e.target.value })}
-          placeholder="Enter your poll question"
+        <form className="addNewPollForm" onSubmit={handleSubmitAddPoll}>
+          <input
+            type="text"
+            className="inputPollTitle"
+            value={addPoll.question}
+            onChange={(e) =>
+              setAddPoll({ ...addPoll, question: e.target.value })
+            }
+            placeholder="Enter your poll question"
           />
 
-        {addPoll.option.map((val, index) => {
-          return (
-            <input
-            type="text"
-            required
-            className="inputOptionValue"
-            onChange={(e) => handleOnChangeOption(index, e)}
-            // value={val[index]?.value}
-            placeholder={"option"}
-            />
+          {addPoll.option.map((val, index) => {
+            return (
+              <input
+                type="text"
+                required
+                className="inputOptionValue"
+                onChange={(e)=>handleOnChangeOption(index,e)}
+                // value={val[index]?.value}
+                placeholder={"option"}
+              />
             );
           })}
 
-        <button className="AddBtn" onClick={handleOptionPoll}>
+          <Stack spacing={2} direction="row">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOptionPoll}
+            >
+              Add Option
+            </Button>
+            <Button variant="contained" color="success" type="submit">
+              Submit
+            </Button>
+          </Stack>
+
+          {/* <button className="AddBtn" onClick={handleOptionPoll}>
           Add Option
         </button>
         <button className="AddBtn" type="submit">
           Submit
-        </button>
-      <Link  className="backLink" to="/adminPanel">
-        <Button className="backBtn"  variant="contained">
-          Back to Admin Page
-        </Button>
-      </Link>
-      </form>
+        </button> */}
+          {/* <Link className="backLink" to="/adminPanel">
+            <Button className="backBtn" variant="contained">
+              Back to Admin Page
+            </Button>
+          </Link> */}
+        </form>
 
-      {/* <form
+        {/* <form
         method="post"
         // onSubmit={() => handleSubmitAddPoll()}
         style={{
@@ -148,7 +166,7 @@ export default function AddNewPoll() {
             </Link>
             </Stack>
           </form> */}
-          </div>
+      </div>
     </>
   );
 }

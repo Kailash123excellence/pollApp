@@ -54,26 +54,20 @@ export default function FloatingActionButtons() {
   });
 
 
-  const [removeOption, setRemoveOption] = useState(false);
-  const [editRemoveOption, setEditRemoveOption] = useState({});
-  const [oldOption, setOldOption] = useState({
-    id: "",
-    text: "",
-  });
+  // const [removeOption, setRemoveOption] = useState(false);
+  // const [editRemoveOption, setEditRemoveOption] = useState({});
+  // const [oldOption, setOldOption] = useState({
+  //   id: "",
+  //   text: "",
+  // });
 
   
 
-  const [question, setQuestion] = useState({
-    text: "",
-    opt1: "",
-    opt2: "",
-    opt3: "",
-    opt4: "",
-  });
+ 
 
   const handleDelete = (id) => {
     dispatch(deletePollRequest(id));
-    dispatch(pollRequest());
+    // dispatch(pollRequest());
   };
 
 
@@ -97,7 +91,7 @@ export default function FloatingActionButtons() {
       title:editable.title
     }));
     setEditPoll(!editPoll)
-        dispatch(pollRequest());
+        // dispatch(pollRequest());
   };
 
 
@@ -120,28 +114,31 @@ export default function FloatingActionButtons() {
       text:newOption.text,
     }));
     setAddOption(!addOption);
-    dispatch(pollRequest())
+    // dispatch(pollRequest())
   }
 
-const EditHandleRemoveOption=(id)=>{
-    setRemoveOption(!removeOption);
-    setEditRemoveOption(id);
-}
+// const EditHandleRemoveOption=(id)=>{
+//     setRemoveOption(!removeOption);
+//     setEditRemoveOption(id);
+// }
 
-const handleEditRemoveOption=(e)=>{
-  setOldOption({ id: editRemoveOption, text: e.target.value });
-}
+// const handleEditRemoveOption=(e)=>{
+//   setOldOption({ id: editRemoveOption, text: e.target.value });
+// }
 
-const submitRemoveOption=(e)=>{
-  e.preventDefault()
-  dispatch(
-    removeOptionRequest({
-      id: oldOption.id,
-      text: oldOption.text,
-    })
-  );
-  setRemoveOption(!addOption);
-  dispatch(pollRequest());
+const submitRemoveOption=(id,text)=>{
+  // console.log(id,text,"remove item");
+  // setOldOption({id:id,text:text})
+dispatch(removeOptionRequest(id,text))
+  // e.preventDefault()
+  // dispatch(
+  //   removeOptionRequest({
+  //     id: oldOption.id,
+  //     text: oldOption.text,
+  //   })
+  // );
+  // setRemoveOption(!addOption);
+  // dispatch(pollRequest());
 
 }
    
@@ -172,137 +169,152 @@ const submitRemoveOption=(e)=>{
           m={5}
         >
           <Link className="addBtn" to="/addNewPoll">
-            <Button
+            {" "}
+            ADD POLL
+            {/* <Button
               className="addBtnInner"
-              sx={{width: "100%" }}
-              // variant="contained"
+              sx={{width: "50%",position:"fixed", backgroundColor:"greenyellow" }}
+              // variant="outlined"
               endIcon={<AddIcon />}
               // onClick={() => <AddNewPoll />}
             >
               add Poll
-            </Button>
+            </Button> */}
           </Link>
         </Stack>
-
-        {pollSelector.isSuccess ? (
-          pollSelector.data.data.map((item,index) => {
-            return (
-              <Card
-              key={index}
-                sx={{
-                  minWidth: 475,
-                  width: "50%",
-                  margin: "auto",
-                  mb:1,
-                }}
-              >
-                <Stack
+        <div className="cardContainerAdmin">
+          {pollSelector.isSuccess ? (
+            pollSelector.data.data.map((item, index) => {
+              return (
+                <Card
+                  key={index}
                   sx={{
-                    mb: 4,
-                    mt: 2,
+                    minWidth: 475,
                     width: "50%",
                     margin: "auto",
+
+                    mb: 1,
                   }}
-                  direction="row"
-                  spacing={2}
-                  m={5}
                 >
-                  <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handleDelete(item._id)}
-                  ></Button>
-                  <Button
-                    variant="outlined"
-                    startIcon={<EditIcon />}
-                    onClick={() => handleEdit(item._id, item.title)}
-                  ></Button>
-                  <Button
-                    variant="outlined"
-                    startIcon={<AddIcon />}
-                    onClick={() => handleAddOption(item._id)}
-                  ></Button>
-                  <Button
+                  <Stack
+                    sx={{
+                      mb: 4,
+                      mt: 2,
+                      width: "50%",
+                      margin: "auto",
+                    }}
+                    direction="row"
+                    spacing={2}
+                    m={5}
+                  >
+                    <Button
+                      variant="outlined"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleDelete(item._id)}
+                    ></Button>
+                    <Button
+                      variant="outlined"
+                      startIcon={<EditIcon />}
+                      onClick={() => handleEdit(item._id, item.title)}
+                    ></Button>
+                    <Button
+                      variant="outlined"
+                      startIcon={<AddIcon />}
+                      onClick={() => handleAddOption(item._id)}
+                    ></Button>
+                    {/* <Button
                     variant="outlined"
                     startIcon={<RemoveIcon />}
                     onClick={() => EditHandleRemoveOption(item._id)}
-                  ></Button>
-                </Stack>
+                  ></Button> */}
+                  </Stack>
 
-                <CardContent sx={{ marginLeft: "50px" }}>
-                  <Typography
-                    variant="h2"
-                    sx={{ fontSize: 25 }}
-                    color="blue"
-                    gutterBottom
-                  >
+                  <CardContent sx={{ marginLeft: "50px" }}>
+                    <Typography
+                      variant="h2"
+                      sx={{ fontSize: 25 }}
+                      color="blue"
+                      gutterBottom
+                    >
+                      {editPoll && item._id === editable.id ? (
+                        <Box
+                          component="form"
+                          sx={{
+                            "& > :not(style)": {
+                              m: 1,
+                              fontSize: "30px",
+                              width: "20ch",
+                            },
+                          }}
+                          noValidate
+                          autoComplete="off"
+                          onSubmit={(e) => handleEditSubmit(e)}
+                        >
+                          <TextField
+                            id="standard-basic"
+                            value={editable.title}
+                            type="text"
+                            variant="standard"
+                            onChange={(e) => handleEditTitle(e)}
+                          />
+                        </Box>
+                      ) : (
+                        item.title
+                      )}
+                    </Typography>
 
-                    {editPoll && item._id === editable.id ? (
+                    {item.options.map((val, index) => {
+                      return (
+                        <>
+                          <Typography
+                            key={index}
+                            sx={{ mb: 1.5 }}
+                            color="black"
+                          >
+                            {val.option}
+                            <div className="editOptionBtn">
+                              <Button
+                                variant="outlined"
+                                startIcon={<DeleteIcon />}
+                                onClick={() =>
+                                  submitRemoveOption(item._id, val.option)
+                                }
+                              ></Button>
+                            </div>
+                          </Typography>
+                        </>
+                      );
+                    })}
+
+                    {addOption && item._id === editOption ? (
                       <Box
                         component="form"
                         sx={{
                           "& > :not(style)": {
                             m: 1,
-                            fontSize: "30px",
-                            width: "20ch",
+                            width: "40ch",
+                            display: "flex",
+                            flexDirection: "column",
                           },
                         }}
                         noValidate
                         autoComplete="off"
-                        onSubmit={(e) => handleEditSubmit(e)}
+                        onSubmit={(e) => submitEditOption(e)}
                       >
                         <TextField
-                          id="standard-basic"
-                          value={editable.title}
-                          type="text"
-                          variant="standard"
-                          onChange={(e) => handleEditTitle(e)}
+                          id="outlined-basic"
+                          label="Add Option"
+                          variant="outlined"
+                          name="opt"
+                          // value={question.opt1}
+                          onChange={(e) => handleEditOption(e)}
                         />
                       </Box>
                     ) : (
-                      item.title
+                      ""
                     )}
-                  </Typography>
 
-                  {item.options.map((val,index) => {
-                    return (
-                      <>
-                        <Typography key={index} sx={{ mb: 1.5 }} color="black">
-                          {val.option}
-                        </Typography>
-                      </>
-                    );
-                  })}
-
-                  {addOption && item._id === editOption ? (
-                    <Box
-                      component="form"
-                      sx={{
-                        "& > :not(style)": {
-                          m: 1,
-                          width: "40ch",
-                          display: "flex",
-                          flexDirection: "column",
-                        },
-                      }}
-                      noValidate
-                      autoComplete="off"
-                      onSubmit={(e) => submitEditOption(e)}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label="Add Option"
-                        variant="outlined"
-                        name="opt"
-                        // value={question.opt1}
-                        onChange={(e) => handleEditOption(e)}
-                      />
-                    </Box>
-                  ) : (
-                    ""
-                  )}
-
-                  {removeOption && item._id === editRemoveOption ? (
+                    {/* {removeOption && item._id === editRemoveOption ? (
                     <Box
                       component="form"
                       sx={{
@@ -328,16 +340,17 @@ const submitRemoveOption=(e)=>{
                     </Box>
                   ) : (
                     ""
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })
-        ) : (
-          <Box sx={{ display: "flex", justifyContent: "center", ml: 20 }}>
-            <CircularProgress />
-          </Box>
-        )}
+                  )} */}
+                  </CardContent>
+                </Card>
+              );
+            })
+          ) : (
+            <Box sx={{ display: "flex", justifyContent: "center", ml: 20 }}>
+              <CircularProgress />
+            </Box>
+          )}
+        </div>
       </div>
     </>
   );

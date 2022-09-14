@@ -21,7 +21,7 @@ const bull = (
 export default function PollList() {
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
-  // console.log(pollSelector.data, "1212");
+  console.log(pollSelector.data, "1212");
 
   const token = localStorage.getItem("token");
 
@@ -33,7 +33,7 @@ export default function PollList() {
   });
   // console.log(voteID, "vote");
   const handleChange = (id, text) => {
-    setVoteID({ id: id, text: text });
+    // setVoteID({ id: id, text: text });
     setVoteDisable(true);
     setClickedID(id);
 
@@ -50,7 +50,7 @@ export default function PollList() {
       });
     }
 
-    dispatch(votePollRequest(voteID));
+    dispatch(votePollRequest(id,text));
   };
 
   useEffect(() => {
@@ -59,10 +59,10 @@ export default function PollList() {
 
   return (
     <>
-      <Navbar />
 
+      <Navbar />
       <div className="pollContainerOuter">
-        <div className="pollContentInner">
+        <div className="pollContainerInner">
           {pollSelector.isSuccess
             ? pollSelector.data.data.map((item, index) => {
                 return (

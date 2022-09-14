@@ -2,6 +2,7 @@ import { call, put } from "redux-saga/effects";
 import {
   deletePollRequestSuccess,
   deletePollRequestError,
+  pollRequest,
 } from "../action/index";
 import axios from "axios";
 
@@ -19,6 +20,7 @@ import axios from "axios";
 
     if(response && response.data && response.data.error===0){
       yield put (deletePollRequestSuccess({response:response.data}));
+      yield put (pollRequest())
     }else{
       yield put (
         deletePollRequestError({error:"not deleted", message: response.data.message})

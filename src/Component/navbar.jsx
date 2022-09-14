@@ -52,6 +52,10 @@ const Navbar = () => {
 
   const handleLogout= ()=>{
     navigate("/login")
+    
+    localStorage.setItem("role", " ");
+    localStorage.setItem("token", " ");
+
   }
 
   // const backToHome=(Role)=>{

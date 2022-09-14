@@ -2,11 +2,12 @@ import { call, put } from "redux-saga/effects";
 import {
   newOptionRequestSuccess,
   newOptionRequestError,
+  pollRequest,
 } from "../action/index";
 import axios from "axios";
 
 function* newOptionSaga(action) {
-  console.log("saga");
+  // console.log("saga");
   const {id,text} = action.payload;
 
   try {
@@ -18,6 +19,7 @@ function* newOptionSaga(action) {
 
     if (response && response.data && response.data.error === 0) {
       yield put(newOptionRequestSuccess({ response: response.data }));
+      yield put(pollRequest())
     } else {
       yield put(
         newOptionRequestError({

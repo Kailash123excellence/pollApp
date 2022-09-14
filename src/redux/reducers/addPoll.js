@@ -10,7 +10,6 @@ const initialState=[{
 }]
 
 const addPollReducer=(state=initialState, action)=>{
-  console.log(action, "reducer");
   switch(action.type){
     case ADD_POLL_REQUEST:
     return{
