@@ -23,7 +23,7 @@ function* logIn(action) {
 
       let token = response.data.token;
       let decoded = jwt_decode(token);
-      console.log(decoded, "get role");
+      // console.log(decoded, "get role");
       localStorage.setItem("role", decoded.role);
       localStorage.setItem("token", response.data.token);
     } else {

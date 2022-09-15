@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { addPollRequestSuccess, addPollRequestError } from "../action/index";
+import { addPollRequestSuccess, addPollRequestError, pollRequest } from "../action/index";
 import axios from "axios";
 
 function* addPollSaga(action) {
@@ -30,6 +30,7 @@ console.log(opt, "opt");
         console.log(response,"addsaga");
     if (response && response.data && response.data.error === 0) {
       yield put(addPollRequestSuccess({ response: response.data }));
+      yield put(pollRequest())
     } else {
       yield put(
         addPollRequestError({

@@ -21,45 +21,42 @@ const bull = (
 export default function PollList() {
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
-  console.log(pollSelector.data, "1212");
 
   const token = localStorage.getItem("token");
 
   const [voteDisable, setVoteDisable] = useState(false);
   const [clickedID, setClickedID] = useState([]);
+  const [selected, setSelected] = useState("no");
   const [voteID, setVoteID] = useState({
     id: "",
     text: "",
   });
   // console.log(voteID, "vote");
   const handleChange = (id, text) => {
-    // setVoteID({ id: id, text: text });
+    setVoteID({ id: id, text: text });
     setVoteDisable(true);
     setClickedID(id);
-
     {
       pollSelector.data.data.map((val) => {
         if (val._id === id) {
           {
             val.options.map((item) => {
-              console.log(item.vote);
               item.vote = 1;
+              // console.log(item);
             });
           }
         }
       });
     }
 
-    dispatch(votePollRequest(id,text));
+    dispatch(votePollRequest(id, text));
   };
 
   useEffect(() => {
     dispatch(pollRequest());
   }, []);
-
   return (
     <>
-
       <Navbar />
       <div className="pollContainerOuter">
         <div className="pollContainerInner">
@@ -94,13 +91,14 @@ export default function PollList() {
                                     }}
                                   >
                                     <Radio
-                                      // checked={}
+                                      type="radio"
                                       onChange={() =>
                                         handleChange(item._id, val.option)
                                       }
                                       disabled={val.vote ? true : false}
-                                      value="a"
-                                      name="radio-buttons"
+                                      value={val.option}
+                                      name={item._id}
+                                      // name="radio-buttons"
                                       inputProps={{ "aria-label": "A" }}
                                     />
 

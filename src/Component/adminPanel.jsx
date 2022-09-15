@@ -30,22 +30,32 @@ import {
   newOptionRequest,
   removeOptionRequest,
 } from "../redux/action";
+import EditTitle from "./EditTitle";
 
 export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
+  const removeSelector = useSelector(
+    (state) => state && state.removeOptionReducer
+  );
+
+  // console.log(removeSelector, "revoe@@@")
   // console.log(pollSelector, "admin");
+
+
+
 
   const [add, setAdd] = useState(false);
   // const [pollData, setPollData] = useState([]);
+  const [editTitle,setEditTitle]=useState(false)
   const [deletePoll, setDeletePoll] = useState(false);
   const [editPoll, setEditPoll] = useState(false);
-  const [editable, setEditable] = useState({
-    id: "",
-    title: "",
-  });
-
+  // const [editable, setEditable] = useState({
+  //   id: "",
+  //   title: "",
+  // });
+const [removeText,setRemoveText]=useState('')
   const [addOption, setAddOption] = useState(false);
   const [editOption, setEditOption] = useState({});
   const [newOption, setNewOption] = useState({
@@ -72,27 +82,30 @@ export default function FloatingActionButtons() {
 
 
   const handleEdit = (id, text) => {
-    console.log(id, text);
-    setEditPoll(!editPoll);
-    setEditable({ id: id, title: text });
-    console.log(editable, "edittit");
+    localStorage.setItem("text",text)
+  navigate(`/editTitle/${id}`)
+  
+    // console.log(id, text);
+    // setEditPoll(!editPoll);
+    // setEditable({ id: id, title: text });
+    // console.log(editable, "edittit");
   };
 
-  const handleEditTitle = (e) => {
-    setEditable({ ...editable, title: e.target.value });
-    console.log(editable, "at on change");
-  };
+  // const handleEditTitle = (e) => {
+  //   setEditable({ ...editable, title: e.target.value });
+  //   console.log(editable, "at on change");
+  // };
   
-  const handleEditSubmit = (e) => {
-    e.preventDefault()
+  // const handleEditSubmit = (e) => {
+  //   e.preventDefault()
     
-    dispatch(editPollTitleRequest({
-      id:editable.id,
-      title:editable.title
-    }));
-    setEditPoll(!editPoll)
-        // dispatch(pollRequest());
-  };
+  //   dispatch(editPollTitleRequest({
+  //     id:editable.id,
+  //     title:editable.title
+  //   }));
+  //   setEditPoll(!editPoll)
+  //       // dispatch(pollRequest());
+  // };
 
 
 
@@ -127,8 +140,9 @@ export default function FloatingActionButtons() {
 // }
 
 const submitRemoveOption=(id,text)=>{
-  // console.log(id,text,"remove item");
-  // setOldOption({id:id,text:text})
+ 
+  setRemoveText(text)
+  
 dispatch(removeOptionRequest(id,text))
   // e.preventDefault()
   // dispatch(
@@ -169,7 +183,6 @@ dispatch(removeOptionRequest(id,text))
           m={5}
         >
           <Link className="addBtn" to="/addNewPoll">
-            {" "}
             ADD POLL
             {/* <Button
               className="addBtnInner"
@@ -192,8 +205,8 @@ dispatch(removeOptionRequest(id,text))
                     minWidth: 475,
                     width: "50%",
                     margin: "auto",
-
-                    mb: 1,
+                    boxShadow: "2px 2px 5px 6px red",
+                    mb: 4,
                   }}
                 >
                   <Stack
@@ -215,13 +228,14 @@ dispatch(removeOptionRequest(id,text))
                     <Button
                       variant="outlined"
                       startIcon={<EditIcon />}
+                      // onClick={<EditTitle/>}
                       onClick={() => handleEdit(item._id, item.title)}
                     ></Button>
-                    <Button
+                    {/* <Button
                       variant="outlined"
                       startIcon={<AddIcon />}
                       onClick={() => handleAddOption(item._id)}
-                    ></Button>
+                    ></Button> */}
                     {/* <Button
                     variant="outlined"
                     startIcon={<RemoveIcon />}
@@ -236,7 +250,9 @@ dispatch(removeOptionRequest(id,text))
                       color="blue"
                       gutterBottom
                     >
-                      {editPoll && item._id === editable.id ? (
+                      {item.title}
+                      {/* {editPoll && item._id === editable.id ?
+                       (
                         <Box
                           component="form"
                           sx={{
@@ -260,7 +276,7 @@ dispatch(removeOptionRequest(id,text))
                         </Box>
                       ) : (
                         item.title
-                      )}
+                      )} */}
                     </Typography>
 
                     {item.options.map((val, index) => {
@@ -273,13 +289,25 @@ dispatch(removeOptionRequest(id,text))
                           >
                             {val.option}
                             <div className="editOptionBtn">
-                              <Button
-                                variant="outlined"
-                                startIcon={<DeleteIcon />}
-                                onClick={() =>
-                                  submitRemoveOption(item._id, val.option)
-                                }
-                              ></Button>
+                              {removeSelector.isLoading ? (
+                                <>
+                                {(val.option===removeText)?
+                                  <Box sx={{ display: "flex", float:"right" }}>
+                                    <CircularProgress />
+                                  </Box>
+                                :""
+                                  }
+                                
+                                </>
+                              ) : (
+                                <Button
+                                  variant="outlined"
+                                  startIcon={<DeleteIcon />}
+                                  onClick={() =>
+                                    submitRemoveOption(item._id, val.option)
+                                  }
+                                ></Button>
+                              )}
                             </div>
                           </Typography>
                         </>

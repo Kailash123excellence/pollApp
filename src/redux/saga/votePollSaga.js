@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 
 function* votePollSaga(action) {
-  console.log(action,"saga")
+  // console.log(action,"saga")
   const { id, text } = action.payload;
   
   const token=localStorage.getItem("token")
@@ -25,7 +25,7 @@ function* votePollSaga(action) {
       }
       
     );
-      console.log(response,"sagaResponse")
+      // console.log(response,"sagaResponse")
     if (response && response.data && response.data.error === 0) {
       yield put(votePollRequestSuccess({ response: response.data }));
 

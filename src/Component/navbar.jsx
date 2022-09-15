@@ -22,39 +22,37 @@ import Chip from "@mui/material/Chip";
 import PollList from "./pollList";
 // import Stack from "@mui/material/Stack";
 
-
+  
 
 const pages = ["Home Page"];
 const settings = ["Dashboard", "Logout"];
 
 const Navbar = () => {
-// const User= localStorage.getItem("role")
+const User= localStorage.getItem("role")
   const navigate= useNavigate()
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] =useState(null);
 
   const Role= localStorage.getItem("role")
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(true);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(true);
-  };
+  // const handleOpenNavMenu = (event) => {
+  //   setAnchorElNav(true);
+  // };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(true);
+  // };
 
   const handleCloseNavMenu = () => {
-    // {User=="admin"?<adminPanal/>: <pollList/> }
+    // {User=="admin"?<adminPanel/>: <pollList/> }
     setAnchorElNav(false);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(false);
-  };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(false);
+  // };
 
   const handleLogout= ()=>{
-    navigate("/login")
-    
-    localStorage.setItem("role", " ");
-    localStorage.setItem("token", " ");
+    localStorage.clear();
+    navigate('/')
 
   }
 
@@ -92,7 +90,7 @@ const Navbar = () => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              // onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />
@@ -141,7 +139,7 @@ const Navbar = () => {
           >
             Polling App
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -152,10 +150,10 @@ const Navbar = () => {
               </Button>
             ))}
 
-            <Button onClick={ " "}>Home Page</Button>
-          </Box>
+            <Button onClick={backToHome}>Home Page</Button>
+          </Box> */}
 
-          <Button className="mr-2"  onClick={handleLogout}  variant="contained" >
+          <Button className="admitLogBtn"  onClick={handleLogout}  variant="contained" >
             Logout
           </Button>
 

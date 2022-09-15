@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,22 +25,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import MuiAlert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Your Website
-      </Link>
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       // {...props}
+//     >
+//     </Typography>
+//   );
+// }
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -49,24 +44,28 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+
   const [credential, setCredential] = useState({
     username: "",
     password: "",
     role: "guest",
   });
 
-  const [open, setOpen] = React.useState(false);
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+  // const [open, setOpen] = React.useState(false);
+  // const handleClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // };
 
+
+
+  const navigate= useNavigate()
   const dispatch = useDispatch();
   const signUpSelector = useSelector((state) => state && state.signUpReducer);
-
-  console.log(signUpSelector, "123");
+console.log(signUpSelector, "@@@@@@");
 
   function getSelect(e) {
     setCredential({ ...credential, role: e.target.value });
@@ -74,17 +73,25 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setOpen(true);
-    dispatch(
-      requestSingUp({
-        username: credential.username,
-        password: credential.password,
-        role: credential.role,
-      })
-    );
+    // setOpen(true);
 
-    console.log(credential);
+     
+      dispatch(
+        requestSingUp({
+          username: credential.username,
+          password: credential.password,
+          role: credential.role,
+        })
+      );
+
+      if(signUpSelector.isSuccess){
+        navigate('/')
+      }
+       
+    
   };
+
+ 
 
   return (
     <ThemeProvider theme={theme}>
@@ -108,7 +115,7 @@ export default function SignIn() {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
+           
             sx={{ mt: 1 }}
           >
             <TextField
@@ -118,8 +125,8 @@ export default function SignIn() {
               id="name"
               label="UserName"
               name="username"
-              autoComplete="email"
-              autoFocus
+              autoComplete="username"
+              // autoFocus
               onChange={(e) =>
                 setCredential({ ...credential, username: e.target.value })
               }
@@ -132,7 +139,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              // autoComplete="current-password"
               onChange={(e) =>
                 setCredential({ ...credential, password: e.target.value })
               }
@@ -168,6 +175,11 @@ export default function SignIn() {
             ) : (
               ""
             )}
+{/* 
+            {signUpSelector.isSuccess
+              ? navigate('/')
+              
+              : navigate('/signUp')} */}
 
             <Button
               type="submit"
@@ -182,21 +194,25 @@ export default function SignIn() {
               <Stack spacing={2} sx={{ width: "100%", marginTop: "10px" }}>
                 <Alert severity="error">{signUpSelector.message}</Alert>
               </Stack>
-            ) : ''}
+            ) : (
+              ""
+            )}
             <Grid container>
               <Grid item>
-                <Link href="/logIn" variant="body1">
+                <Link href="/" variant="body1">
                   {"Already have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );
 }
+
+
 
 // import React, { useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
@@ -227,8 +243,7 @@ export default function SignIn() {
 //         role: credential.role,
 //       })
 //     );
-//     alert("register");
-//     console.log(credential);
+    
 //   }
 
 //   return (

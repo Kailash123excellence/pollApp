@@ -76,7 +76,7 @@
   /* margin-top: 100px; */
   height: 100%;
   padding-bottom: 50px;
-  background-image: url("../assert//image/background.jpg");
+  /* background-image: url("../assert//image/background.jpg"); */
 
   /* background-image: linear-gradient(
     to bottom,
@@ -206,5 +206,12 @@
 
 .cardContainerAdmin{
   margin-Top:150px;
+ 
+ 
 
+}
+
+.admitLogBtn{
+  
+  float: right;
 }

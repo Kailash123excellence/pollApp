@@ -29,6 +29,7 @@ import {
 } from "./actionType";
 
 export const requestSingUp = (data) => {
+  console.log(data)
   return {
     type: REQUEST_SIGNUP,
     payload: data,

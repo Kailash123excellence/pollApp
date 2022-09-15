@@ -26,12 +26,17 @@ const navigate = useNavigate()
     e.preventDefault();
     
     // console.log(addPoll.option, "option");
-    dispatch(addPollRequest(addPoll))
+    if(addPoll.question.length>0){
+      dispatch(addPollRequest(addPoll))
+      
+      navigate('/adminPanel')
+    }else{
+      navigate("/adminPanel");
+    }
     // setAddPoll({...addPoll,question:""})
 
     // setAddPoll({...addPoll,option:[]})
 
-    navigate('/adminPanel')
   }
 
   const handleOptionPoll = () => {
@@ -64,6 +69,7 @@ const navigate = useNavigate()
         <form className="addNewPollForm" onSubmit={handleSubmitAddPoll}>
           <input
             type="text"
+            autoFocus
             className="inputPollTitle"
             value={addPoll.question}
             onChange={(e) =>
@@ -77,8 +83,9 @@ const navigate = useNavigate()
               <input
                 type="text"
                 required
+                autoFocus
                 className="inputOptionValue"
-                onChange={(e)=>handleOnChangeOption(index,e)}
+                onChange={(e) => handleOnChangeOption(index, e)}
                 // value={val[index]?.value}
                 placeholder={"option"}
               />

@@ -12,7 +12,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { Stack } from "@mui/material";
+import Alert from "@mui/material/Alert";
 import { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestLogin } from "../redux/action";
@@ -75,7 +76,7 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (userLogin.username && userLogin.password) {
+    if (userLogin.username.length && userLogin.password.length) {
       dispatch(
         requestLogin({
           username: userLogin.username,
@@ -83,7 +84,7 @@ export default function SignIn() {
         })
       );
     }
-    // console.log(userLogin, "userlogin")
+     
   };
 
   return (
@@ -107,7 +108,7 @@ export default function SignIn() {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
+            
             sx={{ mt: 1 }}
           >
             <TextField
@@ -131,7 +132,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              // autoComplete="current-password"
               onChange={(e) =>
                 setUserLogin({ ...userLogin, password: e.target.value })
               }
@@ -141,6 +142,14 @@ export default function SignIn() {
               <Box sx={{ display: "flex", ml: 20 }}>
                 <CircularProgress />
               </Box>
+            ) : (
+              ""
+            )}
+
+            {loginSelector.isError ? (
+              <Stack spacing={2} sx={{ width: "100%", marginTop: "10px" }}>
+                <Alert severity="error">Account don't exist Kindly check Username or Password</Alert>
+              </Stack>
             ) : (
               ""
             )}

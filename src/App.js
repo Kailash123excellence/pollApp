@@ -7,6 +7,7 @@ import PollList from "./Component/pollList";
 import AdminPanel from "./Component/adminPanel";
 import PrivateRoute from "./PrivateRoute";
 import AddNewPoll from "./Component/AddNewPoll";
+import EditTitle from "./Component/EditTitle";
 
 export default function App() {
   const isLoggedIn = localStorage.getItem("token") ? true : false;
@@ -27,13 +28,15 @@ export default function App() {
 
       <Router>
         <Routes>
-          <Route path="/" element={<PollHomePage />} />
-          <Route path="/login" element={<LoginPage />} />
+           
+          <Route path="/" element={<LoginPage />} />
           <Route path="/signUp" element={<SignUp />} />
           {/* <Route element={<PrivateRoute />}> */}
-            <Route path="/pollList" element={<PollList />} exact />
-            <Route path="/adminPanel" element={<AdminPanel />} exact />
-            <Route path="/addNewPoll" element={<AddNewPoll />} exact />
+          <Route path="/pollList" element={<PollList />} exact />
+          <Route path="/adminPanel" element={<AdminPanel />} exact />
+          <Route path="/addNewPoll" element={<AddNewPoll />} exact />
+          <Route path="/editTitle/:id" element={<EditTitle />} exact />
+
           {/* </Route> */}
         </Routes>
       </Router>
