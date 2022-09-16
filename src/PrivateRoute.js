@@ -1,26 +1,11 @@
-import {Outlet, Navigate} from 'react-router-dom';
+import { Outlet, Navigate } from "react-router-dom";
+import * as React from "react";
 
+const PrivateRoute = () => {
+  const token = localStorage.getItem("token");
+  console.log("hello");
+  console.log(token, "token");
+  return token ? <Outlet /> : <Navigate to="/" />;
+};
 
-const PrivateRoute= ()=>{
-  let auth= {'token':false}
-  return (
-    auth.token ? <Outlet/> : <Navigate to="/login" />
-  )
-}
-
-export default PrivateRoute
-
-
-
-
-
-
-
-// import { Navigate, Outlet } from "react-router-dom";
-// import PollList from "./Component/pollList";
-
-// function PrivateRoute({ isLogged, PollList }) {
-//   return isLogged ? <PollList/> : <Navigate to="/login" />;
-// }
-
-// export default PrivateRoute;
+export default PrivateRoute;

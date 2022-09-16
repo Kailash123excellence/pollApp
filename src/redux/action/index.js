@@ -135,6 +135,7 @@ export const editPollTitleRequestError = (data) => {
 };
 
 export const newOptionRequest = (text) => {
+  console.log("helloIn @@@@@@@@@@@@@")
   return {
     type: NEW_OPTION_REQUEST,
     payload: text,

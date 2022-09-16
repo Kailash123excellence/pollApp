@@ -5,10 +5,11 @@ import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "./navbar";
 import { pollRequest } from "../redux/action";
-import { editPollTitleRequest } from "../redux/action";
+import { editPollTitleRequest, newOptionRequest } from "../redux/action";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
+import { LocalHospitalTwoTone, TextFieldsTwoTone } from "@mui/icons-material";
 
 
 
@@ -18,7 +19,6 @@ export default function EditTitle() {
   const navigate = useNavigate();
   
     const pollSelector = useSelector((state) => state && state.pollReducer);
-    // console.log(pollSelector.data, "dadada");
 
 useEffect(() => {
   dispatch(pollRequest());
@@ -31,6 +31,12 @@ const titleText= localStorage.getItem("text")
       title:titleText,
     });
 
+    const [newOption, setNewOption]=useState({
+      id:"",
+      option:""
+    })
+
+     
 
    const handleEditTitle = (e) => {
     
@@ -39,17 +45,34 @@ const titleText= localStorage.getItem("text")
 
 
   function handleSubmitAddPoll() {
+    localStorage.removeItem('text')
     dispatch(
       editPollTitleRequest({
         id: editable.id,
         title: editable.title,
-      })
+      }),
+    
+      dispatch(
+        newOptionRequest({
+          id:newOption.id,
+          text:newOption.text
+        })
+      )
+     
     );
 
     navigate("/adminPanel");
   }
 
-  
+
+ 
+
+
+
+
+   const backToHome = () => {
+     navigate("/adminPanel");
+   };
 
   return (
     <div>
@@ -60,54 +83,63 @@ const titleText= localStorage.getItem("text")
           pollSelector.data.data.map((val,index) => {
             return val._id === id ? (
               <>
-              
-              <input
-              key={index}
-                type="text"
-                className="inputPollTitle"
-                value={editable.title}
-                onChange={(e) => handleEditTitle(e)}
-                placeholder="Enter your poll question"
-                />
-              {val.options.map((item,index)=>{
-                return (
-                  <Box
+                <input
                   key={index}
-                    component="form"
-                    sx={{
-                      "& > :not(style)": {
-                        m: 1,
-                        width: "40ch",
-                        display: "flex",
-                        flexDirection: "column",
-                      },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                    // onSubmit={(e) => submitEditOption(e)}
+                  type="text"
+                  className="inputPollTitle"
+                  value={editable.title}
+                  onChange={(e) => handleEditTitle(e)}
+                  placeholder="Enter your poll question"
+                />
+                {val.options.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      component="form"
+                      sx={{
+                        "& > :not(style)": {
+                          m: 1,
+                          width: "40ch",
+                          display: "flex",
+                          flexDirection: "column",
+                        },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="outlined-basic"
+                        label="Option"
+                        variant="outlined"
+                        disabled={true}
+                        name="opt"
+                        value={item.option}
+                        
+                      />
+                    </Box>
+                  );
+                })}
+
+                <div className="editButton">
+                  <Button
+                    variant="contained"
+                    sx={{ mr: "20px", width: "40%" }}
+                    color="success"
+                    type="submit"
                   >
-                    <TextField
-                      id="outlined-basic"
-                      label="Option"
-                      variant="outlined"
-                      // variant="outlined"
-                      name="opt"
-                      value={item.option}
-                      // onChange={(e) => handleEditOption(e)}
-                    />
-                  </Box>
-                );
-                
-                
-              })}
+                    Submit
+                  </Button>
 
-
-
-              <Button variant="contained" color="success" type="submit">
-            Submit
-          </Button>
-                </>
-
+                  <Button
+                    variant="contained"
+                    sx={{ mr: "20px", width: "40%" }}
+                    color="primary"
+                    onClick={backToHome}
+                  >
+                    home
+                  </Button>
+                </div>
+              </>
             ) : (
               ""
             );
@@ -118,16 +150,6 @@ const titleText= localStorage.getItem("text")
           </Box>
         )}
         <Stack spacing={2} direction="row">
-          {/* <Button
-            variant="contained"
-            color="primary"
-            // onClick={handleOptionPoll}
-          >
-            Add Option
-          </Button> */}
-          {/* <Button variant="contained" color="success" type="submit">
-            Submit
-          </Button> */}
         </Stack>
       </form>
     </div>

@@ -21,6 +21,7 @@ import Typography from "@mui/material/Typography";
 import AddNewPoll from "./AddNewPoll";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Radio from "@mui/material/Radio";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -36,78 +37,42 @@ export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
+
   const removeSelector = useSelector(
     (state) => state && state.removeOptionReducer
   );
 
-  // console.log(removeSelector, "revoe@@@")
-  // console.log(pollSelector, "admin");
 
+  const user = localStorage.getItem("role");
 
-
-
-  const [add, setAdd] = useState(false);
-  // const [pollData, setPollData] = useState([]);
-  const [editTitle,setEditTitle]=useState(false)
+  const [editTitle, setEditTitle] = useState(false);
   const [deletePoll, setDeletePoll] = useState(false);
   const [editPoll, setEditPoll] = useState(false);
-  // const [editable, setEditable] = useState({
-  //   id: "",
-  //   title: "",
-  // });
-const [removeText,setRemoveText]=useState('')
+ const [pollData,setPollData]= useState([])
+  const [removeText, setRemoveText] = useState({
+    id: "",
+    text: "",
+  });
   const [addOption, setAddOption] = useState(false);
   const [editOption, setEditOption] = useState({});
   const [newOption, setNewOption] = useState({
-    id:"",
-    text:"",
+    id: "",
+    text: "",
   });
 
-
-  // const [removeOption, setRemoveOption] = useState(false);
-  // const [editRemoveOption, setEditRemoveOption] = useState({});
-  // const [oldOption, setOldOption] = useState({
-  //   id: "",
-  //   text: "",
-  // });
-
-  
-
- 
-
+   
   const handleDelete = (id) => {
     dispatch(deletePollRequest(id));
-    // dispatch(pollRequest());
+    
   };
-
 
   const handleEdit = (id, text) => {
-    localStorage.setItem("text",text)
-  navigate(`/editTitle/${id}`)
-  
-    // console.log(id, text);
-    // setEditPoll(!editPoll);
-    // setEditable({ id: id, title: text });
-    // console.log(editable, "edittit");
+    localStorage.setItem("text", text);
+    navigate(`/editTitle/${id}`);
+ 
   };
 
-  // const handleEditTitle = (e) => {
-  //   setEditable({ ...editable, title: e.target.value });
-  //   console.log(editable, "at on change");
-  // };
-  
-  // const handleEditSubmit = (e) => {
-  //   e.preventDefault()
-    
-  //   dispatch(editPollTitleRequest({
-  //     id:editable.id,
-  //     title:editable.title
-  //   }));
-  //   setEditPoll(!editPoll)
-  //       // dispatch(pollRequest());
-  // };
-
-
+ 
 
   const handleAddOption = (id) => {
     console.log(id, "id");
@@ -119,48 +84,36 @@ const [removeText,setRemoveText]=useState('')
     setNewOption({ id: editOption, text: e.target.value });
     console.log(newOption);
   };
-  
-  const submitEditOption=(event)=>{
-    event.preventDefault()
-    dispatch(newOptionRequest({
-      id: newOption.id,
-      text:newOption.text,
-    }));
+
+  const submitEditOption = (event) => {
+    event.preventDefault();
+    dispatch(
+      newOptionRequest({
+        id: newOption.id,
+        text: newOption.text,
+      })
+    );
     setAddOption(!addOption);
-    // dispatch(pollRequest())
-  }
+  };
 
-// const EditHandleRemoveOption=(id)=>{
-//     setRemoveOption(!removeOption);
-//     setEditRemoveOption(id);
-// }
+  const submitRemoveOption = (id, text) => {
+    setRemoveText({
+      id: id,
+      text: text,
+    });
 
-// const handleEditRemoveOption=(e)=>{
-//   setOldOption({ id: editRemoveOption, text: e.target.value });
-// }
-
-const submitRemoveOption=(id,text)=>{
- 
-  setRemoveText(text)
-  
-dispatch(removeOptionRequest(id,text))
-  // e.preventDefault()
-  // dispatch(
-  //   removeOptionRequest({
-  //     id: oldOption.id,
-  //     text: oldOption.text,
-  //   })
-  // );
-  // setRemoveOption(!addOption);
-  // dispatch(pollRequest());
-
-}
+    dispatch(removeOptionRequest(id, text));
    
+  };
 
   useEffect(() => {
-    dispatch(pollRequest());
+    if (user === "admin") {
+      dispatch(pollRequest());
+    } else {
+      navigate("/");
+    }
   }, []);
-  
+
   return (
     <>
       <div className="adminContainer">
@@ -172,11 +125,7 @@ dispatch(removeOptionRequest(id,text))
 
             width: "50%",
             margin: "auto",
-            // paddingLeft: "25%",
-            // border: 2,
-            // borderColor: "primary.main",
-            // borderRadius: "10px",
-            // backgroundColor: "red",
+          
           }}
           direction="row"
           spacing={2}
@@ -184,15 +133,6 @@ dispatch(removeOptionRequest(id,text))
         >
           <Link className="addBtn" to="/addNewPoll">
             ADD POLL
-            {/* <Button
-              className="addBtnInner"
-              sx={{width: "50%",position:"fixed", backgroundColor:"greenyellow" }}
-              // variant="outlined"
-              endIcon={<AddIcon />}
-              // onClick={() => <AddNewPoll />}
-            >
-              add Poll
-            </Button> */}
           </Link>
         </Stack>
         <div className="cardContainerAdmin">
@@ -228,19 +168,10 @@ dispatch(removeOptionRequest(id,text))
                     <Button
                       variant="outlined"
                       startIcon={<EditIcon />}
-                      // onClick={<EditTitle/>}
+                      
                       onClick={() => handleEdit(item._id, item.title)}
                     ></Button>
-                    {/* <Button
-                      variant="outlined"
-                      startIcon={<AddIcon />}
-                      onClick={() => handleAddOption(item._id)}
-                    ></Button> */}
-                    {/* <Button
-                    variant="outlined"
-                    startIcon={<RemoveIcon />}
-                    onClick={() => EditHandleRemoveOption(item._id)}
-                  ></Button> */}
+                    
                   </Stack>
 
                   <CardContent sx={{ marginLeft: "50px" }}>
@@ -251,65 +182,115 @@ dispatch(removeOptionRequest(id,text))
                       gutterBottom
                     >
                       {item.title}
-                      {/* {editPoll && item._id === editable.id ?
-                       (
-                        <Box
-                          component="form"
-                          sx={{
-                            "& > :not(style)": {
-                              m: 1,
-                              fontSize: "30px",
-                              width: "20ch",
-                            },
-                          }}
-                          noValidate
-                          autoComplete="off"
-                          onSubmit={(e) => handleEditSubmit(e)}
-                        >
-                          <TextField
-                            id="standard-basic"
-                            value={editable.title}
-                            type="text"
-                            variant="standard"
-                            onChange={(e) => handleEditTitle(e)}
-                          />
-                        </Box>
-                      ) : (
-                        item.title
-                      )} */}
+                      
                     </Typography>
 
                     {item.options.map((val, index) => {
                       return (
                         <>
-                          <Typography
+                          <table st>
+                            <tr>
+                              <th>vote</th>
+                              <th></th>
+                            </tr>
+                            <tr>
+                              <td>{val.vote}</td>
+                              <td>{val.option}</td>
+                              <td>
+                                <div className="editOptionBtn">
+                                  {removeSelector.isLoading ? (
+                                    <>
+                                      {val.option === removeText.text ? (
+                                        <Box
+                                          sx={{
+                                            display: "flex",
+                                            float: "right",
+                                          }}
+                                        >
+                                          <CircularProgress />
+                                        </Box>
+                                      ) : (
+                                        <Button
+                                          variant="outlined"
+                                          startIcon={<DeleteIcon />}
+                                          onClick={() =>
+                                            submitRemoveOption(
+                                              item._id,
+                                              val.option
+                                            )
+                                          }
+                                        ></Button>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <Button
+                                      variant="outlined"
+                                      startIcon={<DeleteIcon />}
+                                      onClick={() =>
+                                        submitRemoveOption(item._id, val.option)
+                                      }
+                                    ></Button>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          {/* <Typography
                             key={index}
                             sx={{ mb: 1.5 }}
                             color="black"
                           >
-                            {val.option}
-                            <div className="editOptionBtn">
-                              {removeSelector.isLoading ? (
-                                <>
-                                {(val.option===removeText)?
-                                  <Box sx={{ display: "flex", float:"right" }}>
+                            <input
+                              type="text"
+                              style={{display:'inline-block' ,width:"fit-content"}}
+                              // checked={val.vote ? true : false}
+                              // onChange={() =>
+                              //   handleChange(item._id, val.option)
+                              // }
+                              // disabled={val.vote ? true : false}
+                              disabled={true}
+                              value={val.vote}
+                              // name={item._id}
+                              // name="radio-buttons"
+                              // inputProps={{ "aria-label": "A" }}
+                            /> */}
+
+                          {/* <Radio
+                              type="radio"
+                              checked={val.vote ? true : false}
+                              // onChange={() =>
+                              //   handleChange(item._id, val.option)
+                              // }
+                              // disabled={val.vote ? true : false}
+                              disabled={true}
+                              value={val.option}
+                              name={item._id}
+                              // name="radio-buttons"
+                              inputProps={{ "aria-label": "A" }}
+                            /> */}
+                          {/* {val.option} */}
+                          {/* <div className="editOptionBtn">
+                            {removeSelector.isLoading ? (
+                              <>
+                                {val.option === removeText ? (
+                                  <Box sx={{ display: "flex", float: "right" }}>
                                     <CircularProgress />
                                   </Box>
-                                :""
-                                  }
-                                
-                                </>
-                              ) : (
-                                <Button
-                                  variant="outlined"
-                                  startIcon={<DeleteIcon />}
-                                  onClick={() =>
-                                    submitRemoveOption(item._id, val.option)
-                                  }
-                                ></Button>
-                              )}
-                            </div>
-                          </Typography>
+                                ) : (
+                                  ""
+                                )}
+                              </>
+                            ) : (
+                              <Button
+                                variant="outlined"
+                                startIcon={<DeleteIcon />}
+                                onClick={() =>
+                                  submitRemoveOption(item._id, val.option)
+                                }
+                              ></Button>
+                            )}
+                          </div> */}
+                          {/* </Typography> */}
                         </>
                       );
                     })}

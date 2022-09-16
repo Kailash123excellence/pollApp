@@ -23,9 +23,7 @@ import PollList from "./pollList";
 // import Stack from "@mui/material/Stack";
 
   
-
-const pages = ["Home Page"];
-const settings = ["Dashboard", "Logout"];
+ 
 
 const Navbar = () => {
 const User= localStorage.getItem("role")
@@ -139,21 +137,21 @@ const User= localStorage.getItem("role")
           >
             Polling App
           </Typography>
-          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {/* {pages.map((page) => ( */}
               <Button
-                key={page}
+                // key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {/* {page} */}
               </Button>
-            ))}
+            {/* ))} */}
 
-            <Button onClick={backToHome}>Home Page</Button>
-          </Box> */}
+            {/* <Button onClick={backToHome}>Home Page</Button> */}
+          </Box>
 
-          <Button className="admitLogBtn"  onClick={handleLogout}  variant="contained" >
+          <Button className="admitLogoutBtn"  onClick={handleLogout}  variant="contained" >
             Logout
           </Button>
 

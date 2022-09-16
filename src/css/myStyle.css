@@ -111,7 +111,7 @@
   box-shadow: 2px 2px 2px 2px rgb(62, 23, 23);
 }
 .addPollContainerForm{
-  /* border: 3px solid red; */
+  border: 3px solid white;
   
   height: 100vh;
  background-color: rgb(226, 186, 136);
@@ -119,8 +119,9 @@
 }
 .addNewPollForm {
   width: 50%;
+ 
   margin: auto;
-  margin-top: 50px;
+  margin-top: 150px;
   /* border:2px solid rgba(231, 222, 222, 0.6); */
 
   display: flex;
@@ -211,7 +212,20 @@
 
 }
 
-.admitLogBtn{
-  
+.admitLogoutBtn{
+  border:4px solid red;
   float: right;
+}
+
+.editButton{
+margin-top: 20px;
+  
+}
+table, td {
+ 
+  border: 2px solid none ;
+}
+
+td{
+  width: 100%;
 }

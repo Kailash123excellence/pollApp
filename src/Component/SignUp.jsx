@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -73,9 +73,7 @@ console.log(signUpSelector, "@@@@@@");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setOpen(true);
-
-     
+    
       dispatch(
         requestSingUp({
           username: credential.username,
@@ -84,14 +82,18 @@ console.log(signUpSelector, "@@@@@@");
         })
       );
 
-      if(signUpSelector.isSuccess){
-        navigate('/')
-      }
-       
     
   };
 
- 
+ useEffect(() => {
+  if(signUpSelector.isSuccess){
+    navigate('/')
+
+  }
+ }, [signUpSelector.isSuccess]);
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -112,12 +114,7 @@ console.log(signUpSelector, "@@@@@@");
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-           
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -175,11 +172,6 @@ console.log(signUpSelector, "@@@@@@");
             ) : (
               ""
             )}
-{/* 
-            {signUpSelector.isSuccess
-              ? navigate('/')
-              
-              : navigate('/signUp')} */}
 
             <Button
               type="submit"
@@ -197,6 +189,11 @@ console.log(signUpSelector, "@@@@@@");
             ) : (
               ""
             )}
+
+            {/* {signUpSelector.isSuccess?
+            navigate('/')
+            :("")} */}
+
             <Grid container>
               <Grid item>
                 <Link href="/" variant="body1">

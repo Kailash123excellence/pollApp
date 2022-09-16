@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addPollRequest } from "../redux/action/index";
 
@@ -18,25 +18,19 @@ const navigate = useNavigate()
     option: [],
   });
   const [counter, setCounter] = useState(0);
-  // const [option, setOption] = useState("");
-
-    // console.log(addPoll.option, "option");
+   
   
   function handleSubmitAddPoll(e) {
     e.preventDefault();
     
-    // console.log(addPoll.option, "option");
-    if(addPoll.question.length>0){
-      dispatch(addPollRequest(addPoll))
-      
-      navigate('/adminPanel')
-    }else{
-      navigate("/adminPanel");
-    }
-    // setAddPoll({...addPoll,question:""})
-
-    // setAddPoll({...addPoll,option:[]})
-
+      if (addPoll.question.trim()) {
+        dispatch(addPollRequest(addPoll));
+        navigate("/adminPanel");
+      } else {
+        navigate("/addNewPoll");
+      }
+    
+    
   }
 
   const handleOptionPoll = () => {
@@ -47,19 +41,23 @@ const navigate = useNavigate()
   };
 
   const handleOnChangeOption = (index,e) => {
-    console.log(index, "index");
+     
     
 
     {addPoll.option.map((val,indexOption)=>{
           if(indexOption===index){
-          // console.log(val, "Val");
-            val.option=e.target.value
+          
+            val.option=(e.target.value).trim()
           
         }
       
     })}
     
   };
+
+  const backToHome= ()=>{
+    navigate('/adminPanel')
+  }
 
   return (
     <>
@@ -69,6 +67,7 @@ const navigate = useNavigate()
         <form className="addNewPollForm" onSubmit={handleSubmitAddPoll}>
           <input
             type="text"
+            required
             autoFocus
             className="inputPollTitle"
             value={addPoll.question}
@@ -82,11 +81,12 @@ const navigate = useNavigate()
             return (
               <input
                 type="text"
+                
                 required
                 autoFocus
                 className="inputOptionValue"
                 onChange={(e) => handleOnChangeOption(index, e)}
-                // value={val[index]?.value}
+                
                 placeholder={"option"}
               />
             );
@@ -103,77 +103,15 @@ const navigate = useNavigate()
             <Button variant="contained" color="success" type="submit">
               Submit
             </Button>
+            <Button variant="contained" color="secondary" onClick={backToHome} >
+              home
+            </Button>
           </Stack>
 
-          {/* <button className="AddBtn" onClick={handleOptionPoll}>
-          Add Option
-        </button>
-        <button className="AddBtn" type="submit">
-          Submit
-        </button> */}
-          {/* <Link className="backLink" to="/adminPanel">
-            <Button className="backBtn" variant="contained">
-              Back to Admin Page
-            </Button>
-          </Link> */}
+         
         </form>
 
-        {/* <form
-        method="post"
-        // onSubmit={() => handleSubmitAddPoll()}
-        style={{
-          width: "50%",
-          margin: "auto",
-          marginBottom: "20px",
-          marginTop: "100px",
-        }}
-        >
-        <Box
-        component="form"
-        sx={{
-          "& > :not(style)": {
-            m: 1,
-            width: "40ch",
-            display: "flex",
-            marginTop: "100px",
-            flexDirection: "column",
-          },
-          // onSubmit={(e) => handleSubmitAddPoll(e)}
-        }}
-        // sx={{
-          //   "& > :not(style)": { m: 1, width: "100%" },
-          // }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField
-            id="outlined-basic"
-            label="Enter Your Question"
-            variant="outlined"
-            name="text"
-            // value={question.text}
-            onChange={(e) =>
-              setAddPoll({ ...addPoll, question: e.target.value })
-            }
-            />
-            
-            
-            </Box>
-            
-            <Stack spacing={2} direction="row" width="50ch">
-            <Button
-            variant="contained"
-            // onClick={addPollQuestion}
-            >
-            Submit
-            </Button>
-            
-            <Link to="/adminPanel">
-            <Button variant="contained">home</Button>
-            </Link>
-            </Stack>
-          </form> */}
-      </div>
+          </div>
     </>
   );
 }

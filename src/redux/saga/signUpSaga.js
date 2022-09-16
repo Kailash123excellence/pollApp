@@ -12,7 +12,8 @@ function* singUp(action) {
     // console.log(response.data, "signup");
     if (response && response.data && response.data.error === 0) {
       yield put(requestSingUpSuccess({ response: response.data.data }));
-      localStorage.setItem("role", response.data.data.role);
+      // localStorage.setItem("role", response.data.data.role);
+      
     } else {
       yield put(
         requestSingUpError({ error: "NO DATA", message: response.data.message })

@@ -20,7 +20,7 @@ function* removeOptionSaga(action) {
 
     if (response && response.data && response.data.error === 0) {
       yield put(removeOptionRequestSuccess({ response: response.data }));
-      
+      yield put (pollRequest())
     } else {
       yield put(
         removeOptionRequestError({

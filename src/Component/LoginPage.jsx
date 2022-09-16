@@ -42,40 +42,43 @@ const theme = createTheme();
 export default function SignIn() {
   const dispatch = useDispatch();
   const loginSelector = useSelector((state) => state && state.logInReducer);
-  // console.log(loginSelector,"loginSelector")
+  console.log(loginSelector, "loginSelector");
 
   const [userLogin, setUserLogin] = useState({
     username: "",
     password: "",
   });
-
-  const navigator = useNavigate();
+  const [userPanel, setUserPanel] = useState(false);
+  const navigate = useNavigate();
 
   const userRole = localStorage.getItem("role");
-  // console.log(userRole, "5555 role")
-
+  console.log(userRole, "5555 role");
+ 
   // useEffect(() => {
   //   if (loginSelector.isSuccess) {
-  //     if (loginSelector.data.error === 0 && userRole == "admin") {
+  //     if (userRole == "admin") {
   //       navigator("/adminPanel");
-  //     } else if (loginSelector.data.error === 0) {
+  //     } else {
   //       navigator("/pollList");
   //     }
   //   }
-  // }, [loginSelector.isSuccess]);
+  // }, [loginSelector.isSucesss]);
 
   useEffect(() => {
-    if (loginSelector.isSuccess) {
-      if (loginSelector.data.error === 0 && userRole == "admin") {
-        navigator("/adminPanel");
-      } else if (loginSelector.data.error === 0) {
-        navigator("/pollList");
-      }
+    // if (loginSelector.isSuccess) {
+    if (userRole == "admin") {
+      navigate("/adminPanel");
+      console.log("log into admin");
+    } else if (userRole == "guest") {
+      navigate("/pollList");
+      console.log("log into guest");
     }
-  }, [loginSelector.isSuccess]);
+    // }
+  }, [userRole]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setUserPanel(!userPanel);
     if (userLogin.username.length && userLogin.password.length) {
       dispatch(
         requestLogin({
@@ -84,7 +87,6 @@ export default function SignIn() {
         })
       );
     }
-     
   };
 
   return (
@@ -105,12 +107,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -148,7 +145,9 @@ export default function SignIn() {
 
             {loginSelector.isError ? (
               <Stack spacing={2} sx={{ width: "100%", marginTop: "10px" }}>
-                <Alert severity="error">Account don't exist Kindly check Username or Password</Alert>
+                <Alert severity="error">
+                  Account don't exist Kindly check Username or Password
+                </Alert>
               </Stack>
             ) : (
               ""
@@ -162,6 +161,11 @@ export default function SignIn() {
             >
               Sign In
             </Button>
+
+            {/* {loginSelector.isSuccess===true?
+              navigate('pollList') 
+            : ""} */}
+
             <Grid container>
               <Grid item>
                 <Link href="/signUp" variant="body1">
