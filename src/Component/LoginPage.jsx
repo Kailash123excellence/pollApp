@@ -40,46 +40,46 @@ import CircularProgress from "@mui/material/CircularProgress";
 const theme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userRole = localStorage.getItem("role");
+  console.log(userRole, "5555 role");
+
   const loginSelector = useSelector((state) => state && state.logInReducer);
   console.log(loginSelector, "loginSelector");
+
 
   const [userLogin, setUserLogin] = useState({
     username: "",
     password: "",
   });
-  const [userPanel, setUserPanel] = useState(false);
-  const navigate = useNavigate();
+  // const [userPanel, setUserPanel] = useState(false);
 
-  const userRole = localStorage.getItem("role");
-  console.log(userRole, "5555 role");
- 
   // useEffect(() => {
-  //   if (loginSelector.isSuccess) {
-  //     if (userRole == "admin") {
-  //       navigator("/adminPanel");
-  //     } else {
-  //       navigator("/pollList");
-  //     }
+  //   // if (loginSelector.isSuccess) {
+  //   if (userRole === "admin") {
+  //     navigate("/adminPanel");
+  //     console.log("log into admin");
+  //   } else if (userRole === "guest") {
+  //     navigate("/adminPanel");
+  //     console.log("log into guest");
   //   }
-  // }, [loginSelector.isSucesss]);
+  //   // }
+  // }, [userRole]);
 
+
+  
   useEffect(() => {
-    // if (loginSelector.isSuccess) {
-    if (userRole == "admin") {
+    if (userRole) {
       navigate("/adminPanel");
-      console.log("log into admin");
-    } else if (userRole == "guest") {
-      navigate("/pollList");
-      console.log("log into guest");
     }
-    // }
   }, [userRole]);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUserPanel(!userPanel);
-    if (userLogin.username.length && userLogin.password.length) {
+    // setUserPanel(!userPanel);
+    if (userLogin.username.trim() && userLogin.password.trim()) {
       dispatch(
         requestLogin({
           username: userLogin.username,
@@ -142,6 +142,12 @@ export default function SignIn() {
             ) : (
               ""
             )}
+
+
+            {/* {loginSelector.isSuccess
+              ? navigate("/adminPanel")
+              : navigate("/login")} */}
+
 
             {loginSelector.isError ? (
               <Stack spacing={2} sx={{ width: "100%", marginTop: "10px" }}>

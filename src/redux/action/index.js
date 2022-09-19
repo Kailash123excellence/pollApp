@@ -25,7 +25,10 @@ import {
   ADD_POLL_REQUEST_ERROR,
   VOTE_POLL_REQUEST,
   VOTE_POLL_REQUEST_SUCCESS,
-  VOTE_POLL_REQUEST_ERROR
+  VOTE_POLL_REQUEST_ERROR,
+  USER_REQUEST,
+  USER_REQUEST_SUCCESS,
+  USER_REQUEST_ERROR
 } from "./actionType";
 
 export const requestSingUp = (data) => {
@@ -135,7 +138,6 @@ export const editPollTitleRequestError = (data) => {
 };
 
 export const newOptionRequest = (text) => {
-  console.log("helloIn @@@@@@@@@@@@@")
   return {
     type: NEW_OPTION_REQUEST,
     payload: text,
@@ -236,6 +238,33 @@ export const votePollRequestError = (id,text) => {
     payload: {
       id: id,
       text: text,
+    },
+  };
+};
+
+export const userRequest = (id) => {
+  return {
+    type: USER_REQUEST,
+    payload: {
+      id: id,
+    },
+  };
+};
+
+export const userRequestSuccess = (id) => {
+  return {
+    type: USER_REQUEST_SUCCESS,
+    payload: {
+      id: id,
+    },
+  };
+};
+
+export const userRequestError = (id) => {
+  return {
+    type: USER_REQUEST_ERROR,
+    payload: {
+      id: id,
     },
   };
 };

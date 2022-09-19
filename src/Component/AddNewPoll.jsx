@@ -19,11 +19,9 @@ const navigate = useNavigate()
   });
   const [counter, setCounter] = useState(0);
    
-  
   function handleSubmitAddPoll(e) {
     e.preventDefault();
-    
-      if (addPoll.question.trim()) {
+   if (addPoll.question.length>0 && addPoll.option.length>0) {
         dispatch(addPollRequest(addPoll));
         navigate("/adminPanel");
       } else {
@@ -46,8 +44,9 @@ const navigate = useNavigate()
 
     {addPoll.option.map((val,indexOption)=>{
           if(indexOption===index){
-          
+         
             val.option=(e.target.value).trim()
+          
           
         }
       
@@ -69,6 +68,7 @@ const navigate = useNavigate()
             type="text"
             required
             autoFocus
+            
             className="inputPollTitle"
             value={addPoll.question}
             onChange={(e) =>
@@ -81,12 +81,11 @@ const navigate = useNavigate()
             return (
               <input
                 type="text"
-                
                 required
                 autoFocus
+                
                 className="inputOptionValue"
                 onChange={(e) => handleOnChangeOption(index, e)}
-                
                 placeholder={"option"}
               />
             );
@@ -100,18 +99,16 @@ const navigate = useNavigate()
             >
               Add Option
             </Button>
-            <Button variant="contained" color="success" type="submit">
+            <Button variant="contained"
+            color="success" type="submit">
               Submit
             </Button>
-            <Button variant="contained" color="secondary" onClick={backToHome} >
+            <Button variant="contained" color="secondary" onClick={backToHome}>
               home
             </Button>
           </Stack>
-
-         
         </form>
-
-          </div>
+      </div>
     </>
   );
 }

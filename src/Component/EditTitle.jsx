@@ -31,10 +31,7 @@ const titleText= localStorage.getItem("text")
       title:titleText,
     });
 
-    const [newOption, setNewOption]=useState({
-      id:"",
-      option:""
-    })
+    
 
      
 
@@ -51,16 +48,8 @@ const titleText= localStorage.getItem("text")
         id: editable.id,
         title: editable.title,
       }),
-    
-      dispatch(
-        newOptionRequest({
-          id:newOption.id,
-          text:newOption.text
-        })
-      )
      
     );
-
     navigate("/adminPanel");
   }
 

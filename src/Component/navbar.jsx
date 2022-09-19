@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,11 +21,15 @@ import { useNavigate } from "react-router";
 import Chip from "@mui/material/Chip";
 import PollList from "./pollList";
 // import Stack from "@mui/material/Stack";
+import { useDispatch,useSelector } from "react-redux";
+import {userRequest} from '../redux/action/index'
 
-  
  
 
 const Navbar = () => {
+  const dispatch = useDispatch()
+  const userSelector= useSelector((state)=>state && state.userReducer)
+   
 const User= localStorage.getItem("role")
   const navigate= useNavigate()
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -53,6 +57,10 @@ const User= localStorage.getItem("role")
     navigate('/')
 
   }
+
+  useEffect(()=>{
+    dispatch(userRequest())
+  },[])
 
   // const backToHome=(Role)=>{
   //   Role=='admin'?

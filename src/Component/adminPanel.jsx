@@ -23,78 +23,107 @@ import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Radio from "@mui/material/Radio";
 
+
+
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   pollRequest,
   deletePollRequest,
-  editPollTitleRequest,
-  newOptionRequest,
   removeOptionRequest,
+  votePollRequest,
 } from "../redux/action";
 import EditTitle from "./EditTitle";
-
+import Pagination from './Pagination'
 export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
+   
+
+  const [pollData, setPollData] = useState([]);
 
   const removeSelector = useSelector(
     (state) => state && state.removeOptionReducer
   );
 
+  const deleteSelector = useSelector(
+    (state) => state && state.deletePollReducer
+  );
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(5);
+
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = pollData.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+  
   const user = localStorage.getItem("role");
 
-  const [editTitle, setEditTitle] = useState(false);
-  const [deletePoll, setDeletePoll] = useState(false);
-  const [editPoll, setEditPoll] = useState(false);
- const [pollData,setPollData]= useState([])
+  const [deletePoll, setDeletePoll] = useState("");
+
   const [removeText, setRemoveText] = useState({
     id: "",
     text: "",
   });
-  const [addOption, setAddOption] = useState(false);
-  const [editOption, setEditOption] = useState({});
-  const [newOption, setNewOption] = useState({
-    id: "",
-    text: "",
-  });
 
-   
   const handleDelete = (id) => {
+    setDeletePoll(id);
     dispatch(deletePollRequest(id));
-    
   };
-
+  
   const handleEdit = (id, text) => {
     localStorage.setItem("text", text);
     navigate(`/editTitle/${id}`);
- 
   };
 
- 
-
-  const handleAddOption = (id) => {
-    console.log(id, "id");
-    setAddOption(!addOption);
-    setEditOption(id);
+  const handleChange = (id, text) => {
+    // setVoteID({ id: id, text: text });
+    // setVoteDisable(true);
+    // setClickedID(id);
+    {
+      pollSelector.data.data.map((val) => {
+        if (val._id === id) {
+          {
+            val.options.map((item) => {
+              item.vote = item.vote + 1;
+            });
+          }
+        }
+      });
+    }
+    
+    dispatch(votePollRequest(id, text));
   };
 
-  const handleEditOption = (e) => {
-    setNewOption({ id: editOption, text: e.target.value });
-    console.log(newOption);
-  };
+  useEffect(() => {
+    dispatch(pollRequest());
+  }, []);
 
-  const submitEditOption = (event) => {
-    event.preventDefault();
-    dispatch(
-      newOptionRequest({
-        id: newOption.id,
-        text: newOption.text,
-      })
-    );
-    setAddOption(!addOption);
-  };
+  useEffect(() => {
+    if (pollSelector?.isSuccess) {
+      setPollData([...pollSelector.data.data.reverse()]);
+    }
+  }, [pollSelector.isSuccess]);
+  
+  // const handleEditOption = (e) => {
+  //   setNewOption({ id: editOption, text: e.target.value });
+  //   console.log(newOption);
+  // };
+
+  // const submitEditOption = (event) => {
+  //   event.preventDefault();
+  //   dispatch(
+  //     newOptionRequest({
+  //       id: newOption.id,
+  //       text: newOption.text,
+  //     })
+  //   );
+  //   setAddOption(!addOption);
+  // };
 
   const submitRemoveOption = (id, text) => {
     setRemoveText({
@@ -103,41 +132,39 @@ export default function FloatingActionButtons() {
     });
 
     dispatch(removeOptionRequest(id, text));
-   
   };
+ 
+ 
 
-  useEffect(() => {
-    if (user === "admin") {
-      dispatch(pollRequest());
-    } else {
-      navigate("/");
-    }
-  }, []);
+
 
   return (
     <>
       <div className="adminContainer">
         <Navbar />
 
-        <Stack
-          sx={{
-            mb: 2,
+        {user === "admin" ? (
+          <Stack
+            sx={{
+              mb: 2,
 
-            width: "50%",
-            margin: "auto",
-          
-          }}
-          direction="row"
-          spacing={2}
-          m={5}
-        >
-          <Link className="addBtn" to="/addNewPoll">
-            ADD POLL
-          </Link>
-        </Stack>
+              width: "50%",
+              margin: "auto",
+            }}
+            direction="row"
+            spacing={2}
+            m={5}
+          >
+            <Link className="addBtn" to="/addNewPoll">
+              ADD POLL
+            </Link>
+          </Stack>
+        ) : (
+          ""
+        )}
         <div className="cardContainerAdmin">
-          {pollSelector.isSuccess ? (
-            pollSelector.data.data.map((item, index) => {
+          {pollData?.length > 0 ? (
+            currentPosts?.map((item, index) => {
               return (
                 <Card
                   key={index}
@@ -160,18 +187,44 @@ export default function FloatingActionButtons() {
                     spacing={2}
                     m={5}
                   >
-                    <Button
-                      variant="outlined"
-                      startIcon={<DeleteIcon />}
-                      onClick={() => handleDelete(item._id)}
-                    ></Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<EditIcon />}
-                      
-                      onClick={() => handleEdit(item._id, item.title)}
-                    ></Button>
-                    
+                    {user === "admin" ? (
+                      <>
+                        {deleteSelector.isLoading ? (
+                          <>
+                            {item._id === deletePoll ? (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  float: "right",
+                                }}
+                              >
+                                <CircularProgress />
+                              </Box>
+                            ) : (
+                              <Button
+                                variant="outlined"
+                                startIcon={<DeleteIcon />}
+                                onClick={() => handleDelete(item._id)}
+                              ></Button>
+                            )}
+                          </>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => handleDelete(item._id)}
+                          ></Button>
+                        )}
+
+                        <Button
+                          variant="outlined"
+                          startIcon={<EditIcon />}
+                          onClick={() => handleEdit(item._id, item.title)}
+                        ></Button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </Stack>
 
                   <CardContent sx={{ marginLeft: "50px" }}>
@@ -182,174 +235,102 @@ export default function FloatingActionButtons() {
                       gutterBottom
                     >
                       {item.title}
-                      
                     </Typography>
 
                     {item.options.map((val, index) => {
                       return (
                         <>
-                          <table st>
-                            <tr>
-                              <th>vote</th>
-                              <th></th>
-                            </tr>
-                            <tr>
-                              <td>{val.vote}</td>
-                              <td>{val.option}</td>
-                              <td>
-                                <div className="editOptionBtn">
-                                  {removeSelector.isLoading ? (
-                                    <>
-                                      {val.option === removeText.text ? (
-                                        <Box
-                                          sx={{
-                                            display: "flex",
-                                            float: "right",
-                                          }}
-                                        >
-                                          <CircularProgress />
-                                        </Box>
-                                      ) : (
-                                        <Button
-                                          variant="outlined"
-                                          startIcon={<DeleteIcon />}
-                                          onClick={() =>
-                                            submitRemoveOption(
-                                              item._id,
-                                              val.option
-                                            )
-                                          }
-                                        ></Button>
-                                      )}
-                                    </>
-                                  ) : (
-                                    <Button
-                                      variant="outlined"
-                                      startIcon={<DeleteIcon />}
-                                      onClick={() =>
-                                        submitRemoveOption(item._id, val.option)
-                                      }
-                                    ></Button>
-                                  )}
-                                </div>
-                              </td>
-                            </tr>
-                          </table>
-                          {/* <Typography
-                            key={index}
-                            sx={{ mb: 1.5 }}
-                            color="black"
-                          >
-                            <input
-                              type="text"
-                              style={{display:'inline-block' ,width:"fit-content"}}
-                              // checked={val.vote ? true : false}
-                              // onChange={() =>
-                              //   handleChange(item._id, val.option)
-                              // }
-                              // disabled={val.vote ? true : false}
-                              disabled={true}
-                              value={val.vote}
-                              // name={item._id}
-                              // name="radio-buttons"
-                              // inputProps={{ "aria-label": "A" }}
-                            /> */}
+                          {user === "admin" ? (
+                            <table st>
+                              <tr>
+                                <th>vote</th>
+                                <th></th>
+                              </tr>
+                              <tr>
+                                <td>{val.vote}</td>
+                                <td>{val.option}</td>
+                                <td>
+                                  <div className="editOptionBtn">
+                                    {removeSelector.isLoading ? (
+                                      <>
+                                        {val.option === removeText.text && item._id== removeText.id ? (
+                                          <Box
+                                            sx={{
+                                              display: "flex",
+                                              float: "right",
+                                            }}
+                                          >
+                                            <CircularProgress />
+                                          </Box>
+                                        ) : (
+                                          <Button
+                                            variant="outlined"
+                                            startIcon={<DeleteIcon />}
+                                            onClick={() =>
+                                              submitRemoveOption(
+                                                item._id,
+                                                val.option
+                                              )
+                                            }
+                                          ></Button>
+                                        )}
+                                      </>
+                                    ) : (
+                                      <Button
+                                        variant="outlined"
+                                        startIcon={<DeleteIcon />}
+                                        onClick={() =>
+                                          submitRemoveOption(
+                                            item._id,
+                                            val.option
+                                          )
+                                        }
+                                      ></Button>
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          ) : (
+                            <div key={index}>
+                              <Card
+                                sx={{
+                                  minWidth: 275,
+                                }}
+                              >
+                                <CardContent
+                                  sx={{
+                                    minWidth: 275,
+                                    display: "flex",
+                                    flexDirection: "row",
+                                  }}
+                                >
+                                  <Radio
+                                    type="radio"
+                                    checked={val.vote ? true : false}
+                                    onChange={() =>
+                                      handleChange(item._id, val.option)
+                                    }
+                                    disabled={val.vote ? true : false}
+                                    value={val.option}
+                                    name={item._id}
+                                    // name="radio-buttons"
+                                    inputProps={{ "aria-label": "A" }}
+                                  />
 
-                          {/* <Radio
-                              type="radio"
-                              checked={val.vote ? true : false}
-                              // onChange={() =>
-                              //   handleChange(item._id, val.option)
-                              // }
-                              // disabled={val.vote ? true : false}
-                              disabled={true}
-                              value={val.option}
-                              name={item._id}
-                              // name="radio-buttons"
-                              inputProps={{ "aria-label": "A" }}
-                            /> */}
-                          {/* {val.option} */}
-                          {/* <div className="editOptionBtn">
-                            {removeSelector.isLoading ? (
-                              <>
-                                {val.option === removeText ? (
-                                  <Box sx={{ display: "flex", float: "right" }}>
-                                    <CircularProgress />
-                                  </Box>
-                                ) : (
-                                  ""
-                                )}
-                              </>
-                            ) : (
-                              <Button
-                                variant="outlined"
-                                startIcon={<DeleteIcon />}
-                                onClick={() =>
-                                  submitRemoveOption(item._id, val.option)
-                                }
-                              ></Button>
-                            )}
-                          </div> */}
-                          {/* </Typography> */}
+                                  <Typography
+                                    // sx={{ mb: 1 }}
+                                    color="text.secondary"
+                                  >
+                                    {val.option}
+                                  </Typography>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          )}
                         </>
                       );
                     })}
-
-                    {addOption && item._id === editOption ? (
-                      <Box
-                        component="form"
-                        sx={{
-                          "& > :not(style)": {
-                            m: 1,
-                            width: "40ch",
-                            display: "flex",
-                            flexDirection: "column",
-                          },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={(e) => submitEditOption(e)}
-                      >
-                        <TextField
-                          id="outlined-basic"
-                          label="Add Option"
-                          variant="outlined"
-                          name="opt"
-                          // value={question.opt1}
-                          onChange={(e) => handleEditOption(e)}
-                        />
-                      </Box>
-                    ) : (
-                      ""
-                    )}
-
-                    {/* {removeOption && item._id === editRemoveOption ? (
-                    <Box
-                      component="form"
-                      sx={{
-                        "& > :not(style)": {
-                          m: 1,
-                          width: "40ch",
-                          display: "flex",
-                          flexDirection: "column",
-                        },
-                      }}
-                      noValidate
-                      autoComplete="off"
-                      onSubmit={(e) => submitRemoveOption(e)}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label="Remove Option"
-                        variant="outlined"
-                        name="opt"
-                        // value={question.opt1}
-                        onChange={(e) => handleEditRemoveOption(e)}
-                      />
-                    </Box>
-                  ) : (
-                    ""
-                  )} */}
                   </CardContent>
                 </Card>
               );
@@ -360,6 +341,7 @@ export default function FloatingActionButtons() {
             </Box>
           )}
         </div>
+        <Pagination postPerPage={postPerPage} totalPost={pollData.length} paginate={paginate} />
       </div>
     </>
   );

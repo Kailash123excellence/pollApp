@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 
  function* deleteSaga(action) {
-  console.log("saga delete")
+ 
   const id  = action.payload;
    
   

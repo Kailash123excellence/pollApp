@@ -24,6 +24,7 @@ import Snackbar from "@mui/material/Snackbar";
 import CircularProgress from "@mui/material/CircularProgress";
 import MuiAlert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import { AlternateEmail } from "@mui/icons-material";
 
 // function Copyright(props) {
 //   return (
@@ -87,7 +88,11 @@ console.log(signUpSelector, "@@@@@@");
 
  useEffect(() => {
   if(signUpSelector.isSuccess){
-    navigate('/')
+    if (credential.username.trim()){
+      navigate("/");
+    }else{
+      alert('userName is not defined')
+    }
 
   }
  }, [signUpSelector.isSuccess]);
