@@ -11,7 +11,7 @@ const initialState = {
 const deletePollReducer= (state=initialState,action)=>{
   switch (action.type) {
     case DELETE_POLL_REQUEST:
-    console.log(action.payload)
+     
       return {
         isLoading: true,
         isSuccess: false,

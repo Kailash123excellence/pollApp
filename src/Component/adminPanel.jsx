@@ -23,8 +23,8 @@ import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Radio from "@mui/material/Radio";
 
-
-
+import TablePagination from "@mui/material/TablePagination";
+import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -34,12 +34,11 @@ import {
   votePollRequest,
 } from "../redux/action";
 import EditTitle from "./EditTitle";
-import Pagination from './Pagination'
+import Pagination from "./Pagination";
 export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pollSelector = useSelector((state) => state && state.pollReducer);
-   
 
   const [pollData, setPollData] = useState([]);
 
@@ -47,20 +46,40 @@ export default function FloatingActionButtons() {
     (state) => state && state.removeOptionReducer
   );
 
+  
+
   const deleteSelector = useSelector(
     (state) => state && state.deletePollReducer
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(5);
+  // pagination details
 
-  const indexOfLastPost = currentPage * postPerPage;
-  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const [page, setPage] = useState(1);
+  const [pollPerPage, setPollPerPage] = useState(5);
+
+  const indexOfLastPost = page * pollPerPage;
+  const indexOfFirstPost = indexOfLastPost - pollPerPage;
   const currentPosts = pollData.slice(indexOfFirstPost, indexOfLastPost);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  // function handleChangeRowsPerPage(event) {
+  //   setRowsPerPages(event.target.value);
+  //   setPage(0);
+  // }
+  // const totalPost = pollData.length;
 
-  
+  // const pageNumbers = [];
+  // for (let i = 1; i <= Math.ceil(totalPost / pollPerPage); i++) {
+  //   pageNumbers.push(i);
+//   }
+//  const handleChangePage = (newPage) => {
+//    setPage(newPage);
+//  };
+
+
+
+ 
+  const paginate = (pageNumber) => setPage(pageNumber);
+
   const user = localStorage.getItem("role");
 
   const [deletePoll, setDeletePoll] = useState("");
@@ -74,7 +93,7 @@ export default function FloatingActionButtons() {
     setDeletePoll(id);
     dispatch(deletePollRequest(id));
   };
-  
+
   const handleEdit = (id, text) => {
     localStorage.setItem("text", text);
     navigate(`/editTitle/${id}`);
@@ -95,7 +114,7 @@ export default function FloatingActionButtons() {
         }
       });
     }
-    
+
     dispatch(votePollRequest(id, text));
   };
 
@@ -108,10 +127,10 @@ export default function FloatingActionButtons() {
       setPollData([...pollSelector.data.data.reverse()]);
     }
   }, [pollSelector.isSuccess]);
-  
+
   // const handleEditOption = (e) => {
   //   setNewOption({ id: editOption, text: e.target.value });
-  //   console.log(newOption);
+  
   // };
 
   // const submitEditOption = (event) => {
@@ -126,17 +145,36 @@ export default function FloatingActionButtons() {
   // };
 
   const submitRemoveOption = (id, text) => {
+  
     setRemoveText({
       id: id,
       text: text,
     });
-
     dispatch(removeOptionRequest(id, text));
+    
   };
- 
- 
+
+  useEffect(()=>{
+    checkLastOption()
+  },[removeSelector.isSuccess])
+  
+
+function checkLastOption(){
+  pollData.map((values)=>{
+    if(values._id===removeText.id){
+      return(
+        (values.options.length-1)===0?
+        dispatch(deletePollRequest(removeText.id)):""
+      )
+    }
+  })
+}
 
 
+
+  const addNewPoll = () => {
+    navigate("/addNewPoll");
+  };
 
   return (
     <>
@@ -155,16 +193,19 @@ export default function FloatingActionButtons() {
             spacing={2}
             m={5}
           >
-            <Link className="addBtn" to="/addNewPoll">
+            <button className="addBtn" onClick={addNewPoll}>
               ADD POLL
-            </Link>
+            </button>
+            {/* <Link className="addBtn" to="/addNewPoll">
+              ADD POLL
+            </Link> */}
           </Stack>
         ) : (
           ""
         )}
         <div className="cardContainerAdmin">
           {pollData?.length > 0 ? (
-            currentPosts?.map((item, index) => {
+            pollData?.map((item, index) => {
               return (
                 <Card
                   key={index}
@@ -172,8 +213,8 @@ export default function FloatingActionButtons() {
                     minWidth: 475,
                     width: "50%",
                     margin: "auto",
-                    boxShadow: "2px 2px 5px 6px red",
-                    mb: 4,
+                    boxShadow: "10px 10px 20px #8eb1e8",
+                    mb: 5,
                   }}
                 >
                   <Stack
@@ -243,17 +284,18 @@ export default function FloatingActionButtons() {
                           {user === "admin" ? (
                             <table st>
                               <tr>
-                                <th>vote</th>
                                 <th></th>
+                                <th>vote</th>
                               </tr>
                               <tr>
-                                <td>{val.vote}</td>
                                 <td>{val.option}</td>
+                                <td>{val.vote}</td>
                                 <td>
                                   <div className="editOptionBtn">
                                     {removeSelector.isLoading ? (
                                       <>
-                                        {val.option === removeText.text && item._id== removeText.id ? (
+                                        {val.option === removeText.text &&
+                                        item._id == removeText.id ? (
                                           <Box
                                             sx={{
                                               display: "flex",
@@ -341,8 +383,15 @@ export default function FloatingActionButtons() {
             </Box>
           )}
         </div>
-        <Pagination postPerPage={postPerPage} totalPost={pollData.length} paginate={paginate} />
+
+        
+        <Pagination
+          postPerPage={pollPerPage}
+          totalPost={pollData.length}
+          paginate={paginate}
+        />
       </div>
     </>
   );
 }
+

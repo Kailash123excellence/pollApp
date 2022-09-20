@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addPollRequest } from "../redux/action/index";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -12,51 +13,84 @@ import Navbar from "./navbar";
 
 export default function AddNewPoll() {
   const dispatch = useDispatch();
-const navigate = useNavigate()
+  const navigate = useNavigate();
+  const addPollSelector = useSelector((state) => state && state.addPollReducer);
+  console.log(addPollSelector, "add######");
+
+
   const [addPoll, setAddPoll] = useState({
     question: "",
-    option: [],
+    option: [{ option: "", vote: 0 }],
   });
   const [counter, setCounter] = useState(0);
-   
+  const [addPollTask, setAddPollTask]= useState(false)
+
   function handleSubmitAddPoll(e) {
     e.preventDefault();
-   if (addPoll.question.length>0 && addPoll.option.length>0) {
+    addPoll.option.map((val, index) => {
+      if (addPoll.question.trim().length > 0 && val.option.trim().length > 0) {
         dispatch(addPollRequest(addPoll));
-        navigate("/adminPanel");
+        navigate("/adminPanel")
       } else {
         navigate("/addNewPoll");
       }
-    
-    
+    });
   }
 
   const handleOptionPoll = () => {
-    if (addPoll.option.length <4) {
-      addPoll.option.push({option:"",vote:0 });
-      setCounter(counter+1)
-    }
-  };
-
-  const handleOnChangeOption = (index,e) => {
-     
-    
-
-    {addPoll.option.map((val,indexOption)=>{
-          if(indexOption===index){
-         
-            val.option=(e.target.value).trim()
-          
-          
+    addPoll.option.map((val) => {
+      if (val.option.trim().length > 0) {
+        if (addPoll.option.length < 4) {
+          addPoll.option.push({ option: "", vote: 0 });
+          setCounter(counter + 1);
         }
-      
-    })}
-    
+      }
+    });
   };
 
-  const backToHome= ()=>{
-    navigate('/adminPanel')
-  }
+  const handleOnChangeOption = (index, e) => {
+    const dataValue = e.target.value;
+    console.log(dataValue.trim().length);
+    const updatedOpt = addPoll.option.map((val, indexOption) => {
+      if (indexOption === index) {
+        return {
+          ...val,
+          option: e.target.value,
+        };
+      } else {
+        return val;
+      }
+    });
+
+    setAddPoll((prev) => {
+      return {
+        ...prev,
+        option: updatedOpt,
+      };
+    });
+  };
+
+  const backToHome = () => {
+    navigate("/adminPanel");
+  };
+
+
+  
+  
+
+// useEffect(()=>{
+//   console.log("backToAdmin");
+//   if(addPollTask){
+//     navigate('/adminPanel')
+//   }
+//   setAddPollTask(false)
+// },[addPollTask])
+
+
+  // useEffect(()=>{
+  // navigate('/adminPanel')
+  // },[addPollSelector?.isSuccess])
+   
 
   return (
     <>
@@ -68,7 +102,6 @@ const navigate = useNavigate()
             type="text"
             required
             autoFocus
-            
             className="inputPollTitle"
             value={addPoll.question}
             onChange={(e) =>
@@ -83,7 +116,6 @@ const navigate = useNavigate()
                 type="text"
                 required
                 autoFocus
-                
                 className="inputOptionValue"
                 onChange={(e) => handleOnChangeOption(index, e)}
                 placeholder={"option"}
@@ -91,6 +123,8 @@ const navigate = useNavigate()
             );
           })}
 
+
+         
           <Stack spacing={2} direction="row">
             <Button
               variant="contained"
@@ -99,10 +133,15 @@ const navigate = useNavigate()
             >
               Add Option
             </Button>
-            <Button variant="contained"
-            color="success" type="submit">
-              Submit
-            </Button>
+            {addPollSelector.isLoading ? (
+              <Box sx={{ display: "flex", justifyContent: "center", ml: 20 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Button variant="contained" color="success" type="submit">
+                Submit
+              </Button>
+            )}
             <Button variant="contained" color="secondary" onClick={backToHome}>
               home
             </Button>

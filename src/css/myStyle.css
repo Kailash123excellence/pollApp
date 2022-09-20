@@ -101,6 +101,7 @@
   text-align: center;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: bold;
+  border: none;
  
   background-color: greenyellow;
   /* background-image: linear-gradient(to right, #ff7722, white, green); */
@@ -140,7 +141,7 @@
 
 
 .inputPollTitle:hover{
-   box-shadow: 5px 3px 5px 5px #df9595;
+   box-shadow: 5px 3px 5px 5px #cd6e6e;
 }
 .inputOptionValue {
   margin-bottom: 10px;
@@ -223,11 +224,11 @@ margin-top: 20px;
 }
 table, td {
  
-  border: 2px solid none ;
+  /* border: 2px solid red ; */
 }
 
 td{
-  width: 100%;
+  width: 50%;
 }
 
 .pagination{

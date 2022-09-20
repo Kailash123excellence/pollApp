@@ -3,7 +3,7 @@ import { addPollRequestSuccess, addPollRequestError, pollRequest } from "../acti
 import axios from "axios";
 
 function* addPollSaga(action) {
-  console.log(action,"saga");
+ 
   const { option,question } = action.payload;
   
   let opt='';
@@ -18,7 +18,7 @@ option.map((val, index) => {
 });
   
 
-console.log(opt, "opt");
+ 
 
 
 
