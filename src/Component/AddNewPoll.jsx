@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addPollRequest } from "../redux/action/index";
+import {
+  addPollRequest,
+  changePollRequest,
+  addPollRequestError,
+  addPollRequestSuccess,
+  pollRequest,
+} from "../redux/action/index";
+
 import CircularProgress from "@mui/material/CircularProgress";
 
 import Stack from "@mui/material/Stack";
@@ -15,22 +22,20 @@ export default function AddNewPoll() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const addPollSelector = useSelector((state) => state && state.addPollReducer);
-  console.log(addPollSelector, "add######");
-
+ 
 
   const [addPoll, setAddPoll] = useState({
     question: "",
     option: [{ option: "", vote: 0 }],
   });
   const [counter, setCounter] = useState(0);
-  const [addPollTask, setAddPollTask]= useState(false)
+  const [addPollTask, setAddPollTask] = useState(false);
 
   function handleSubmitAddPoll(e) {
     e.preventDefault();
     addPoll.option.map((val, index) => {
       if (addPoll.question.trim().length > 0 && val.option.trim().length > 0) {
         dispatch(addPollRequest(addPoll));
-        navigate("/adminPanel")
       } else {
         navigate("/addNewPoll");
       }
@@ -50,7 +55,7 @@ export default function AddNewPoll() {
 
   const handleOnChangeOption = (index, e) => {
     const dataValue = e.target.value;
-    console.log(dataValue.trim().length);
+
     const updatedOpt = addPoll.option.map((val, indexOption) => {
       if (indexOption === index) {
         return {
@@ -74,23 +79,12 @@ export default function AddNewPoll() {
     navigate("/adminPanel");
   };
 
-
-  
-  
-
-// useEffect(()=>{
-//   console.log("backToAdmin");
-//   if(addPollTask){
-//     navigate('/adminPanel')
-//   }
-//   setAddPollTask(false)
-// },[addPollTask])
-
-
-  // useEffect(()=>{
-  // navigate('/adminPanel')
-  // },[addPollSelector?.isSuccess])
-   
+  useEffect(() => {
+    if (addPollSelector.isSuccess) {
+      navigate("/adminPanel");
+      dispatch(changePollRequest());
+    }
+  }, [addPollSelector.isSuccess]);
 
   return (
     <>
@@ -123,8 +117,6 @@ export default function AddNewPoll() {
             );
           })}
 
-
-         
           <Stack spacing={2} direction="row">
             <Button
               variant="contained"
@@ -133,6 +125,7 @@ export default function AddNewPoll() {
             >
               Add Option
             </Button>
+
             {addPollSelector.isLoading ? (
               <Box sx={{ display: "flex", justifyContent: "center", ml: 20 }}>
                 <CircularProgress />
@@ -142,6 +135,7 @@ export default function AddNewPoll() {
                 Submit
               </Button>
             )}
+
             <Button variant="contained" color="secondary" onClick={backToHome}>
               home
             </Button>

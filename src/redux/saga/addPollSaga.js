@@ -1,5 +1,9 @@
 import { call, put } from "redux-saga/effects";
-import { addPollRequestSuccess, addPollRequestError, pollRequest } from "../action/index";
+import {
+  addPollRequestSuccess,
+  addPollRequestError,
+  pollRequest,
+} from "../action/index";
 import axios from "axios";
 
 function* addPollSaga(action) {

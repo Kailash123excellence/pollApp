@@ -38,6 +38,7 @@ import Pagination from "./Pagination";
 export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const pollSelector = useSelector((state) => state && state.pollReducer);
 
   const [pollData, setPollData] = useState([]);
@@ -46,8 +47,6 @@ export default function FloatingActionButtons() {
     (state) => state && state.removeOptionReducer
   );
 
-  
-
   const deleteSelector = useSelector(
     (state) => state && state.deletePollReducer
   );
@@ -55,29 +54,32 @@ export default function FloatingActionButtons() {
   // pagination details
 
   const [page, setPage] = useState(1);
-  const [pollPerPage, setPollPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const indexOfLastPost = page * pollPerPage;
-  const indexOfFirstPost = indexOfLastPost - pollPerPage;
+  const indexOfLastPost = page * rowsPerPage;
+  const indexOfFirstPost = indexOfLastPost - rowsPerPage;
   const currentPosts = pollData.slice(indexOfFirstPost, indexOfLastPost);
 
-  // function handleChangeRowsPerPage(event) {
-  //   setRowsPerPages(event.target.value);
-  //   setPage(0);
-  // }
-  // const totalPost = pollData.length;
+  const totalPost = pollData.length;
+  console.log(totalPost, "@@@@@@");
+  console.log(page, "@@@@@@");
+  console.log(rowsPerPage, "@@@@@@");
+  console.log(currentPosts, "@@@@@@");
 
-  // const pageNumbers = [];
-  // for (let i = 1; i <= Math.ceil(totalPost / pollPerPage); i++) {
-  //   pageNumbers.push(i);
-//   }
-//  const handleChangePage = (newPage) => {
-//    setPage(newPage);
-//  };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value,10));
+    setPage(0);
+  };
 
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalPost / rowsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
- 
   const paginate = (pageNumber) => setPage(pageNumber);
 
   const user = localStorage.getItem("role");
@@ -130,7 +132,7 @@ export default function FloatingActionButtons() {
 
   // const handleEditOption = (e) => {
   //   setNewOption({ id: editOption, text: e.target.value });
-  
+
   // };
 
   // const submitEditOption = (event) => {
@@ -145,34 +147,29 @@ export default function FloatingActionButtons() {
   // };
 
   const submitRemoveOption = (id, text) => {
-  
     setRemoveText({
       id: id,
       text: text,
     });
     dispatch(removeOptionRequest(id, text));
-    
   };
 
-  useEffect(()=>{
-    checkLastOption()
-  },[removeSelector.isSuccess])
-  
+  useEffect(() => {
+    checkLastOption();
+  }, [removeSelector.isSuccess]);
 
-function checkLastOption(){
-  pollData.map((values)=>{
-    if(values._id===removeText.id){
-      return(
-        (values.options.length-1)===0?
-        dispatch(deletePollRequest(removeText.id)):""
-      )
-    }
-  })
-}
-
-
+  function checkLastOption() {
+    pollData.map((values) => {
+      if (values._id === removeText.id) {
+        return values.options.length - 1 === 0
+          ? dispatch(deletePollRequest(removeText.id))
+          : "";
+      }
+    });
+  }
 
   const addNewPoll = () => {
+    dispatch(pollRequest());
     navigate("/addNewPoll");
   };
 
@@ -205,7 +202,7 @@ function checkLastOption(){
         )}
         <div className="cardContainerAdmin">
           {pollData?.length > 0 ? (
-            pollData?.map((item, index) => {
+            currentPosts?.map((item, index) => {
               return (
                 <Card
                   key={index}
@@ -282,7 +279,7 @@ function checkLastOption(){
                       return (
                         <>
                           {user === "admin" ? (
-                            <table st>
+                            <table>
                               <tr>
                                 <th></th>
                                 <th>vote</th>
@@ -384,14 +381,17 @@ function checkLastOption(){
           )}
         </div>
 
-        
-        <Pagination
-          postPerPage={pollPerPage}
-          totalPost={pollData.length}
-          paginate={paginate}
-        />
+        <div>
+          <TablePagination
+            component="div"
+            count={totalPost}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
       </div>
     </>
   );
 }
-

@@ -28,7 +28,9 @@ import {
   VOTE_POLL_REQUEST_ERROR,
   USER_REQUEST,
   USER_REQUEST_SUCCESS,
-  USER_REQUEST_ERROR
+  USER_REQUEST_ERROR,
+  ADD_POLL_CHANGE,
+  CHANGE_POLL_REQUEST
 } from "./actionType";
 
 export const requestSingUp = (data) => {
@@ -158,6 +160,8 @@ export const newOptionRequestError = (text) => {
   };
 };
 
+
+
 export const removeOptionRequest = (id,text) => {
  
   return {
@@ -208,6 +212,12 @@ export const addPollRequestError = (data) => {
   return {
     type: ADD_POLL_REQUEST_ERROR,
     payload: data,
+  };
+};
+
+export const changePollRequest = () => {
+  return {
+    type: CHANGE_POLL_REQUEST,
   };
 };
 
@@ -268,3 +278,4 @@ export const userRequestError = (id) => {
     },
   };
 };
+

@@ -1,5 +1,6 @@
 import {ADD_POLL_REQUEST,ADD_POLL_REQUEST_SUCCESS,
-  ADD_POLL_REQUEST_ERROR} from '../action/actionType'
+  ADD_POLL_REQUEST_ERROR,
+  CHANGE_POLL_REQUEST} from '../action/actionType'
 
 const initialState=[{
   isLoading:false,
@@ -31,6 +32,13 @@ const addPollReducer=(state=initialState, action)=>{
         isError:true,
         message:action.payload.message,
       }
+    case CHANGE_POLL_REQUEST:
+      return {
+        isLoading: false,
+        isSuccess: false,
+        isError: false,
+      };
+    
     default:
       return state;
   }
