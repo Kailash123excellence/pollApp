@@ -35,6 +35,7 @@ import {
 } from "../redux/action";
 import EditTitle from "./EditTitle";
 import Pagination from "./Pagination";
+import BasicPagination from "./Pagination";
 export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,34 +54,26 @@ export default function FloatingActionButtons() {
 
   // pagination details
 
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const indexOfLastPost = page * rowsPerPage;
-  const indexOfFirstPost = indexOfLastPost - rowsPerPage;
-  const currentPosts = pollData.slice(indexOfFirstPost, indexOfLastPost);
-
-  const totalPost = pollData.length;
-  console.log(totalPost, "@@@@@@");
-  console.log(page, "@@@@@@");
-  console.log(rowsPerPage, "@@@@@@");
-  console.log(currentPosts, "@@@@@@");
+  const [page, setPage] =  useState(0);
+  const [rowsPerPage, setRowsPerPage] =  useState(5);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(newPage) 
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value,10));
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalPost / rowsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const indexOfFirstPost = page*rowsPerPage;
+  const indexOfLastPost = indexOfFirstPost + rowsPerPage;
+  const currentPosts = pollData.slice(indexOfFirstPost, indexOfLastPost);
+   
 
-  const paginate = (pageNumber) => setPage(pageNumber);
+
+  const totalPost = pollData.length;
+
 
   const user = localStorage.getItem("role");
 
@@ -90,6 +83,8 @@ export default function FloatingActionButtons() {
     id: "",
     text: "",
   });
+
+  
 
   const handleDelete = (id) => {
     setDeletePoll(id);
@@ -130,21 +125,7 @@ export default function FloatingActionButtons() {
     }
   }, [pollSelector.isSuccess]);
 
-  // const handleEditOption = (e) => {
-  //   setNewOption({ id: editOption, text: e.target.value });
-
-  // };
-
-  // const submitEditOption = (event) => {
-  //   event.preventDefault();
-  //   dispatch(
-  //     newOptionRequest({
-  //       id: newOption.id,
-  //       text: newOption.text,
-  //     })
-  //   );
-  //   setAddOption(!addOption);
-  // };
+ 
 
   const submitRemoveOption = (id, text) => {
     setRemoveText({
@@ -186,16 +167,12 @@ export default function FloatingActionButtons() {
               width: "50%",
               margin: "auto",
             }}
-            direction="row"
             spacing={2}
             m={5}
           >
             <button className="addBtn" onClick={addNewPoll}>
               ADD POLL
             </button>
-            {/* <Link className="addBtn" to="/addNewPoll">
-              ADD POLL
-            </Link> */}
           </Stack>
         ) : (
           ""
@@ -381,8 +358,9 @@ export default function FloatingActionButtons() {
           )}
         </div>
 
-        <div>
+        <div className="pagination">
           <TablePagination
+            rowsPerPageOptions={[5, 10, 15]}
             component="div"
             count={totalPost}
             page={page}

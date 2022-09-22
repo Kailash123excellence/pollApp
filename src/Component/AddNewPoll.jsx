@@ -22,24 +22,22 @@ export default function AddNewPoll() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const addPollSelector = useSelector((state) => state && state.addPollReducer);
- 
 
   const [addPoll, setAddPoll] = useState({
     question: "",
     option: [{ option: "", vote: 0 }],
   });
+  const [pollDone,setPollDone] =useState(true)
   const [counter, setCounter] = useState(0);
   const [addPollTask, setAddPollTask] = useState(false);
 
   function handleSubmitAddPoll(e) {
     e.preventDefault();
-    addPoll.option.map((val, index) => {
-      if (addPoll.question.trim().length > 0 && val.option.trim().length > 0) {
-        dispatch(addPollRequest(addPoll));
+      if (addPoll.question.trim().length > 0) {
+      dispatch(addPollRequest(addPoll));
       } else {
         navigate("/addNewPoll");
       }
-    });
   }
 
   const handleOptionPoll = () => {
@@ -50,29 +48,37 @@ export default function AddNewPoll() {
           setCounter(counter + 1);
         }
       }
-    });
+    })
   };
 
-  const handleOnChangeOption = (index, e) => {
-    const dataValue = e.target.value;
+  // const handleOnChangeOption = (index, e) => {
 
+  //   const updatedOpt = addPoll.option.map((val, indexOption) => {
+  //     if (indexOption === index) {
+  //       return {
+  //         ...val,
+  //         option: e.target.value,
+  //       };
+  //     } else {
+  //       return val;
+  //     }
+  //   });
+
+  //   setAddPoll((prev) => {
+  //     return {
+  //       ...prev,
+  //       option: updatedOpt,
+  //     };
+  //   });
+  // };
+
+  const handleOnChangeOption = (index, e) => {
     const updatedOpt = addPoll.option.map((val, indexOption) => {
       if (indexOption === index) {
-        return {
-          ...val,
-          option: e.target.value,
-        };
-      } else {
-        return val;
+          val.option= e.target.value
       }
-    });
-
-    setAddPoll((prev) => {
-      return {
-        ...prev,
-        option: updatedOpt,
-      };
-    });
+    })
+    
   };
 
   const backToHome = () => {
@@ -107,6 +113,7 @@ export default function AddNewPoll() {
           {addPoll.option.map((val, index) => {
             return (
               <input
+              key={index}
                 type="text"
                 required
                 autoFocus
@@ -131,7 +138,10 @@ export default function AddNewPoll() {
                 <CircularProgress />
               </Box>
             ) : (
-              <Button variant="contained" color="success" type="submit">
+              <Button variant="contained"
+              // disabled={pollDone?true:false} 
+               color="success" 
+               type="submit">
                 Submit
               </Button>
             )}

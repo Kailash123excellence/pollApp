@@ -31,7 +31,7 @@ option.map((val, index) => {
       axios.put,
 `https://secure-refuge-14993.herokuapp.com/add_poll?title=${question}&options=${opt}`
       );
-        console.log(response,"addsaga");
+      
     if (response && response.data && response.data.error === 0) {
       yield put(addPollRequestSuccess({ response: response.data }));
       yield put(pollRequest())

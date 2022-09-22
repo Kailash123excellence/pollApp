@@ -251,3 +251,9 @@ td{
   width: 50px;
 
 }
+.pagination{
+  background-color: lightgray;
+  height: 55px;
+  padding:5px;
+  align-items:center;
+}
