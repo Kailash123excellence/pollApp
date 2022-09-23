@@ -7,18 +7,17 @@ import {
 import axios from "axios";
 
 function* editTitleSaga(action) {
-  const {id,title} = action.payload;
- 
+  const { id, title } = action.payload;
+
   try {
     const response = yield call(
       axios.put,
       `https://secure-refuge-14993.herokuapp.com/update_poll_title?id=${id}&title=${title}`
     );
-    
 
     if (response && response.data && response.data.error === 0) {
       yield put(editPollTitleRequestSuccess({ response: response.data }));
-      yield put(pollRequest())
+      yield put(pollRequest());
     } else {
       yield put(
         editPollTitleRequestError({

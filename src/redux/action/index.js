@@ -29,12 +29,10 @@ import {
   USER_REQUEST,
   USER_REQUEST_SUCCESS,
   USER_REQUEST_ERROR,
-  ADD_POLL_CHANGE,
-  CHANGE_POLL_REQUEST
+  CHANGE_POLL_REQUEST,
 } from "./actionType";
 
 export const requestSingUp = (data) => {
-  console.log(data)
   return {
     type: REQUEST_SIGNUP,
     payload: data,
@@ -160,41 +158,37 @@ export const newOptionRequestError = (text) => {
   };
 };
 
-
-
-export const removeOptionRequest = (id,text) => {
- 
+export const removeOptionRequest = (id, text) => {
   return {
     type: REMOVE_OPTION_REQUEST,
-    payload:({
-      id:id,
-      text:text,
-    }),
+    payload: {
+      id: id,
+      text: text,
+    },
   };
 };
 
-export const removeOptionRequestSuccess = (id,text) => {
+export const removeOptionRequestSuccess = (id, text) => {
   return {
     type: REMOVE_OPTION_REQUEST_SUCCESS,
-    payload:({
-      id:id,
-      text:text,
-    }),
+    payload: {
+      id: id,
+      text: text,
+    },
   };
 };
 
-export const removeOptionRequestError = (id,text) => {
+export const removeOptionRequestError = (id, text) => {
   return {
     type: REMOVE_OPTION_REQUEST_ERROR,
-    payload:({
-      id:id,
-      text:text,
-    }),
+    payload: {
+      id: id,
+      text: text,
+    },
   };
 };
 
 export const addPollRequest = (data) => {
-  
   return {
     type: ADD_POLL_REQUEST,
     payload: data,
@@ -221,28 +215,27 @@ export const changePollRequest = () => {
   };
 };
 
-
-export const votePollRequest = (id,text) => {
+export const votePollRequest = (id, text) => {
   return {
     type: VOTE_POLL_REQUEST,
-    payload:({
-      id:id,
-      text:text,
-    }),
+    payload: {
+      id: id,
+      text: text,
+    },
   };
 };
 
-export const votePollRequestSuccess = (id,text) => {
+export const votePollRequestSuccess = (id, text) => {
   return {
     type: VOTE_POLL_REQUEST_SUCCESS,
-    payload:({
-      id:id,
-      text:text,
-    }),
+    payload: {
+      id: id,
+      text: text,
+    },
   };
 };
 
-export const votePollRequestError = (id,text) => {
+export const votePollRequestError = (id, text) => {
   return {
     type: VOTE_POLL_REQUEST_ERROR,
     payload: {
@@ -278,4 +271,3 @@ export const userRequestError = (id) => {
     },
   };
 };
-

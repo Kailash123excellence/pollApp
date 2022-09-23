@@ -1,8 +1,8 @@
 import {
   EDIT_TITLE_REQUEST,
-EDIT_TITLE_REQUEST_SUCCESS,
-EDIT_TITLE_REQUEST_ERROR
-}from "../action/actionType";
+  EDIT_TITLE_REQUEST_SUCCESS,
+  EDIT_TITLE_REQUEST_ERROR,
+} from "../action/actionType";
 
 const initialState = {
   isLoading: false,
@@ -12,17 +12,14 @@ const initialState = {
 };
 
 const editPollReducer = (state = initialState, action) => {
-  
   switch (action.type) {
     case EDIT_TITLE_REQUEST:
-      console.log(action.payload,"reduce");
       return {
         isLoading: true,
         isSuccess: false,
         isError: false,
       };
     case EDIT_TITLE_REQUEST_SUCCESS:
-      console.log(action.payload, "reduce12")
       return {
         isLoading: false,
         isSuccess: true,

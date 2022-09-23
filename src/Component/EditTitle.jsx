@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -11,57 +11,42 @@ import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
 import { LocalHospitalTwoTone, TextFieldsTwoTone } from "@mui/icons-material";
 
-
-
 export default function EditTitle() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-    const pollSelector = useSelector((state) => state && state.pollReducer);
 
-useEffect(() => {
-  dispatch(pollRequest());
-}, []);
+  const pollSelector = useSelector((state) => state && state.pollReducer);
 
-const titleText= localStorage.getItem("text")
+  useEffect(() => {
+    dispatch(pollRequest());
+  }, []);
 
-    const [editable, setEditable] = useState({
-      id: id,
-      title:titleText,
-    });
+  const titleText = localStorage.getItem("text");
 
-    
+  const [editable, setEditable] = useState({
+    id: id,
+    title: titleText,
+  });
 
-     
-
-   const handleEditTitle = (e) => {
-    
-     setEditable({ ...editable, title: e.target.value });
-   };
-
+  const handleEditTitle = (e) => {
+    setEditable({ ...editable, title: e.target.value });
+  };
 
   function handleSubmitAddPoll() {
-    localStorage.removeItem('text')
+    localStorage.removeItem("text");
     dispatch(
       editPollTitleRequest({
         id: editable.id,
         title: editable.title,
-      }),
-     
+      })
     );
-    navigate("/adminPanel");
+    navigate("/pollApp");
   }
 
-
- 
-
-
-
-
-   const backToHome = () => {
-     navigate("/adminPanel");
-   };
+  const backToHome = () => {
+    navigate("/pollApp");
+  };
 
   return (
     <div>
@@ -69,7 +54,7 @@ const titleText= localStorage.getItem("text")
 
       <form className="addNewPollForm" onSubmit={handleSubmitAddPoll}>
         {pollSelector.isSuccess ? (
-          pollSelector.data.data.map((val,index) => {
+          pollSelector.data.data.map((val, index) => {
             return val._id === id ? (
               <>
                 <input
@@ -103,7 +88,6 @@ const titleText= localStorage.getItem("text")
                         disabled={true}
                         name="opt"
                         value={item.option}
-                        
                       />
                     </Box>
                   );
@@ -138,8 +122,7 @@ const titleText= localStorage.getItem("text")
             <CircularProgress />
           </Box>
         )}
-        <Stack spacing={2} direction="row">
-        </Stack>
+        <Stack spacing={2} direction="row"></Stack>
       </form>
     </div>
   );

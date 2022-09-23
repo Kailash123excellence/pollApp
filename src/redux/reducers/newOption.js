@@ -11,7 +11,7 @@ const initialState = {
   data: null,
 };
 
-const  newOptionReducer = (state = initialState, action) => {
+const newOptionReducer = (state = initialState, action) => {
   switch (action.type) {
     case NEW_OPTION_REQUEST:
       return {

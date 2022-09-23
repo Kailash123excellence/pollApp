@@ -1,8 +1,7 @@
-
 import signUpReducer from "./signUp";
-import logInReducer from './logIn';
+import logInReducer from "./logIn";
 import pollReducer from "./viewPoll";
-import deletePollReducer from './deletePoll';
+import deletePollReducer from "./deletePoll";
 import editPollReducer from "./editPollTitle";
 import newOptionReducer from "./newOption";
 import removeOptionReducer from "./removeOption";
@@ -25,4 +24,3 @@ const rootReducers = combineReducers({
 });
 
 export default rootReducers;
-

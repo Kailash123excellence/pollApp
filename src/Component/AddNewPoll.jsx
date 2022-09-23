@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addPollRequest,
   changePollRequest,
-  addPollRequestError,
-  addPollRequestSuccess,
-  pollRequest,
 } from "../redux/action/index";
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -14,13 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Navbar from "./navbar";
-import {
-  NextPlan,
-  Troubleshoot,
-  TroubleshootOutlined,
-} from "@mui/icons-material";
 
 export default function AddNewPoll() {
   const dispatch = useDispatch();
@@ -31,7 +22,6 @@ export default function AddNewPoll() {
     question: "",
     option: [{ option: "", vote: 0 }],
   });
-  const [pollDone, setPollDone] = useState(true);
   const [counter, setCounter] = useState(0);
   const [addPollTask, setAddPollTask] = useState(false);
 
@@ -46,42 +36,18 @@ export default function AddNewPoll() {
   }
 
   const handleOptionPoll = () => {
-    // addPoll.option.map((val) => {
-    //   if (val.option.length > 0) {
     if (addPoll.option.length < 4) {
       addPoll.option.push({ option: "", vote: 0 });
       setCounter(counter + 1);
     }
-    //   }
-    // });
   };
-
-  // const handleOnChangeOption = (index, e) => {
-
-  //   const updatedOpt = addPoll.option.map((val, indexOption) => {
-  //     if (indexOption === index) {
-  //       return {
-  //         ...val,
-  //         option: (e.target.value).trim(),
-  //       };
-  //     } else {
-  //       return val;
-  //     }
-  //   });
-
-  //   setAddPoll((prev) => {
-  //     return {
-  //       ...prev,
-  //       option: updatedOpt,
-  //     };
-  //   });
-  // };
 
   const handleOnChangeOption = (index, e) => {
     const updatedOpt = addPoll.option.map((val, indexOption) => {
       if (indexOption === index) {
         return {
           ...val,
+          key:{indexOption},
           option: e.target.value,
         };
       } else {
@@ -98,12 +64,12 @@ export default function AddNewPoll() {
   };
 
   const backToHome = () => {
-    navigate("/adminPanel");
+    navigate("/pollApp");
   };
 
   useEffect(() => {
     if (addPollSelector.isSuccess) {
-      navigate("/adminPanel");
+      navigate("/pollApp");
       dispatch(changePollRequest());
     }
   }, [addPollSelector.isSuccess]);

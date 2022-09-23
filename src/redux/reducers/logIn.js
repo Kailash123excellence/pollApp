@@ -24,7 +24,7 @@ const logInReducer = (state = initialState, action) => {
         isLoading: false,
         isSuccess: true,
         isError: false,
-        data:action.payload.response
+        data: action.payload.response,
       };
     case REQUEST_LOGIN_ERROR:
       return {
@@ -38,4 +38,4 @@ const logInReducer = (state = initialState, action) => {
   }
 };
 
-export default logInReducer
+export default logInReducer;

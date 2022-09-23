@@ -1,94 +1,8 @@
-/* home page */
-.pollContainer {
-  border: 2px solid rgb(232, 224, 224);
-  height: 100vh;
-  background-image: url("../assert//image/background.jpg");
-  margin: auto;
-  /* position: relative; */
-  /* top: 50%; */
-}
-.pollStart {
-  width: 400px;
-  color: white;
-  margin: auto;
-  margin-top: 20%;
-  text-align: center;
-  font-size: 30px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-.headLineFirst {
-  font-size: 30px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-.quoteLine {
-  font-size: 20px;
-  text-align: center;
-}
-.getStart {
-  border-radius: 10px;
-  border: none;
-}
-
-
-/* PollList */
-
-.pollContainerOuter{
-  margin-top: 0px;
-  background-color: rgba(214, 242, 242, 0.728);
-}
-
-.pollContainerInner{
-  margin-top: 70px;
-  /* background-color: rgba(214, 242, 242, 0.728); */
-} 
-.pollListArea{
-  box-shadow: 2px 2px 10px 10px rgb(43, 43, 79);
-  /* border:2px solid red; */
-  width: 50%;
-  text-align: center;
-  overflow: auto;
-  
-  margin: auto;
-  margin-top: 40px;
-  border-radius: 20px;
- 
-
-}
-.pollQuestion{
-  
-  margin-right: 30%;
-  margin-left: 20%;
-  width:300px;
-  align-content: center;
-  margin-top: 50px;
-  font-size: large;
-  font-weight: bold;
-   
-
-}
-.pollListOption{
-  text-align: center;
-}
-
 /* admin page */
 
 .adminContainer {
-  /* margin-top: 100px; */
   height: 100%;
   padding-bottom: 50px;
-  /* background-image: url("../assert//image/background.jpg"); */
-
-  /* background-image: linear-gradient(
-    to bottom,
-    red,
-    orange,
-    yellow,
-    green,
-    blue,
-    indigo,
-    violet
-  ); */
-  /* background-image: linear-gradient(to bottom, red, orange,yellow)  */
 }
 
 .addBtn {
@@ -97,33 +11,30 @@
   text-decoration: none;
   border-radius: 5px;
   margin-top: 80px;
-  position:fixed;
+  position: fixed;
   text-align: center;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-weight: bold;
   border: none;
- 
+
   background-color: greenyellow;
-  /* background-image: linear-gradient(to right, #ff7722, white, green); */
 }
 
-.addBtn:hover{
+.addBtn:hover {
   background-color: greenyellow;
   box-shadow: 2px 2px 2px 2px rgb(62, 23, 23);
 }
-.addPollContainerForm{
+.addPollContainerForm {
   border: 3px solid white;
-  
+
   height: 100vh;
- background-color: rgb(226, 186, 136);
-  /* background-image: url('../assert/image/voting.jpg') ; */
+  background-color: rgb(226, 186, 136);
 }
 .addNewPollForm {
   width: 50%;
- 
+
   margin: auto;
   margin-top: 150px;
-  /* border:2px solid rgba(231, 222, 222, 0.6); */
 
   display: flex;
   flex-direction: column;
@@ -139,9 +50,8 @@
   border-radius: 10px;
 }
 
-
-.inputPollTitle:hover{
-   box-shadow: 5px 3px 5px 5px #cd6e6e;
+.inputPollTitle:hover {
+  box-shadow: 5px 3px 5px 5px #cd6e6e;
 }
 .inputOptionValue {
   margin-bottom: 10px;
@@ -153,10 +63,8 @@
   border-radius: 10px;
 }
 
-
-.inputOptionValue:hover{
-   box-shadow: 2px 3px 2px 2px #3e4143 ;
-
+.inputOptionValue:hover {
+  box-shadow: 2px 3px 2px 2px #3e4143;
 }
 
 .AddBtn {
@@ -169,101 +77,77 @@
   background-image: linear-gradient(to right, red, blue, yellow);
 }
 
-.subBtn{
-   height: 50px;
-   margin: auto;
+.subBtn {
+  height: 50px;
+  margin: auto;
   margin-bottom: 15px;
   border-radius: 15px;
   font-size: 20px;
   font-weight: bold;
   border: none;
   width: 90%;
-  background-image: linear-gradient(to right, red, blue, yellow)
+  background-image: linear-gradient(to right, red, blue, yellow);
 }
 
- .AddBtn:hover{
-   box-shadow: 5px 3px 5px 5px #452d19;
+.AddBtn:hover {
+  box-shadow: 5px 3px 5px 5px #452d19;
+}
 
- }
-
-  .subBtn:hover{
-   box-shadow: 8px 5px 5px 5px #3c4719;
-
- }
+.subBtn:hover {
+  box-shadow: 8px 5px 5px 5px #3c4719;
+}
 
 .backLink {
   width: 60%;
-  margin-top:20px;
-
+  margin-top: 20px;
 }
 
-/* .backBtn{
-  width: 100%;
-
-} */
-
-.editOptionBtn{
+.editOptionBtn {
   float: right;
 }
 
-.cardContainerAdmin{
-  margin-Top:150px;
- 
- 
-
+.cardContainerAdmin {
+  margin-top: 150px;
 }
 
-.admitLogoutBtn{
-  border:4px solid red;
+.admitLogoutBtn {
+  border: 4px solid red;
   float: right;
 }
 
-.editButton{
-margin-top: 20px;
-  
-}
-table, td {
- 
-  /* border: 2px solid red ; */
+.editButton {
+  margin-top: 20px;
 }
 
-td{
+td {
   width: 50%;
 }
 
-.pagination{
-  width:50%;
+.pagination {
+  width: 50%;
   margin: auto;
   height: 150px;
-  color:black;
+  color: black;
   font-size: 30px;
 }
 
-.page-link{
+.page-link {
   color: black;
   font-weight: 600;
   border: 2px solid blue;
   background-color: bisque;
-
 }
-.page-item{
-  font-size:20px;
+.page-item {
+  font-size: 20px;
   width: 50px;
-
 }
-.pagination{
- 
-  /* background-color: rgba(239, 235, 235, 0.436); */
+.pagination {
   height: 55px;
-  padding:5px;
-  /* margin: auto; */
-  align-items:center;
-  /* min-width:70%; */
-  
+  padding: 5px;
+  align-items: center;
 }
 
-.tablePagination{
+.tablePagination {
   width: 100%;
-    margin: auto;
+  margin: auto;
 }
-

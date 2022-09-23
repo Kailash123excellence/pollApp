@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,56 +17,34 @@ import Stack from "@mui/material/Stack";
 
 import { useNavigate } from "react-router";
 
-// import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
-import PollList from "./pollList";
-// import Stack from "@mui/material/Stack";
-import { useDispatch,useSelector } from "react-redux";
-import {userRequest} from '../redux/action/index'
-
- 
+import { useDispatch, useSelector } from "react-redux";
+import { userRequest } from "../redux/action/index";
 
 const Navbar = () => {
-  const dispatch = useDispatch()
-  const userSelector= useSelector((state)=>state && state.userReducer)
-   
-const User= localStorage.getItem("role")
-  const navigate= useNavigate()
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] =useState(null);
+  const dispatch = useDispatch();
+  const userSelector = useSelector((state) => state && state.userReducer);
 
-  const Role= localStorage.getItem("role")
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(true);
-  // };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(true);
-  // };
+  const User = localStorage.getItem("role");
+  const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const Role = localStorage.getItem("role");
 
   const handleCloseNavMenu = () => {
-    // {User=="admin"?<adminPanel/>: <pollList/> }
     setAnchorElNav(false);
   };
 
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(false);
-  // };
-
-  const handleLogout= ()=>{
+  const handleLogout = () => {
     localStorage.clear();
-    navigate('/')
+    navigate("/");
+  };
 
-  }
+  useEffect(() => {
+    dispatch(userRequest());
+  }, []);
 
-  useEffect(()=>{
-    dispatch(userRequest())
-  },[])
-
-  // const backToHome=(Role)=>{
-  //   Role=='admin'?
-  //   navigate('/adminPanel'):
-  //   navigate('/pollList')
-  // }
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
@@ -96,7 +74,6 @@ const User= localStorage.getItem("role")
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              // onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />
@@ -118,13 +95,7 @@ const User= localStorage.getItem("role")
               sx={{
                 display: { xs: "block", md: "none" },
               }}
-            >
-              {/* {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))} */}
-            </Menu>
+            ></Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -146,37 +117,31 @@ const User= localStorage.getItem("role")
             Polling App
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {/* {pages.map((page) => ( */}
-              <Button
-                // key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {/* {page} */}
-              </Button>
-            {/* ))} */}
-
-            {/* <Button onClick={backToHome}>Home Page</Button> */}
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            ></Button>
           </Box>
 
-          <Button className="admitLogoutBtn"  onClick={handleLogout}  variant="contained" >
+          <Button
+            className="admitLogoutBtn"
+            onClick={handleLogout}
+            variant="contained"
+          >
             Logout
           </Button>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-
               <Stack direction="row" spacing={1}>
-      {/* <Chip avatar={<Avatar>M</Avatar>} label="Avatar" /> */}
-      <Chip
-        avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label={Role}
-        variant="outlined"
-      />
-    </Stack>
-              {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton> */}
+                <Chip
+                  avatar={
+                    <Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />
+                  }
+                  label={Role}
+                  variant="outlined"
+                />
+              </Stack>
             </Tooltip>
           </Box>
         </Toolbar>

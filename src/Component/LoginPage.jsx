@@ -20,65 +20,26 @@ import { requestLogin } from "../redux/action";
 import { useNavigate } from "react-router";
 import CircularProgress from "@mui/material/CircularProgress";
 
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant="body2"
-//       color="text.secondary"
-//       align="center"
-//       {...props}
-//     >
-//       {"Copyright © "}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>
-//       {new Date().getFullYear()}
-//     </Typography>
-//   );
-// }
-
 const theme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userRole = localStorage.getItem("role");
-  console.log(userRole, "5555 role");
-
   const loginSelector = useSelector((state) => state && state.logInReducer);
-  console.log(loginSelector, "loginSelector");
-
-
   const [userLogin, setUserLogin] = useState({
     username: "",
     password: "",
   });
-  // const [userPanel, setUserPanel] = useState(false);
 
-  // useEffect(() => {
-  //   // if (loginSelector.isSuccess) {
-  //   if (userRole === "admin") {
-  //     navigate("/adminPanel");
-  //     console.log("log into admin");
-  //   } else if (userRole === "guest") {
-  //     navigate("/adminPanel");
-  //     console.log("log into guest");
-  //   }
-  //   // }
-  // }, [userRole]);
-
-
-  
   useEffect(() => {
     if (userRole) {
-      navigate("/adminPanel");
+      navigate("/pollApp");
     }
   }, [userRole]);
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setUserPanel(!userPanel);
     if (userLogin.username.trim() && userLogin.password.trim()) {
       dispatch(
         requestLogin({
@@ -131,7 +92,6 @@ export default function SignIn() {
               value={userLogin.password}
               type="password"
               id="password"
-              // autoComplete="current-password"
               onChange={(e) =>
                 setUserLogin({ ...userLogin, password: e.target.value.trim() })
               }
@@ -144,12 +104,6 @@ export default function SignIn() {
             ) : (
               ""
             )}
-
-
-            {/* {loginSelector.isSuccess
-              ? navigate("/adminPanel")
-              : navigate("/login")} */}
-
 
             {loginSelector.isError ? (
               <Stack spacing={2} sx={{ width: "100%", marginTop: "10px" }}>
@@ -170,10 +124,6 @@ export default function SignIn() {
               Sign In
             </Button>
 
-            {/* {loginSelector.isSuccess===true?
-              navigate('pollList') 
-            : ""} */}
-
             <Grid container>
               <Grid item>
                 <Link href="/signUp" variant="body1">
@@ -183,89 +133,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );
 }
-
-// import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { Link ,useNavigate} from "react-router-dom";
-// import {requestLogin} from '../redux/action/index'
-
-// export default function LoginPage() {
-//   const navigator= useNavigate()
-//   const dispatch = useDispatch();
-// const loginSelector = useSelector((state) =>state&& state.logInReducer);
-// // console.log(loginSelector);
-// const userRole= localStorage.getItem("role")
-// console.log(userRole);
-
-// useEffect(()=>{
-//   if(loginSelector.isSuccess){
-//     if(userRole=='Admin'){
-//       navigator('/adminPanel')
-//     }else{
-//       navigator('/pollDeshboard')
-//     }
-
-//   }
-// },[loginSelector])
-
-// const[userLogin,setUserLogin]=useState({
-//     username:"",
-//     password:""
-
-//   })
-
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     dispatch(requestLogin({
-//       username:userLogin.username,
-//       password:userLogin.password
-//     }));
-//   }
-
-//   return (
-//     <>
-
-//       <div className="registerFrom">
-//         <div className="registerContainer">
-//           <form className="inputForm" onSubmit={handleSubmit}>
-//             <h1 className="formHeading">Login</h1>
-//             <div className="mb-3">
-//               <label className="form-label">UserName</label>
-//               <input
-//                 required
-//                 name="username"
-//                 type="text"
-//                 className="form-control"
-//                 placeholder="Enter Username"
-//                 onChange={(e) => setUserLogin({...userLogin, username:e.target.value})}
-//               />
-//             </div>
-//             <div className="mb-3">
-//               <label className="form-label">Password</label>
-//               <input
-//                 required
-//                 name="password"
-//                 type="password"
-//                 className="form-control"
-//                 placeholder="Enter Password"
-//                 onChange={(e) => setUserLogin({...userLogin, password:e.target.value})}
-//               />
-//             </div>
-//             <button type="submit" className="btn btn-primary w-100">
-//               Submit
-//             </button>
-//           </form>
-//           <p className="loginLink">
-//             Not a Member <Link to="/signUp">SignUp</Link>
-//           </p>
-//         </div>
-
-//       </div>
-//     </>
-//   );
-// }

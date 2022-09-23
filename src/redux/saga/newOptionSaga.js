@@ -7,19 +7,17 @@ import {
 import axios from "axios";
 
 function* newOptionSaga(action) {
-  // console.log("saga");
-  const {id,text} = action.payload;
+  const { id, text } = action.payload;
 
   try {
     const response = yield call(
       axios.put,
       `https://secure-refuge-14993.herokuapp.com/add_new_option?id=${id}&option_text=${text}`
     );
-    // console.log(response, "deleteresponse");
 
     if (response && response.data && response.data.error === 0) {
       yield put(newOptionRequestSuccess({ response: response.data }));
-      yield put(pollRequest())
+      yield put(pollRequest());
     } else {
       yield put(
         newOptionRequestError({

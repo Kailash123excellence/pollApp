@@ -5,26 +5,21 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import RemoveIcon from "@mui/icons-material/Remove";
 import Navbar from "./navbar";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SendIcon from "@mui/icons-material/Send";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { borders } from "@mui/system";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import AddNewPoll from "./AddNewPoll";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Radio from "@mui/material/Radio";
 
 import TablePagination from "@mui/material/TablePagination";
- 
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -33,9 +28,7 @@ import {
   removeOptionRequest,
   votePollRequest,
 } from "../redux/action";
-import EditTitle from "./EditTitle";
-import Pagination from "./Pagination";
-import BasicPagination from "./Pagination";
+
 export default function FloatingActionButtons() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,11 +47,11 @@ export default function FloatingActionButtons() {
 
   // pagination details
 
-  const [page, setPage] =  useState(0);
-  const [rowsPerPage, setRowsPerPage] =  useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage) 
+    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -66,14 +59,11 @@ export default function FloatingActionButtons() {
     setPage(0);
   };
 
-  const indexOfFirstPost = page*rowsPerPage;
+  const indexOfFirstPost = page * rowsPerPage;
   const indexOfLastPost = indexOfFirstPost + rowsPerPage;
   const currentPosts = pollData.slice(indexOfFirstPost, indexOfLastPost);
-   
-
 
   const totalPost = pollData.length;
-
 
   const user = localStorage.getItem("role");
 
@@ -83,8 +73,6 @@ export default function FloatingActionButtons() {
     id: "",
     text: "",
   });
-
-  
 
   const handleDelete = (id) => {
     setDeletePoll(id);
@@ -97,14 +85,11 @@ export default function FloatingActionButtons() {
   };
 
   const handleChange = (id, text) => {
-    // setVoteID({ id: id, text: text });
-    // setVoteDisable(true);
-    // setClickedID(id);
     {
       pollSelector.data.data.map((val) => {
         if (val._id === id) {
           {
-            val.options.map((item) => {
+            val.options.map((item,index) => {
               item.vote = item.vote + 1;
             });
           }
@@ -124,8 +109,6 @@ export default function FloatingActionButtons() {
       setPollData([...pollSelector.data.data.reverse()]);
     }
   }, [pollSelector.isSuccess]);
-
- 
 
   const submitRemoveOption = (id, text) => {
     setRemoveText({
@@ -257,7 +240,7 @@ export default function FloatingActionButtons() {
                         <>
                           {user === "admin" ? (
                             <table>
-                              <tr>
+                              <tr key={index}>
                                 <th></th>
                                 <th>vote</th>
                               </tr>
@@ -330,14 +313,10 @@ export default function FloatingActionButtons() {
                                     disabled={val.vote ? true : false}
                                     value={val.option}
                                     name={item._id}
-                                    // name="radio-buttons"
                                     inputProps={{ "aria-label": "A" }}
                                   />
 
-                                  <Typography
-                                    // sx={{ mb: 1 }}
-                                    color="text.secondary"
-                                  >
+                                  <Typography color="text.secondary">
                                     {val.option}
                                   </Typography>
                                 </CardContent>
@@ -360,7 +339,7 @@ export default function FloatingActionButtons() {
 
         <div className="pagination">
           <TablePagination
-          className="tablePagination"
+            className="tablePagination"
             rowsPerPageOptions={[5, 10, 15]}
             component="div"
             count={totalPost}

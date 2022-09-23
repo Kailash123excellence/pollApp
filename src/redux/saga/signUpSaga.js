@@ -9,11 +9,8 @@ function* singUp(action) {
       axios.get,
       `https://secure-refuge-14993.herokuapp.com/add_user?username=${username}&password=${password}&role=${role}`
     );
-    // console.log(response.data, "signup");
     if (response && response.data && response.data.error === 0) {
       yield put(requestSingUpSuccess({ response: response.data.data }));
-      // localStorage.setItem("role", response.data.data.role);
-      
     } else {
       yield put(
         requestSingUpError({ error: "NO DATA", message: response.data.message })

@@ -58,8 +58,8 @@ function* voteRequest() {
   yield takeLatest(VOTE_POLL_REQUEST, votePollSaga);
 }
 
-function* userRequest(){
-  yield takeLatest(USER_REQUEST, userSaga)
+function* userRequest() {
+  yield takeLatest(USER_REQUEST, userSaga);
 }
 export default function* rootSaga() {
   yield all([

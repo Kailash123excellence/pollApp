@@ -5,36 +5,30 @@ import {
   pollRequest,
 } from "../action/index";
 import axios from "axios";
+import { Key } from "@mui/icons-material";
 
 function* addPollSaga(action) {
- 
-  const { option,question } = action.payload;
-  
-  let opt='';
-option.map((val, index) => {
-  if(option.length===index+1){
+  const { option, question } = action.payload;
+
+  let opt = "";
+  option.map((val, index) => {
+    if (option.length === index + 1) {
+      Key={index}
       opt += `${val.option}`;
-  }
-  else{
-  opt += `${val.option}____`;
-
-  }
-});
-  
-
- 
-
-
+    } else {
+      opt += `${val.option}____`;
+    }
+  });
 
   try {
     const response = yield call(
       axios.put,
-`https://secure-refuge-14993.herokuapp.com/add_poll?title=${question}&options=${opt}`
-      );
-      
+      `https://secure-refuge-14993.herokuapp.com/add_poll?title=${question}&options=${opt}`
+    );
+
     if (response && response.data && response.data.error === 0) {
       yield put(addPollRequestSuccess({ response: response.data }));
-      yield put(pollRequest())
+      yield put(pollRequest());
     } else {
       yield put(
         addPollRequestError({

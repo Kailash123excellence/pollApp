@@ -7,25 +7,20 @@ import {
 import axios from "axios";
 
 function* votePollSaga(action) {
-  // console.log(action,"saga")
   const { id, text } = action.payload;
-  
-  const token=localStorage.getItem("token")
- 
 
+  const token = localStorage.getItem("token");
 
   try {
-    
     const response = yield call(
       axios.get,
-      `https://secure-refuge-14993.herokuapp.com/do_vote?id=${id}&option_text=${text}`,{
-        headers:{
-          access_token:token
-        }
+      `https://secure-refuge-14993.herokuapp.com/do_vote?id=${id}&option_text=${text}`,
+      {
+        headers: {
+          access_token: token,
+        },
       }
-      
     );
-      // console.log(response,"sagaResponse")
     if (response && response.data && response.data.error === 0) {
       yield put(votePollRequestSuccess({ response: response.data }));
 

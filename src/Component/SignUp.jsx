@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -26,18 +26,6 @@ import MuiAlert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { AlternateEmail } from "@mui/icons-material";
 
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant="body2"
-//       color="text.secondary"
-//       align="center"
-//       // {...props}
-//     >
-//     </Typography>
-//   );
-// }
-
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -45,28 +33,15 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const theme = createTheme();
 
 export default function SignIn() {
-
-
   const [credential, setCredential] = useState({
     username: "",
     password: "",
     role: "guest",
   });
 
-  // const [open, setOpen] = React.useState(false);
-  // const handleClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setOpen(false);
-  // };
-
-
-
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const signUpSelector = useSelector((state) => state && state.signUpReducer);
-console.log(signUpSelector, "@@@@@@");
 
   function getSelect(e) {
     setCredential({ ...credential, role: e.target.value });
@@ -74,31 +49,25 @@ console.log(signUpSelector, "@@@@@@");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-      dispatch(
-        requestSingUp({
-          username: credential.username,
-          password: credential.password,
-          role: credential.role,
-        })
-      );
 
-    
+    dispatch(
+      requestSingUp({
+        username: credential.username,
+        password: credential.password,
+        role: credential.role,
+      })
+    );
   };
 
- useEffect(() => {
-  if(signUpSelector.isSuccess){
-    if (credential.username.trim()){
-      navigate("/");
-    }else{
-      alert('userName is not defined')
+  useEffect(() => {
+    if (signUpSelector.isSuccess) {
+      if (credential.username.trim()) {
+        navigate("/");
+      } else {
+        alert("userName is not defined");
+      }
     }
-
-  }
- }, [signUpSelector.isSuccess]);
-
-
-
+  }, [signUpSelector.isSuccess]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -131,7 +100,10 @@ console.log(signUpSelector, "@@@@@@");
               autoComplete="username"
               autoFocus
               onChange={(e) =>
-                setCredential({ ...credential, username: e.target.value.trim()})
+                setCredential({
+                  ...credential,
+                  username: e.target.value.trim(),
+                })
               }
             />
             <TextField
@@ -143,16 +115,13 @@ console.log(signUpSelector, "@@@@@@");
               type="password"
               value={credential.password}
               id="password"
-              // autoComplete="current-password"
               onChange={(e) =>
-                setCredential({ ...credential, password: e.target.value.trim()})
+                setCredential({
+                  ...credential,
+                  password: e.target.value.trim(),
+                })
               }
             />
-
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
 
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
@@ -197,10 +166,6 @@ console.log(signUpSelector, "@@@@@@");
               ""
             )}
 
-            {/* {signUpSelector.isSuccess?
-            navigate('/')
-            :("")} */}
-
             <Grid container>
               <Grid item>
                 <Link href="/" variant="body1">
@@ -210,99 +175,7 @@ console.log(signUpSelector, "@@@@@@");
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );
 }
-
-
-
-// import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
-// import { requestSingUp } from "../redux/action";
-
-// export default function SignUp() {
-//   const dispatch = useDispatch();
-//   const signUpSelector = useSelector((state) => state && state.signUpReducer);
-//   console.log(signUpSelector.data, "555555");
-
-//   const [credential, setCredential] = useState({
-//     username: "",
-//     password: "",
-//     role: "guest",
-//   });
-
-//   function getSelect(e) {
-//     setCredential({ ...credential, role: e.target.value });
-//   }
-
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     dispatch(
-//       requestSingUp({
-//         username: credential.username,
-//         password: credential.password,
-//         role: credential.role,
-//       })
-//     );
-    
-//   }
-
-//   return (
-//     <>
-//       {/* <Navbar /> */}
-//       <div className="registerFrom">
-//         <div className="registerContainer">
-//           <form className="inputForm" onSubmit={handleSubmit}>
-//             <h1 className="formHeading">Register</h1>
-//             <div className="mb-3">
-//               <label className="form-label">UserName</label>
-//               <input
-//                 type="text"
-//                 name="username"
-//                 required
-//                 className="form-control"
-//                 placeholder="Enter Username"
-//                 onChange={(e) =>
-//                   setCredential({ ...credential, username: e.target.value })
-//                 }
-//               />
-//             </div>
-//             <div className="mb-3">
-//               <label className="form-label">Password</label>
-//               <input
-//                 required
-//                 type="password"
-//                 name="password"
-//                 className="form-control"
-//                 placeholder="Enter Password"
-//                 onChange={(e) =>
-//                   setCredential({ ...credential, password: e.target.value })
-//                 }
-//               />
-//             </div>
-
-//             <label className="form-label">Role</label>
-//             <select
-//               className="form-select mb-2"
-//               aria-label="Default select example"
-//               onChange={getSelect}
-//             >
-//               <option value="guest">Guest</option>
-//               <option value="admin">Admin</option>
-//             </select>
-
-//             <button type="submit" className="btn btn-primary w-100">
-//               Submit
-//             </button>
-//           </form>
-//           <p className="loginLink">
-//             Already have an account? <Link to="/login">Login In</Link>
-//           </p>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
