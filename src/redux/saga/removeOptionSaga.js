@@ -3,7 +3,7 @@ import {
   removeOptionRequestSuccess,
   removeOptionRequestError,
   pollRequest,
-  newOptionRequest,
+
 } from "../action/index";
 import axios from "axios";
 

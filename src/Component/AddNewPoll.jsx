@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   addPollRequest,
   changePollRequest,
@@ -17,6 +16,11 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Navbar from "./navbar";
+import {
+  NextPlan,
+  Troubleshoot,
+  TroubleshootOutlined,
+} from "@mui/icons-material";
 
 export default function AddNewPoll() {
   const dispatch = useDispatch();
@@ -27,28 +31,29 @@ export default function AddNewPoll() {
     question: "",
     option: [{ option: "", vote: 0 }],
   });
-  const [pollDone,setPollDone] =useState(true)
+  const [pollDone, setPollDone] = useState(true);
   const [counter, setCounter] = useState(0);
   const [addPollTask, setAddPollTask] = useState(false);
 
   function handleSubmitAddPoll(e) {
     e.preventDefault();
-      if (addPoll.question.trim().length > 0) {
+
+    if (addPoll.question.trim().length > 0) {
       dispatch(addPollRequest(addPoll));
-      } else {
-        navigate("/addNewPoll");
-      }
+    } else {
+      navigate("/addNewPoll");
+    }
   }
 
   const handleOptionPoll = () => {
-    addPoll.option.map((val) => {
-      if (val.option.trim().length > 0) {
-        if (addPoll.option.length < 4) {
-          addPoll.option.push({ option: "", vote: 0 });
-          setCounter(counter + 1);
-        }
-      }
-    })
+    // addPoll.option.map((val) => {
+    //   if (val.option.length > 0) {
+    if (addPoll.option.length < 4) {
+      addPoll.option.push({ option: "", vote: 0 });
+      setCounter(counter + 1);
+    }
+    //   }
+    // });
   };
 
   // const handleOnChangeOption = (index, e) => {
@@ -57,7 +62,7 @@ export default function AddNewPoll() {
   //     if (indexOption === index) {
   //       return {
   //         ...val,
-  //         option: e.target.value,
+  //         option: (e.target.value).trim(),
   //       };
   //     } else {
   //       return val;
@@ -75,10 +80,21 @@ export default function AddNewPoll() {
   const handleOnChangeOption = (index, e) => {
     const updatedOpt = addPoll.option.map((val, indexOption) => {
       if (indexOption === index) {
-          val.option= e.target.value
+        return {
+          ...val,
+          option: e.target.value,
+        };
+      } else {
+        return val;
       }
-    })
-    
+    });
+
+    setAddPoll((prev) => {
+      return {
+        ...prev,
+        option: updatedOpt,
+      };
+    });
   };
 
   const backToHome = () => {
@@ -113,8 +129,9 @@ export default function AddNewPoll() {
           {addPoll.option.map((val, index) => {
             return (
               <input
-              key={index}
+                key={index}
                 type="text"
+                value={val.option}
                 required
                 autoFocus
                 className="inputOptionValue"
@@ -138,10 +155,7 @@ export default function AddNewPoll() {
                 <CircularProgress />
               </Box>
             ) : (
-              <Button variant="contained"
-              // disabled={pollDone?true:false} 
-               color="success" 
-               type="submit">
+              <Button variant="contained" color="success" type="submit">
                 Submit
               </Button>
             )}

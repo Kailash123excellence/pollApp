@@ -127,10 +127,11 @@ console.log(signUpSelector, "@@@@@@");
               id="name"
               label="UserName"
               name="username"
+              value={credential.username}
               autoComplete="username"
-              // autoFocus
+              autoFocus
               onChange={(e) =>
-                setCredential({ ...credential, username: e.target.value })
+                setCredential({ ...credential, username: e.target.value.trim()})
               }
             />
             <TextField
@@ -140,10 +141,11 @@ console.log(signUpSelector, "@@@@@@");
               name="password"
               label="Password"
               type="password"
+              value={credential.password}
               id="password"
               // autoComplete="current-password"
               onChange={(e) =>
-                setCredential({ ...credential, password: e.target.value })
+                setCredential({ ...credential, password: e.target.value.trim()})
               }
             />
 

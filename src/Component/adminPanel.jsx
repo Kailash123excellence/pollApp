@@ -24,7 +24,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Radio from "@mui/material/Radio";
 
 import TablePagination from "@mui/material/TablePagination";
-import Paper from "@mui/material/Paper";
+ 
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -360,6 +360,7 @@ export default function FloatingActionButtons() {
 
         <div className="pagination">
           <TablePagination
+          className="tablePagination"
             rowsPerPageOptions={[5, 10, 15]}
             component="div"
             count={totalPost}

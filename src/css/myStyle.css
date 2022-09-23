@@ -252,8 +252,18 @@ td{
 
 }
 .pagination{
-  background-color: lightgray;
+ 
+  /* background-color: rgba(239, 235, 235, 0.436); */
   height: 55px;
   padding:5px;
+  /* margin: auto; */
   align-items:center;
+  /* min-width:70%; */
+  
 }
+
+.tablePagination{
+  width: 100%;
+    margin: auto;
+}
+

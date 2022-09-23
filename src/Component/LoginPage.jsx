@@ -115,10 +115,11 @@ export default function SignIn() {
               id="username"
               label="Username"
               name="username"
+              value={userLogin.username}
               autoComplete="username"
               autoFocus
               onChange={(e) =>
-                setUserLogin({ ...userLogin, username: e.target.value })
+                setUserLogin({ ...userLogin, username: e.target.value.trim() })
               }
             />
             <TextField
@@ -127,11 +128,12 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="Password"
+              value={userLogin.password}
               type="password"
               id="password"
               // autoComplete="current-password"
               onChange={(e) =>
-                setUserLogin({ ...userLogin, password: e.target.value })
+                setUserLogin({ ...userLogin, password: e.target.value.trim() })
               }
             />
 
