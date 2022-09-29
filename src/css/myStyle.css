@@ -1,0 +1,153 @@
+/* admin page */
+
+.adminContainer {
+  height: 100%;
+  padding-bottom: 50px;
+}
+
+.addBtn {
+  width: 50%;
+  height: 40px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 80px;
+  position: fixed;
+  text-align: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
+  border: none;
+
+  background-color: greenyellow;
+}
+
+.addBtn:hover {
+  background-color: greenyellow;
+  box-shadow: 2px 2px 2px 2px rgb(62, 23, 23);
+}
+.addPollContainerForm {
+  border: 3px solid white;
+
+  height: 100vh;
+  background-color: rgb(226, 186, 136);
+}
+.addNewPollForm {
+  width: 50%;
+
+  margin: auto;
+  margin-top: 150px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.inputPollTitle {
+  margin-top: 100px;
+  margin-bottom: 15px;
+  height: 60px;
+  border: 2px solid rgba(231, 222, 222, 0.769);
+
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.inputPollTitle:hover {
+  box-shadow: 5px 3px 5px 5px #cd6e6e;
+}
+.inputOptionValue {
+  margin-bottom: 10px;
+  border: 2px solid rgba(231, 222, 222, 0.801);
+
+  width: 50%;
+  height: 40px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.inputOptionValue:hover {
+  box-shadow: 2px 3px 2px 2px #3e4143;
+}
+
+.AddBtn {
+  height: 50px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  background-image: linear-gradient(to right, red, blue, yellow);
+}
+
+.subBtn {
+  height: 50px;
+  margin: auto;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  width: 90%;
+  background-image: linear-gradient(to right, red, blue, yellow);
+}
+
+.AddBtn:hover {
+  box-shadow: 5px 3px 5px 5px #452d19;
+}
+
+.subBtn:hover {
+  box-shadow: 8px 5px 5px 5px #3c4719;
+}
+
+.backLink {
+  width: 60%;
+  margin-top: 20px;
+}
+
+.editOptionBtn {
+  float: right;
+}
+
+.cardContainerAdmin {
+  margin-top: 150px;
+}
+
+.admitLogoutBtn {
+  border: 4px solid red;
+  float: right;
+}
+
+.editButton {
+  margin-top: 20px;
+}
+
+td {
+  width: 50%;
+}
+
+.pagination {
+  width: 50%;
+  margin: auto;
+  height: 150px;
+  color: black;
+  font-size: 30px;
+}
+
+.page-link {
+  color: black;
+  font-weight: 600;
+  border: 2px solid blue;
+  background-color: bisque;
+}
+.page-item {
+  font-size: 20px;
+  width: 50px;
+}
+.pagination {
+  height: 55px;
+  padding: 5px;
+  align-items: center;
+}
+
+.tablePagination {
+  width: 100%;
+  margin: auto;
+}
